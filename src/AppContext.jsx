@@ -25,18 +25,18 @@ function AppProvider({ children }) {
   const [cookies] = useCookies(['tokenWarehouse'])
   // console.log(accesses)
 
-  const getSession = useCallback(
-    () =>
-      AppService.getSession()
-        .then((res) => {
-          setUser({
-            ...res.data,
-            photo_url: `${res.data.photo_url}?time=${new Date().getTime()}`,
-          })
-        })
-        .catch(myToaster),
-    []
-  )
+  // const getSession = useCallback(
+  //   () =>
+  //     AppService.getSession()
+  //       .then((res) => {
+  //         setUser({
+  //           ...res.data,
+  //           photo_url: `${res.data.photo_url}?time=${new Date().getTime()}`,
+  //         })
+  //       })
+  //       .catch(myToaster),
+  //   []
+  // )
 
   const getAccess = (accesName) =>
     accesses?.find(
@@ -44,40 +44,9 @@ function AppProvider({ children }) {
         acc.name === accesName || acc.name === Access?.ALL_MODULE_WAREHOUSE
     )
 
-  // const chatSocket = useMemo(
-  //   () =>
-  //     io(`${import.meta.env.VITE_APP_CHAT_HOST}/v1`, {
-  //       query: { authorization: `Bearer ${cookies.tokenWarehouse}` },
-  //       autoConnect: true,
-  //       transports: ['websocket'],
-  //       path: '/chat/socket.io',
-  //     }),
-  //   [cookies.tokenWarehouse]
-  // )
-  // const sendOnline = debounce(
-  //   () => chatSocket.emit('update-online-status', true),
-  //   5000
-  // )
-  useEffect(
-    () => {
-      getSession()
-
-      // sendOnline()
-      // const handleBeforeUnload = () => {
-      //   chatSocket.emit('update-online-status', false)
-      // }
-
-      // window.addEventListener('beforeunload', handleBeforeUnload)
-
-      return () => {
-        // chatSocket.emit('update-online-status', false)
-        // window.removeEventListener('beforeunload', handleBeforeUnload)
-      }
-    },
-    [
-      /* chatSocket */
-    ]
-  )
+  useEffect(() => {
+    // getSession()
+  }, [])
 
   return (
     <AppContext.Provider
@@ -91,7 +60,7 @@ function AppProvider({ children }) {
         accesses,
         setAccesses,
         getAccess,
-        getSession,
+        // getSession,
       }}
     >
       {children}
