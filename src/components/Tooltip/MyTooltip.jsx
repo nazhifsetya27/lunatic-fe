@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 import { Tooltip } from '@mui/material'
 import React, { Fragment } from 'react'
 

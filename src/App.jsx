@@ -1,10 +1,13 @@
 import './App.css'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import SimpleBar from 'simplebar-react'
 import { AppProvider } from './AppContext'
 import Welcome from './pages/Welcome'
-import SideNavbar from './components/Navigation'
+import AssetManagement from './pages/asset-management'
+import Furniture from './pages/asset-management/furniture'
+import MyNavigation from './components/Navigation/MyNavigation'
+import { FurnitureProvider } from './pages/asset-management/furniture/context'
 
 function App() {
   return (
@@ -21,20 +24,27 @@ function App() {
         pauseOnHover
         closeOnClick
       />
-      <div className="relative flex h-screen w-full flex-col">
-        <SimpleBar
-          forceVisible="y"
-          className="flex-1"
-          style={{ height: '100vh' }}
-        >
-          <SideNavbar />
-          <AppProvider>
+      <AppProvider>
+        <div id="main-content" className="relative flex h-screen w-full">
+          <MyNavigation />
+          <div className="relative flex h-screen w-full flex-col">
             <Routes>
               <Route path="/" element={<Welcome />} />
+              <Route path="/asset" element={<AssetManagement />}>
+                <Route index element={<Navigate to="furniture" replace />} />
+                <Route
+                  path="furniture"
+                  element={
+                    <FurnitureProvider>
+                      <Furniture />
+                    </FurnitureProvider>
+                  }
+                />
+              </Route>
             </Routes>
-          </AppProvider>
-        </SimpleBar>
-      </div>
+          </div>
+        </div>
+      </AppProvider>
     </>
   )
 }

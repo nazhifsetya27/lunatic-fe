@@ -10,7 +10,6 @@ import { useCookies } from 'react-cookie'
 import { debounce } from 'lodash'
 import { get } from './services/NetworkUtils'
 import { Access } from './services/Helper'
-import { myToaster } from './components/MyToaster'
 
 const AppService = {
   getSession: async () => await get('/v1/auth/session'),
@@ -22,7 +21,7 @@ function AppProvider({ children }) {
   const [slider, setSlider] = useState(false)
   const [user, setUser] = useState({})
   const [accesses, setAccesses] = useState([])
-  const [cookies] = useCookies(['tokenWarehouse'])
+  const [cookies] = useCookies(['token'])
   // console.log(accesses)
 
   // const getSession = useCallback(

@@ -1,8 +1,8 @@
 import React from 'react'
 import { toast } from 'react-toastify'
 import { CheckCircle, XClose, AlertCircle } from '@untitled-ui/icons-react'
-import MyButton from './MyButton'
-import MyIconDecorativeOutline from './MyIconDecorativeOutline'
+import MyButton from '../Button/MyButton'
+import MyIconDecorativeOutline from '../Decorative/MyIconDecorativeOutline'
 
 function Content({
   closeToast,

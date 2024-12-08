@@ -2,11 +2,16 @@ import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { LogOut04, Users01, ReceiptCheck, Bank } from '@untitled-ui/icons-react'
 import { useCookies } from 'react-cookie'
+import { AllApplication } from '@icon-park/react'
+import MyConfirmModal from '../Modal/MyConfirmModal'
+import MyTooltip from '../Tooltip/MyTooltip'
+import MyButton from '../Button/MyButton'
+import MyAvatar from '../Avatar/MyAvatar'
 
-import MyAvatar from './MyAvatar'
-import MyButton from './MyButton'
-import MyTooltip from './MyTooltip'
-import MyConfirmModal from './MyConfirmModal'
+// import MyAvatar from './MyAvatar'
+// import MyButton from './MyButton'
+// import MyTooltip from './MyTooltip'
+// import MyConfirmModal from './MyConfirmModal'
 
 function SideNavbar({ childs }) {
   const location = useLocation()
@@ -42,40 +47,24 @@ function SideNavbar({ childs }) {
             </div>
             {/* TOP */}
             <div className="flex h-full flex-1 flex-col">
-              <Link to="/reconcile">
+              <Link to="/asset">
                 <MyTooltip
                   placement="right"
                   target={
                     <div
                       className={`${
-                        location?.pathname.includes('/reconcile')
+                        location?.pathname.includes('/asset')
                           ? 'bg-gray-light/50 text-gray-light/700'
                           : 'text-gray-light/500'
                       } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
                     >
-                      <ReceiptCheck size={24} stroke="currentColor" />
+                      <AllApplication theme="outline" size="24" fill="#333" />
                     </div>
                   }
                 >
-                  <p className="text-xs-semibold text-white">Reconcile</p>
-                </MyTooltip>
-              </Link>
-              <Link to="customer-management/">
-                <MyTooltip
-                  placement="right"
-                  target={
-                    <div
-                      className={`${
-                        location?.pathname.includes('/customer-management')
-                          ? 'bg-gray-light/50 text-gray-light/700'
-                          : 'text-gray-light/500'
-                      } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
-                    >
-                      <Bank size={24} stroke="currentColor" />
-                    </div>
-                  }
-                >
-                  <p className="text-xs-semibold text-white">Customer hub</p>
+                  <p className="text-xs-semibold text-white">
+                    Asset management
+                  </p>
                 </MyTooltip>
               </Link>
               <Link to="/user">

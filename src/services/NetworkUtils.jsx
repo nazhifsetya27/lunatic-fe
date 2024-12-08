@@ -28,15 +28,15 @@ export const setCookie = (key, value, expiry) => {
 const deleteCookie = (key) => {
   document.cookie = `${key}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`
 }
-// deleteCookie('tokenWarehouse)
+// deleteCookie('token)
 const logout = () => {
-  setCookie('tokenWarehouse', null, '-1')
-  window.location.href = '/warehouse/login'
+  setCookie('token', null, '-1')
+  window.location.href = '/login'
 }
 
 const getHeader = (type) => {
   const timezone = moment.tz.guess()
-  let headers = { authorization: `Bearer ${getCookie('tokenWarehouse')}` }
+  let headers = { authorization: `Bearer ${getCookie('token')}` }
   switch (type) {
     case 'json': {
       headers = {
@@ -68,6 +68,7 @@ export const get = async (endpoint, params, type = 'json', timeout = 60000) => {
     const response = await instance.get(url, { headers, params, timeout })
     return response.data
   } catch (error) {
+    console.error(error)
     if (error.response?.status === 401) logout()
     throw (
       error.response?.data ?? { message: error.message ?? 'Something wrong' }
@@ -128,7 +129,7 @@ export const patch = async (
 
 export const remove = async (endpoint, data, timeout = 60000) => {
   try {
-    const headers = { authorization: `Bearer ${getCookie('tokenWarehouse')}` }
+    const headers = { authorization: `Bearer ${getCookie('token')}` }
     const url = `${baseURL}${endpoint}`
     const response = await instance.delete(url, { headers, timeout, data })
     return response.data
@@ -143,7 +144,7 @@ export const remove = async (endpoint, data, timeout = 60000) => {
 }
 
 export const download = (endpoint, params) => {
-  let url = `${baseURL}${endpoint}?token=${getCookie('tokenWarehouse')}`
+  let url = `${baseURL}${endpoint}?token=${getCookie('token')}`
   if (params) {
     const newParams = { ...params }
     delete newParams.filter

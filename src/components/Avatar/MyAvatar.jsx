@@ -13,7 +13,7 @@ function MyAvatar({
   useEffect(() => {
     if (photo && ref && !isPhotoError) {
       const url = typeof photo === 'string' ? photo : URL.createObjectURL(photo)
-      ref.current.src = url;
+      ref.current.src = url
     }
   }, [ref, photo, isPhotoError])
 
@@ -35,15 +35,16 @@ function MyAvatar({
             className="h-full w-full object-cover"
             src={photo}
             alt=""
-            onError={() => {
+            onError={({ currentTarget }) => {
+              // currentTarget.onerror = null;
               setIsPhotoError(true)
             }}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gray-light/100">
             <User01
-              // size={iconSize}
-              className={`size-${iconSize >= 96 ? '24' : '13'} text-gray-light/500`}
+              size={iconSize}
+              className="text-gray-light/500"
               stroke="currentColor"
             />
           </div>

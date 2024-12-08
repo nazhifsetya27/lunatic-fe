@@ -3,7 +3,7 @@
 /* eslint-disable radix */
 import $ from 'jquery'
 import moment from 'moment'
-import { myToaster } from '../components/MyToaster'
+import { myToaster } from '../components/Toaster/MyToaster'
 
 export const handleError =
   (func, control, config = {}) =>

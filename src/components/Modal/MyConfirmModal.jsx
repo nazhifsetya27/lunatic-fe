@@ -1,8 +1,8 @@
 import { Save01, XClose } from '@untitled-ui/icons-react'
 
-import MyBgPatternDecorativeCircle from './MyBgPatternDecorativeCircle'
-import MyButton from './MyButton'
 import MyModal from './MyModal'
+import MyButton from '../Button/MyButton'
+import MyBgPatternDecorativeCircle from '../Decorative/MyBgPatternDecorativeCircle'
 
 function MyConfirmModal({
   open,
