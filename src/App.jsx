@@ -2,14 +2,19 @@ import './App.css'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import SimpleBar from 'simplebar-react'
+import { useCookies } from 'react-cookie'
 import { AppProvider } from './AppContext'
 import Welcome from './pages/Welcome'
 import AssetManagement from './pages/asset-management'
 import Furniture from './pages/asset-management/furniture'
 import MyNavigation from './components/Navigation/MyNavigation'
 import { FurnitureProvider } from './pages/asset-management/furniture/context'
+import Login from './pages/Login'
+import { LoginProvider } from './pages/Login/context'
 
 function App() {
+  const [cookies, setCookie, removeCookie] = useCookies(['token'])
+
   return (
     <>
       <ToastContainer
@@ -24,27 +29,51 @@ function App() {
         pauseOnHover
         closeOnClick
       />
-      <AppProvider>
-        <div id="main-content" className="relative flex h-screen w-full">
-          <MyNavigation />
-          <div className="relative flex h-screen w-full flex-col">
-            <Routes>
-              <Route path="/" element={<Welcome />} />
-              <Route path="/asset" element={<AssetManagement />}>
-                <Route index element={<Navigate to="furniture" replace />} />
-                <Route
-                  path="furniture"
-                  element={
-                    <FurnitureProvider>
-                      <Furniture />
-                    </FurnitureProvider>
-                  }
-                />
-              </Route>
-            </Routes>
+      {cookies.token ? (
+        <AppProvider>
+          <div id="main-content" className="relative flex h-screen w-full">
+            <MyNavigation />
+            <div className="relative flex h-screen w-full flex-col">
+              <Routes>
+                <Route path="/login" element={<Navigate to="/" replace />} />
+                <Route path="/" element={<Welcome />} />
+                <Route path="/asset" element={<AssetManagement />}>
+                  <Route index element={<Navigate to="furniture" replace />} />
+                  <Route
+                    path="furniture"
+                    element={
+                      <FurnitureProvider>
+                        <Furniture />
+                      </FurnitureProvider>
+                    }
+                  />
+                </Route>
+              </Routes>
+            </div>
           </div>
-        </div>
-      </AppProvider>
+        </AppProvider>
+      ) : (
+        <Routes>
+          <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route
+            path="/login"
+            element={
+              <LoginProvider>
+                <Login />
+              </LoginProvider>
+            }
+          />
+
+          {/* <Route
+            path="/forget-password"
+            element={
+              <ForgetPasswordProvider>
+                <ForgetPassword />
+              </ForgetPasswordProvider>
+            }
+          /> */}
+        </Routes>
+      )}
     </>
   )
 }

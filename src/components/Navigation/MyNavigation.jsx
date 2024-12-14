@@ -24,9 +24,7 @@ function SideNavbar({ childs }) {
     localStorage.removeItem('user_id')
     localStorage.removeItem('email_forget_password')
     localStorage.removeItem('countdown_to_new_otp')
-    removeCookie('tokenInvoice', {
-      path: '/',
-    })
+    removeCookie('token')
   }
 
   return (
