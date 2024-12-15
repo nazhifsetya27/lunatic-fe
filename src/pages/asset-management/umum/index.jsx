@@ -10,8 +10,20 @@
 // } from '@untitled-ui/icons-react'
 import { useNavigate } from 'react-router-dom'
 import { debounce } from 'lodash'
+import moment from 'moment'
+// import {
+//   MyArchiveButton,
+//   MyButton,
+//   MyChip,
+//   MyColumn,
+//   MyDataTable,
+//   MyFilterModal,
+//   MyModalSlider,
+//   MyTextField,
+//   MyTooltip,
+// } from '@interstellar-component'
 import { Box, Divider, Stack } from '@mui/material'
-import { Download, Plus, Refresh, Search, Upload } from '@icon-park/react'
+import { Download, Plus, Search, Upload } from '@icon-park/react'
 import { LinkExternal02 } from '@untitled-ui/icons-react'
 import MyChip from '../../../components/Chip/MyChip'
 import MyButton from '../../../components/Button/MyButton'
@@ -20,30 +32,20 @@ import MyDataTable from '../../../components/Table/MyDataTable'
 import MyColumn from '../../../components/Table/MyColumn'
 
 // import FormSlider from './Sliders/FormSlider'
-import { useFurniture } from './context'
-import MyModalSlider from '../../../components/ModalSlider/MyModalSlider'
-import DetailSlider from './Sliders/DetailSlider'
-import FormSlider from './Sliders/FormSlider'
-import MyArchiveButton from '../../../components/Button/MyArchiveButton'
+import { useElektronik } from './context'
 // import DetailSlider from './Sliders/DetailSlider'
 // import ImportSlider from './Sliders/ImportSlider'
 // import { useApp } from '../../../AppContext'
 
-function Furniture() {
+function Umum() {
   const nav = useNavigate()
 
-  const {
-    handleCurrentSlider,
-    currentSlider,
-    params,
-    setParams,
-    furnitures,
-    restoreFurniture,
-  } = useFurniture()
+  const { handleCurrentSlider, params, setParams, umums, setTerminals } =
+    useElektronik()
 
   return (
     <>
-      <MyModalSlider
+      {/* <MyModalSlider
         open={currentSlider?.current === 'form-slider'}
         element={<FormSlider />}
         onClose={() => handleCurrentSlider(null)}
@@ -53,7 +55,7 @@ function Furniture() {
         element={<DetailSlider />}
         onClose={() => handleCurrentSlider(null)}
       />
-      {/* <MyModalSlider
+      <MyModalSlider
         open={currentSlider?.current === 'import-slider'}
         element={<ImportSlider />}
         onClose={() => handleCurrentSlider(null)}
@@ -64,10 +66,11 @@ function Furniture() {
           <Stack className="flex-1 gap-1">
             <Stack direction="row" className="items-center gap-2">
               <Box className="text-lg-semibold text-gray-light/900">
-                Furniture management
+                Umum management
               </Box>
               <MyChip
-                label={`${furnitures.meta?.total ?? '-'} item`}
+                // label={`${terminals.meta?.total ?? '-'} item`}
+                label="0 item"
                 rounded="full"
                 color="modern"
                 variant="outlined"
@@ -105,12 +108,12 @@ function Furniture() {
               <span className="text-sm-semibold">Import</span>
             </MyButton>
             <MyButton
-              onClick={() =>
-                handleCurrentSlider({
-                  status: true,
-                  current: 'form-slider',
-                })
-              }
+              // onClick={() =>
+              //   handleCurrentSlider({
+              //     status: true,
+              //     current: 'form-slider',
+              //   })
+              // }
               color="primary"
               variant="filled"
               size="md"
@@ -124,12 +127,13 @@ function Furniture() {
         <Divider className="border-gray-light/200" />
 
         <Stack direction="row" className="items-center justify-start gap-3 p-4">
-          <MyArchiveButton
+          {/* <MyArchiveButton
+            isUnavailable
             value={params}
             onChange={(e) => {
               setParams((value) => ({ ...value, archive: e, page: 1 }))
             }}
-          />
+          /> */}
           <Stack
             direction="row"
             className="flex-1 items-center justify-end gap-3"
@@ -185,23 +189,23 @@ function Furniture() {
         <div>
           <MyDataTable
             paginator
-            values={furnitures}
+            values={umums}
             selectionMode="multiple"
             // onDeleteAll={bulkDeleteTerminal}
             // onSelectionChange={(value) => setTerminals(value)}
-            onClick={(value) => {
-              if (params.archive)
-                handleCurrentSlider(
-                  { status: true, current: 'form-slider' },
-                  value.id
-                )
-            }}
+            // onClick={(value) => {
+            //   if (params.archive)
+            //     handleCurrentSlider(
+            //       { status: true, current: 'form-slider' },
+            //       value.id
+            //     )
+            // }}
             // onChangePagination={(page) => {
             //   setParams((value) => ({ ...value, page }))
             // }}
           >
             <MyColumn
-              header="Nama"
+              header="Name"
               // hideCheckBoxHeader
               // isArchived={params.archive}
               body={({ name }) => (
@@ -220,25 +224,25 @@ function Furniture() {
                 </Box>
               )}
             />
-            {/* <MyColumn
+            <MyColumn
               header="Quantity"
               body={({ quantity }) => (
                 <Box className="text-sm-regular text-gray-light/600">
                   {quantity ?? '-'}
                 </Box>
               )}
-            /> */}
-            <MyColumn
+            />
+            {/* <MyColumn
               alignment="right"
               body={(value) =>
                 params.archive !== 1 ? (
                   <MyButton
-                    onClick={() => {
-                      handleCurrentSlider(
-                        { status: true, current: 'detail-slider' },
-                        value?.id
-                      )
-                    }}
+                    // onClick={() => {
+                    //   handleCurrentSlider(
+                    //     { status: true, current: 'detail-slider' },
+                    //     value?.id
+                    //   )
+                    // }}
                     size="md"
                     variant="text"
                   >
@@ -251,19 +255,19 @@ function Furniture() {
                   <MyButton
                     onClick={(e) => {
                       e.stopPropagation()
-                      restoreFurniture(value?.id)
+                      restoreTerminal(value?.id)
                     }}
                     size="md"
                     variant="text"
                   >
-                    <Refresh
+                    <RefreshCcw01
                       className="size-5 text-gray-light/600"
                       stroke="currentColor"
                     />
                   </MyButton>
                 )
               }
-            />
+            /> */}
           </MyDataTable>
         </div>
       </Stack>
@@ -271,4 +275,4 @@ function Furniture() {
   )
 }
 
-export default Furniture
+export default Umum

@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import MyAutocomplete from "./MyAutocomplete";
-import { debounce } from "lodash";
+import { useEffect, useState } from 'react'
+import { debounce } from 'lodash'
+import MyAutocomplete from './MyAutocomplete'
 
-const MyAsyncDropDown = ({
+function MyAsyncDropdown({
   options = [],
   value,
-  inputType = "text",
+  inputType = 'text',
   name,
   control,
   error,
@@ -35,7 +35,7 @@ const MyAsyncDropDown = ({
   onInputKeyUp,
   getOnRender = true,
   trigger,
-}) => {
+}) {
   const props = {
     options,
     value,
@@ -65,20 +65,20 @@ const MyAsyncDropDown = ({
     onInputFocus,
     asyncFunction,
     onInputKeyUp,
-  };
-  if (!props.asyncFunction) throw "asyncFunction is required";
-  const [option, setOption] = useState({ loading: true, data: [] });
-  const [params, setParams] = useState({ search: "" });
-  const [mount, setMount] = useState(false);
+  }
+  if (!props.asyncFunction) throw 'asyncFunction is required'
+  const [option, setOption] = useState({ loading: true, data: [] })
+  const [params, setParams] = useState({ search: '' })
+  const [mount, setMount] = useState(false)
 
   useEffect(() => {
-    setOption({ loading: true, data: [] });
-    if (getOnRender || mount) asyncFunction(params)?.then(setOption);
-  }, [params]);
+    setOption({ loading: true, data: [] })
+    if (getOnRender || mount) asyncFunction(params)?.then(setOption)
+  }, [params])
 
   useEffect(() => {
-    setMount(true);
-  }, []);
+    setMount(true)
+  }, [])
 
   return (
     <MyAutocomplete
@@ -87,18 +87,18 @@ const MyAsyncDropDown = ({
       loading={option?.loading}
       options={option?.data}
       onChange={(e, value) => {
-        onChange && onChange(e, value);
-        setParams({ search: "", ...extraData });
-        if (trigger && name) trigger(name);
+        onChange && onChange(e, value)
+        setParams({ search: '', ...extraData })
+        if (trigger && name) trigger(name)
       }}
       //   onChange={onChange.then(setParams({ search: "", ...extraData }))}
-      onInputFocus={(e) => setParams({ search: "", ...extraData })}
+      onInputFocus={(e) => setParams({ search: '', ...extraData })}
       onInputChange={debounce(
         (e) => setParams({ search: e.target.value, ...extraData }),
         500
       )}
     />
-  );
-};
+  )
+}
 
-export default MyAsyncDropDown;
+export default MyAsyncDropdown

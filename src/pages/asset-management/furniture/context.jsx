@@ -30,9 +30,9 @@ function FurnitureProvider({ children }) {
     setSlider(currentSlider.status)
   }, [currentSlider, setSlider])
 
-  const handleCurrentSlider = useCallback((slider, id) => {
+  const handleCurrentSlider = useCallback((slider, id, data) => {
     if (slider && slider.current)
-      setCurrentSlider({ status: true, current: slider.current, id })
+      setCurrentSlider({ status: true, current: slider.current, id, data })
     else {
       setCurrentSlider((value) => ({ ...value, current: null }))
       setTimeout(() => {
@@ -67,49 +67,49 @@ function FurnitureProvider({ children }) {
     [params]
   )
 
-  //   const showFurniture = useCallback(
-  //     (id) =>
-  //       Service.showFurniture(id)
-  //         .then((res) => res.data)
-  //         .catch(myToaster),
-  //     []
-  //   )
+  const showFurniture = useCallback(
+    (id) =>
+      Service.showFurniture(id)
+        .then((res) => res.data)
+        .catch(myToaster),
+    []
+  )
 
-  //   const getFurnitureDetail = useCallback(
-  //     (id) =>
-  //       Service.getFurnitureDetail(id)
-  //         .then((res) => res)
-  //         .catch(myToaster),
-  //     []
-  //   )
+  const getFurnitureDetail = useCallback(
+    (id) =>
+      Service.getFurnitureDetail(id)
+        .then((res) => res)
+        .catch(myToaster),
+    []
+  )
 
-  //   const createFurniture = useCallback(
-  //     (body) =>
-  //       Service.createFurniture(body)
-  //         .then(myToaster)
-  //         .then(() => handleCurrentSlider({ status: false, current: null }))
-  //         .then(getFurnitures),
-  //     [getFurnitures, handleCurrentSlider]
-  //   )
+  const createFurniture = useCallback(
+    (body) =>
+      Service.createFurniture(body)
+        .then(myToaster)
+        .then(() => handleCurrentSlider({ status: false, current: null }))
+        .then(getFurnitures),
+    [getFurnitures, handleCurrentSlider]
+  )
 
-  //   const updateSimcard = useCallback(
-  //     (body) =>
-  //       Service.updateFurniture(currentSlider?.id, body)
-  //         .then(myToaster)
-  //         .then(() => handleCurrentSlider({ status: false, current: null }))
-  //         .then(getFurnitures),
-  //     [currentSlider, getFurnitures, handleCurrentSlider]
-  //   )
+  const updateFurniture = useCallback(
+    (body) =>
+      Service.updateFurniture(currentSlider?.id, body)
+        .then(myToaster)
+        .then(() => handleCurrentSlider({ status: false, current: null }))
+        .then(getFurnitures),
+    [currentSlider, getFurnitures, handleCurrentSlider]
+  )
 
-  //   const restoreFurniture = useCallback(
-  //     (id) =>
-  //       Service.restoreFurniture(id)
-  //         .then(myToaster)
-  //         .then(() => handleCurrentSlider({ status: false, current: null }))
-  //         .then(getFurnitures)
-  //         .catch(myToaster),
-  //     [getFurnitures, handleCurrentSlider]
-  //   )
+  const restoreFurniture = useCallback(
+    (id) =>
+      Service.restoreFurniture(id)
+        .then(myToaster)
+        .then(() => handleCurrentSlider({ status: false, current: null }))
+        .then(getFurnitures)
+        .catch(myToaster),
+    [getFurnitures, handleCurrentSlider]
+  )
 
   //   const bulkDeleteFurniture = useCallback(
   //     (data) =>
@@ -120,19 +120,19 @@ function FurnitureProvider({ children }) {
   //     [getFurnitures]
   //   )
 
-  //   const deleteFurniture = useCallback(
-  //     (id) => {
-  //       if (window.confirm('Anda yakin ingin menghapus data ini?')) {
-  //         return Service.deleteFurniture(id)
-  //           .then(myToaster)
-  //           .then(() => handleCurrentSlider({ status: false, current: null }))
-  //           .then(getFurnitures)
-  //           .catch(myToaster)
-  //       }
-  //       return Promise.resolve()
-  //     },
-  //     [getFurnitures, handleCurrentSlider]
-  //   )
+  const deleteFurniture = useCallback(
+    (id) => {
+      if (window.confirm('Anda yakin ingin menghapus data ini?')) {
+        return Service.deleteFurniture(id)
+          .then(myToaster)
+          .then(() => handleCurrentSlider({ status: false, current: null }))
+          .then(getFurnitures)
+          .catch(myToaster)
+      }
+      return Promise.resolve()
+    },
+    [getFurnitures, handleCurrentSlider]
+  )
 
   //   const importFurniture = useCallback((values, config) => {
   //     const formData = new FormData()
@@ -167,16 +167,12 @@ function FurnitureProvider({ children }) {
       searchFurnitureType,
       searchRack,
       getFurnitures,
-      //   showFurniture,
-      //   getFurnitureDetail,
-      //   createFurniture,
-      //   updateSimcard,
-      //   deleteFurniture,
-      //   restoreFurniture,
-      //   bulkDeleteFurniture,
-      //   importFurniture,
-      //   downloadTemplateImport,
-      //   downloadExport,
+      getFurnitureDetail,
+      showFurniture,
+      createFurniture,
+      updateFurniture,
+      deleteFurniture,
+      restoreFurniture,
     }),
     [
       params,
@@ -187,16 +183,12 @@ function FurnitureProvider({ children }) {
       searchRack,
       searchFurnitureType,
       furnitures,
-      //   bulkDeleteFurniture,
-      //   createFurniture,
-      //   deleteFurniture,
-      //   downloadExport,
-      //   downloadTemplateImport,
-      //   getFurnitureDetail,
-      //   importFurniture,
-      //   restoreFurniture,
-      //   showFurniture,
-      //   updateSimcard,
+      getFurnitureDetail,
+      showFurniture,
+      createFurniture,
+      updateFurniture,
+      deleteFurniture,
+      restoreFurniture,
     ]
   )
 

@@ -10,6 +10,18 @@
 // } from '@untitled-ui/icons-react'
 import { useNavigate } from 'react-router-dom'
 import { debounce } from 'lodash'
+import moment from 'moment'
+// import {
+//   MyArchiveButton,
+//   MyButton,
+//   MyChip,
+//   MyColumn,
+//   MyDataTable,
+//   MyFilterModal,
+//   MyModalSlider,
+//   MyTextField,
+//   MyTooltip,
+// } from '@interstellar-component'
 import { Box, Divider, Stack } from '@mui/material'
 import { Download, Plus, Refresh, Search, Upload } from '@icon-park/react'
 import { LinkExternal02 } from '@untitled-ui/icons-react'
@@ -20,34 +32,33 @@ import MyDataTable from '../../../components/Table/MyDataTable'
 import MyColumn from '../../../components/Table/MyColumn'
 
 // import FormSlider from './Sliders/FormSlider'
-import { useFurniture } from './context'
+import { useElektronik } from './context'
+import MyArchiveButton from '../../../components/Button/MyArchiveButton'
 import MyModalSlider from '../../../components/ModalSlider/MyModalSlider'
 import DetailSlider from './Sliders/DetailSlider'
-import FormSlider from './Sliders/FormSlider'
-import MyArchiveButton from '../../../components/Button/MyArchiveButton'
 // import DetailSlider from './Sliders/DetailSlider'
 // import ImportSlider from './Sliders/ImportSlider'
 // import { useApp } from '../../../AppContext'
 
-function Furniture() {
+function Elektronik() {
   const nav = useNavigate()
 
   const {
     handleCurrentSlider,
-    currentSlider,
     params,
     setParams,
-    furnitures,
-    restoreFurniture,
-  } = useFurniture()
+    elektronics,
+    restoreElektronik,
+    currentSlider,
+  } = useElektronik()
 
   return (
     <>
-      <MyModalSlider
+      {/* <MyModalSlider
         open={currentSlider?.current === 'form-slider'}
         element={<FormSlider />}
         onClose={() => handleCurrentSlider(null)}
-      />
+      /> */}
       <MyModalSlider
         open={currentSlider?.current === 'detail-slider'}
         element={<DetailSlider />}
@@ -64,10 +75,11 @@ function Furniture() {
           <Stack className="flex-1 gap-1">
             <Stack direction="row" className="items-center gap-2">
               <Box className="text-lg-semibold text-gray-light/900">
-                Furniture management
+                Elektronik management
               </Box>
               <MyChip
-                label={`${furnitures.meta?.total ?? '-'} item`}
+                // label={`${terminals.meta?.total ?? '-'} item`}
+                label="0 item"
                 rounded="full"
                 color="modern"
                 variant="outlined"
@@ -105,12 +117,12 @@ function Furniture() {
               <span className="text-sm-semibold">Import</span>
             </MyButton>
             <MyButton
-              onClick={() =>
-                handleCurrentSlider({
-                  status: true,
-                  current: 'form-slider',
-                })
-              }
+              // onClick={() =>
+              //   handleCurrentSlider({
+              //     status: true,
+              //     current: 'form-slider',
+              //   })
+              // }
               color="primary"
               variant="filled"
               size="md"
@@ -185,23 +197,23 @@ function Furniture() {
         <div>
           <MyDataTable
             paginator
-            values={furnitures}
+            values={elektronics}
             selectionMode="multiple"
             // onDeleteAll={bulkDeleteTerminal}
             // onSelectionChange={(value) => setTerminals(value)}
-            onClick={(value) => {
-              if (params.archive)
-                handleCurrentSlider(
-                  { status: true, current: 'form-slider' },
-                  value.id
-                )
-            }}
+            // onClick={(value) => {
+            //   if (params.archive)
+            //     handleCurrentSlider(
+            //       { status: true, current: 'form-slider' },
+            //       value.id
+            //     )
+            // }}
             // onChangePagination={(page) => {
             //   setParams((value) => ({ ...value, page }))
             // }}
           >
             <MyColumn
-              header="Nama"
+              header="Name"
               // hideCheckBoxHeader
               // isArchived={params.archive}
               body={({ name }) => (
@@ -251,7 +263,7 @@ function Furniture() {
                   <MyButton
                     onClick={(e) => {
                       e.stopPropagation()
-                      restoreFurniture(value?.id)
+                      restoreElektronik(value?.id)
                     }}
                     size="md"
                     variant="text"
@@ -271,4 +283,4 @@ function Furniture() {
   )
 }
 
-export default Furniture
+export default Elektronik
