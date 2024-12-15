@@ -11,6 +11,10 @@ import MyNavigation from './components/Navigation/MyNavigation'
 import { FurnitureProvider } from './pages/asset-management/furniture/context'
 import Login from './pages/Login'
 import { LoginProvider } from './pages/Login/context'
+import Elektronik from './pages/asset-management/elektronik'
+import { ElektronikProvider } from './pages/asset-management/elektronik/context'
+import Umum from './pages/asset-management/umum'
+import { UmumProvider } from './pages/asset-management/umum/context'
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
@@ -45,6 +49,22 @@ function App() {
                       <FurnitureProvider>
                         <Furniture />
                       </FurnitureProvider>
+                    }
+                  />
+                  <Route
+                    path="elektronik"
+                    element={
+                      <ElektronikProvider>
+                        <Elektronik />
+                      </ElektronikProvider>
+                    }
+                  />
+                  <Route
+                    path="umum"
+                    element={
+                      <UmumProvider>
+                        <Umum />
+                      </UmumProvider>
                     }
                   />
                 </Route>

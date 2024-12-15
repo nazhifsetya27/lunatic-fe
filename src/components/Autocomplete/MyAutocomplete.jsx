@@ -2,12 +2,11 @@ import React, { useState, useRef, useEffect } from 'react'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
 import { InputAdornment, Paper } from '@mui/material'
-import { Check, XClose } from '@untitled-ui/icons-react'
-import { ChevronDown, ChevronUp } from '@untitled-ui/icons-react'
+import { Check, XClose, ChevronDown, ChevronUp } from '@untitled-ui/icons-react'
 import SimpleBar from 'simplebar-react'
 import MyChip from '../Chip/MyChip'
 
-const MyAutocomplete = ({
+function MyAutocomplete({
   options = [],
   value,
   inputType = 'text',
@@ -39,7 +38,7 @@ const MyAutocomplete = ({
   freeSolo = false,
   loading = false,
   trigger,
-}) => {
+}) {
   const styleTextField = {
     '& .MuiInputBase-root::-webkit-scrollbar': {
       display: 'none',
@@ -146,17 +145,9 @@ const MyAutocomplete = ({
     }
   }, [value])
 
-  const ListboxSimpleBar = React.forwardRef(
-    function ListboxSimpleBar(props, ref) {
-      return (
-        <SimpleBar
-          {...props}
-          role="listbox"
-          scrollableNodeProps={{ ref: ref }}
-        />
-      )
-    }
-  )
+  const ListboxSimpleBar = React.forwardRef((props, ref) => (
+    <SimpleBar {...props} role="listbox" scrollableNodeProps={{ ref }} />
+  ))
   const isError = error ? Boolean(error) : false
 
   const handleClearValue = (e) => {
@@ -172,344 +163,326 @@ const MyAutocomplete = ({
   }
 
   return (
-    <>
-      <div
-        id={
-          name
-            ? `input-${name.replace(/\./gi, '-').replace(/[\[\]]/g, '')}`
-            : null
+    <div
+      id={
+        name
+          ? `input-${name.replace(/\./gi, '-').replace(/[\[\]]/g, '')}`
+          : null
+      }
+    >
+      <Autocomplete
+        inputValue={inputValue}
+        loading={loading}
+        open={disabled ? false : isOpen}
+        freeSolo={freeSolo}
+        popupIcon={<></>}
+        multiple={multiple}
+        options={options ?? []}
+        value={multiple ? (value ?? []) : (value ?? null)}
+        disabled={Boolean(disabled)}
+        fullWidth
+        onOpen={(e) => setIsOpen(true)}
+        onClose={(e) => setIsOpen(false)}
+        ListboxComponent={ListboxSimpleBar}
+        onChange={(e, value, state) => {
+          if (multiple) {
+            setInputValue('')
+          } else if (value) {
+            if (getOptionLabel) {
+              setInputValue(getOptionLabel(value))
+            } else {
+              setInputValue(value.label ?? '')
+            }
+          }
+
+          if (multiple && isTypingValue) {
+            const tempValue = value.map((e) => {
+              if (typeof e === 'string') {
+                return { label: e.trim() }
+              }
+              return e
+            })
+
+            const uniqueData = tempValue.filter((obj, index, self) => {
+              if (
+                obj.label &&
+                index === self.findIndex((o) => o.label === obj.label)
+              ) {
+                return true
+              }
+              return false
+            })
+
+            onChange && onChange(e, uniqueData)
+          } else {
+            onChange && onChange(e, value)
+          }
+        }}
+        disableClearable={!!multiple}
+        ListboxProps={{ style: { maxHeight: 320 } }}
+        PaperComponent={(props) => <Paper {...props} sx={stylePapper} />}
+        isOptionEqualToValue={(option, value) =>
+          isOptionEqualToValue
+            ? isOptionEqualToValue(option, value)
+            : option.label === value.label
         }
-      >
-        <Autocomplete
-          inputValue={inputValue}
-          loading={loading}
-          open={disabled ? false : isOpen}
-          freeSolo={freeSolo}
-          popupIcon={<></>}
-          multiple={multiple}
-          options={options ?? []}
-          value={multiple ? (value ?? []) : (value ?? null)}
-          disabled={Boolean(disabled)}
-          fullWidth={true}
-          onOpen={(e) => setIsOpen(true)}
-          onClose={(e) => setIsOpen(false)}
-          ListboxComponent={ListboxSimpleBar}
-          onChange={(e, value, state) => {
+        getOptionLabel={(option) =>
+          getOptionLabel ? getOptionLabel(option) : option.label
+        }
+        renderOption={(props, option, ownerState) => {
+          let selected = false
+          if (value) {
             if (multiple) {
-              setInputValue('')
+              selected = value.some((e) =>
+                isOptionEqualToValue
+                  ? isOptionEqualToValue(option, e)
+                  : option?.value === e?.value || option?.id === e?.id
+              )
             } else {
-              if (value) {
-                if (getOptionLabel) {
-                  setInputValue(getOptionLabel(value))
-                } else {
-                  setInputValue(value.label ?? '')
-                }
-              }
+              selected = isOptionEqualToValue
+                ? isOptionEqualToValue(option, value)
+                : option?.value === value?.value || option?.id === value?.id
             }
-
-            if (multiple && isTypingValue) {
-              let tempValue = value.map((e) => {
-                if (typeof e === 'string') {
-                  return { label: e.trim() }
-                } else {
-                  return e
-                }
-              })
-
-              const uniqueData = tempValue.filter((obj, index, self) => {
-                if (
-                  obj.label &&
-                  index === self.findIndex((o) => o.label === obj.label)
-                ) {
-                  return true
-                } else {
-                  return false
-                }
-              })
-
-              onChange && onChange(e, uniqueData)
-            } else {
-              onChange && onChange(e, value)
-            }
-          }}
-          disableClearable={multiple ? true : false}
-          ListboxProps={{ style: { maxHeight: 320 } }}
-          PaperComponent={(props) => <Paper {...props} sx={stylePapper} />}
-          isOptionEqualToValue={(option, value) =>
-            isOptionEqualToValue
-              ? isOptionEqualToValue(option, value)
-              : option.label === value.label
           }
-          getOptionLabel={(option) =>
-            getOptionLabel ? getOptionLabel(option) : option.label
-          }
-          renderOption={(props, option, ownerState) => {
-            var selected = false
-            if (value) {
-              if (multiple) {
-                selected = value.some((e) =>
-                  isOptionEqualToValue
-                    ? isOptionEqualToValue(option, e)
-                    : option?.value === e?.value || option?.id === e?.id
-                )
-              } else {
-                selected = isOptionEqualToValue
-                  ? isOptionEqualToValue(option, value)
-                  : option?.value === value?.value || option?.id === value?.id
-              }
-            }
+
+          return (
+            <div
+              {...props}
+              key={props['data-option-index']}
+              className={`${
+                selected ? 'bg-gray-light/50' : ''
+              } py w-full cursor-pointer px-1.5 hover:bg-gray-light/50`}
+            >
+              <div className="flex w-full items-center gap-x-2 py-2.5 pl-2 pr-2.5">
+                <div className="flex-1 overflow-hidden">
+                  {renderOption ? (
+                    renderOption(option, {
+                      isOption: true,
+                      isOptionValue: false,
+                    })
+                  ) : (
+                    <p className="text-md-regular whitespace-nowrap px-1 text-gray-light/900">
+                      {getOptionLabel
+                        ? (getOptionLabel(option) ?? '')
+                        : option?.label}
+                    </p>
+                  )}
+                </div>
+                {value && (
+                  <span className="h-5 min-h-[20px] w-5 min-w-[20px] text-brand/600">
+                    {selected && <Check size={20} stroke="currentColor" />}
+                  </span>
+                )}
+              </div>
+            </div>
+          )
+        }}
+        renderTags={(options, getTagProps, ownerState) =>
+          options.map((option, index) => {
+            const { onDelete } = getTagProps({ index })
 
             return (
               <div
-                {...props}
-                key={props['data-option-index']}
-                className={`${
-                  selected ? 'bg-gray-light/50' : ''
-                } py w-full cursor-pointer px-1.5 hover:bg-gray-light/50`}
+                key={index}
+                onClick={() => onClick && onClick(option.label)}
+                className="h-max w-max"
               >
-                <div className="flex w-full items-center gap-x-2 py-2.5 pl-2 pr-2.5">
-                  <div className="flex-1 overflow-hidden">
-                    {renderOption ? (
-                      renderOption(option, {
-                        isOption: true,
-                        isOptionValue: false,
-                      })
-                    ) : (
-                      <p className="text-md-regular whitespace-nowrap px-1 text-gray-light/900">
-                        {getOptionLabel
-                          ? (getOptionLabel(option) ?? '')
-                          : option?.label}
-                      </p>
-                    )}
-                  </div>
-                  {value && (
-                    <span className="h-5 min-h-[20px] w-5 min-w-[20px] text-brand/600">
-                      {selected && <Check size={20} stroke={'currentColor'} />}
-                    </span>
-                  )}
-                </div>
+                {renderTag ? (
+                  renderTag(option, index, onDelete)
+                ) : (
+                  <MyChip
+                    label={
+                      getOptionLabel
+                        ? (getOptionLabel(option) ?? '')
+                        : option.label
+                    }
+                    rounded="md"
+                    color="modern"
+                    variant="outlined"
+                    size="md"
+                    endAdornment={
+                      removeable && (
+                        <button
+                          disabled={disabled}
+                          type="button"
+                          onClick={onDelete}
+                        >
+                          <XClose
+                            className="text-gray-light/400"
+                            size={14}
+                            strokeWidth={3}
+                            stroke="currentColor"
+                          />
+                        </button>
+                      )
+                    }
+                  />
+                )}
               </div>
             )
-          }}
-          renderTags={(options, getTagProps, ownerState) => {
-            return options.map((option, index) => {
-              var { onDelete } = getTagProps({ index })
+          })
+        }
+        filterOptions={(options, state) => {
+          function sortOptions(options, value, isOptionEqualToValue) {
+            if (multiple) {
+              const selectedOptions = []
+              const unSelectedOptions = []
 
-              return (
-                <div
-                  key={index}
-                  onClick={() => onClick && onClick(option.label)}
-                  className="h-max w-max"
-                >
-                  {renderTag ? (
-                    renderTag(option, index, onDelete)
-                  ) : (
-                    <MyChip
-                      label={
-                        getOptionLabel
-                          ? (getOptionLabel(option) ?? '')
-                          : option.label
-                      }
-                      rounded={'md'}
-                      color={'modern'}
-                      variant={'outlined'}
-                      size={'md'}
-                      endAdornment={
-                        removeable && (
-                          <button
-                            disabled={disabled}
-                            type="button"
-                            onClick={onDelete}
-                          >
-                            <XClose
-                              className={'text-gray-light/400'}
-                              size={14}
-                              strokeWidth={3}
-                              stroke={'currentColor'}
-                            />
-                          </button>
-                        )
-                      }
-                    />
-                  )}
-                </div>
-              )
-            })
-          }}
-          filterOptions={(options, state) => {
-            function sortOptions(options, value, isOptionEqualToValue) {
-              if (multiple) {
-                let selectedOptions = []
-                let unSelectedOptions = []
+              for (let i = 0; i < options.length; i++) {
+                const selected = value.some((e) =>
+                  isOptionEqualToValue
+                    ? isOptionEqualToValue(options[i], e)
+                    : options[i]?.value === e?.value || options[i]?.id === e?.id
+                )
 
-                for (let i = 0; i < options.length; i++) {
-                  let selected = value.some((e) =>
-                    isOptionEqualToValue
-                      ? isOptionEqualToValue(options[i], e)
-                      : options[i]?.value === e?.value ||
-                        options[i]?.id === e?.id
-                  )
-
-                  if (selected) {
-                    selectedOptions.push(options[i])
-                  } else {
-                    unSelectedOptions.push(options[i])
-                  }
+                if (selected) {
+                  selectedOptions.push(options[i])
+                } else {
+                  unSelectedOptions.push(options[i])
                 }
+              }
 
-                return [...selectedOptions, ...unSelectedOptions]
+              return [...selectedOptions, ...unSelectedOptions]
+            }
+            const selectedOptions = []
+            const unSelectedOptions = []
+
+            for (let i = 0; i < options.length; i++) {
+              const selected = isOptionEqualToValue
+                ? isOptionEqualToValue(options[i], value)
+                : options[i]?.value === value?.value ||
+                  options[i]?.id === value?.id
+
+              if (selected) {
+                selectedOptions.push(options[i])
               } else {
-                let selectedOptions = []
-                let unSelectedOptions = []
-
-                for (let i = 0; i < options.length; i++) {
-                  let selected = isOptionEqualToValue
-                    ? isOptionEqualToValue(options[i], value)
-                    : options[i]?.value === value?.value ||
-                      options[i]?.id === value?.id
-
-                  if (selected) {
-                    selectedOptions.push(options[i])
-                  } else {
-                    unSelectedOptions.push(options[i])
-                  }
-                }
-
-                return [...selectedOptions, ...unSelectedOptions]
+                unSelectedOptions.push(options[i])
               }
             }
 
-            if (value) {
-              return sortOptions(options, value, isOptionEqualToValue) ?? []
-            } else {
-              return options ?? []
-            }
-          }}
-          renderInput={(params) => {
-            const { InputProps } = params
-            return (
-              <TextField
-                {...params}
-                control={control}
-                inputRef={textFieldRef}
-                type={inputType}
-                error={isError}
-                disabled={disabled}
-                placeholder={
-                  (
-                    multiple
-                      ? Boolean(value) && Boolean(value.length !== 0)
-                      : Boolean(value)
-                  )
-                    ? ''
-                    : placeholder
-                }
-                helperText={isError ? error : ''}
-                onChange={(e) => {
-                  setInputValue(e.target.value)
-                  onInputChange && onInputChange(e)
-                }}
-                onKeyUp={onInputKeyUp}
-                onFocus={(e) => {
-                  setInputValue('')
-                  onInputFocus && onInputFocus(e)
-                }}
-                onBlur={(e) => {
-                  setIsOpen(false)
-                }}
-                InputProps={{
-                  ...InputProps,
-                  startAdornment: multiple ? (
-                    InputProps.startAdornment
-                  ) : !isOpen ? (
-                    value ? (
-                      <div
-                        className="flex-1 overflow-hidden px-1"
-                        onClick={(e) => !disabled && setIsOpen(true)}
-                      >
-                        {renderOption ? (
-                          renderOption(value, {
-                            isOption: false,
-                            isOptionValue: true,
-                          })
-                        ) : (
-                          <p className="text-md-regular text-gray-light/900">
-                            {getOptionLabel
-                              ? getOptionLabel(value)
-                              : value.label}
-                          </p>
-                        )}
-                      </div>
-                    ) : (
-                      <div
-                        className="flex-1 overflow-hidden px-1"
-                        onClick={(e) => !disabled && setIsOpen(true)}
-                      >
-                        <p className="text-md-regular text-gray-light/500">
-                          {placeholder}
+            return [...selectedOptions, ...unSelectedOptions]
+          }
+
+          if (value) {
+            return sortOptions(options, value, isOptionEqualToValue) ?? []
+          }
+          return options ?? []
+        }}
+        renderInput={(params) => {
+          const { InputProps } = params
+          return (
+            <TextField
+              {...params}
+              control={control}
+              inputRef={textFieldRef}
+              type={inputType}
+              error={isError}
+              disabled={disabled}
+              placeholder={
+                (
+                  multiple
+                    ? Boolean(value) && Boolean(value.length !== 0)
+                    : Boolean(value)
+                )
+                  ? ''
+                  : placeholder
+              }
+              helperText={isError ? error : ''}
+              onChange={(e) => {
+                setInputValue(e.target.value)
+                onInputChange && onInputChange(e)
+              }}
+              onKeyUp={onInputKeyUp}
+              onFocus={(e) => {
+                setInputValue('')
+                onInputFocus && onInputFocus(e)
+              }}
+              onBlur={(e) => {
+                setIsOpen(false)
+              }}
+              InputProps={{
+                ...InputProps,
+                startAdornment: multiple ? (
+                  InputProps.startAdornment
+                ) : !isOpen ? (
+                  value ? (
+                    <div
+                      className="flex-1 overflow-hidden px-1"
+                      onClick={(e) => !disabled && setIsOpen(true)}
+                    >
+                      {renderOption ? (
+                        renderOption(value, {
+                          isOption: false,
+                          isOptionValue: true,
+                        })
+                      ) : (
+                        <p className="text-md-regular text-gray-light/900">
+                          {getOptionLabel ? getOptionLabel(value) : value.label}
                         </p>
-                      </div>
-                    )
-                  ) : startAdornment ? (
-                    <InputAdornment position="start">
-                      {startAdornment}
-                    </InputAdornment>
-                  ) : null,
-                  endAdornment: multiple ? (
-                    <></>
-                  ) : !disableClearable && value && !isOpen && !disabled ? (
-                    <InputAdornment position="end">
-                      <button
-                        type="button"
-                        className="flex h-7 w-7 items-center justify-center rounded-full text-center hover:bg-gray-light/50"
-                        onClick={handleClearValue}
-                      >
-                        <span>
-                          <XClose size={20} stroke={'currentColor'} />
-                        </span>
-                      </button>
-                    </InputAdornment>
+                      )}
+                    </div>
                   ) : (
-                    <InputAdornment position="end">
-                      {endAdornment
-                        ? endAdornment
-                        : !disabled && (
-                            <div>
-                              {isOpen ? (
-                                <button
-                                  onClick={(e) => setIsOpen(false)}
-                                  type="button"
-                                  className="flex h-7 w-7 items-center justify-center rounded-full text-center hover:bg-gray-light/50"
-                                >
-                                  <ChevronUp
-                                    size={20}
-                                    stroke={'currentColor'}
-                                  />
-                                </button>
-                              ) : (
-                                <button
-                                  onClick={(e) => setIsOpen(true)}
-                                  type="button"
-                                  className="flex h-7 w-7 items-center justify-center rounded-full text-center hover:bg-gray-light/50"
-                                >
-                                  <ChevronDown
-                                    size={20}
-                                    stroke={'currentColor'}
-                                  />
-                                </button>
-                              )}
-                            </div>
+                    <div
+                      className="flex-1 overflow-hidden px-1"
+                      onClick={(e) => !disabled && setIsOpen(true)}
+                    >
+                      <p className="text-md-regular text-gray-light/500">
+                        {placeholder}
+                      </p>
+                    </div>
+                  )
+                ) : startAdornment ? (
+                  <InputAdornment position="start">
+                    {startAdornment}
+                  </InputAdornment>
+                ) : null,
+                endAdornment: multiple ? (
+                  <></>
+                ) : !disableClearable && value && !isOpen && !disabled ? (
+                  <InputAdornment position="end">
+                    <button
+                      type="button"
+                      className="flex h-7 w-7 items-center justify-center rounded-full text-center hover:bg-gray-light/50"
+                      onClick={handleClearValue}
+                    >
+                      <span>
+                        <XClose size={20} stroke="currentColor" />
+                      </span>
+                    </button>
+                  </InputAdornment>
+                ) : (
+                  <InputAdornment position="end">
+                    {endAdornment ||
+                      (!disabled && (
+                        <div>
+                          {isOpen ? (
+                            <button
+                              onClick={(e) => setIsOpen(false)}
+                              type="button"
+                              className="flex h-7 w-7 items-center justify-center rounded-full text-center hover:bg-gray-light/50"
+                            >
+                              <ChevronUp size={20} stroke="currentColor" />
+                            </button>
+                          ) : (
+                            <button
+                              onClick={(e) => setIsOpen(true)}
+                              type="button"
+                              className="flex h-7 w-7 items-center justify-center rounded-full text-center hover:bg-gray-light/50"
+                            >
+                              <ChevronDown size={20} stroke="currentColor" />
+                            </button>
                           )}
-                    </InputAdornment>
-                  ),
-                }}
-                sx={styleTextField}
-              />
-            )
-          }}
-        />
-      </div>
-    </>
+                        </div>
+                      ))}
+                  </InputAdornment>
+                ),
+              }}
+              sx={styleTextField}
+            />
+          )
+        }}
+      />
+    </div>
   )
 }
 
