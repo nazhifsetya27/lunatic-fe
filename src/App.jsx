@@ -15,6 +15,9 @@ import Elektronik from './pages/asset-management/elektronik'
 import { ElektronikProvider } from './pages/asset-management/elektronik/context'
 import Umum from './pages/asset-management/umum'
 import { UmumProvider } from './pages/asset-management/umum/context'
+import Settings from './pages/settings'
+import Condition from './pages/settings/Kondisi'
+import { ConditionProvider } from './pages/settings/Kondisi/context'
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
@@ -65,6 +68,16 @@ function App() {
                       <UmumProvider>
                         <Umum />
                       </UmumProvider>
+                    }
+                  />
+                </Route>
+                <Route path="/settings" element={<Settings />}>
+                  <Route
+                    path="kondisi"
+                    element={
+                      <ConditionProvider>
+                        <Condition />
+                      </ConditionProvider>
                     }
                   />
                 </Route>

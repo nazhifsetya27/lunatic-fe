@@ -3,7 +3,7 @@ import SimpleBar from 'simplebar-react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Plus, RefreshCcw01, Trash01, XClose } from '@untitled-ui/icons-react'
-import { useElektronik } from '../context'
+import { useUmum } from '../context'
 import { schema } from '../schema'
 import { handleError, checkErrorYup } from '../../../../services/Helper'
 import MyTextField from '../../../../components/TextField/MyTextField'
@@ -13,14 +13,14 @@ function FormSlider() {
   const {
     currentSlider,
     handleCurrentSlider,
-    createElektronik,
-    showElektronik,
-    updateElektronik,
-    deleteElektronik,
-    restoreElektronik,
+    createUmum,
+    showUmum,
+    updateUmum,
+    deleteUmum,
+    restoreUmum,
     setParams,
     params,
-  } = useElektronik()
+  } = useUmum()
 
   const {
     setValue,
@@ -38,7 +38,7 @@ function FormSlider() {
 
   useEffect(() => {
     if (currentSlider.id) {
-      showElektronik(currentSlider.id).then((elektronik) => {
+      showUmum(currentSlider.id).then((elektronik) => {
         // console.log('elektronik: ', elektronik)
 
         setTitle(elektronik.name)
@@ -51,15 +51,12 @@ function FormSlider() {
           }))
       })
     }
-  }, [currentSlider.id, setValue, showElektronik])
+  }, [currentSlider.id, setValue, showUmum])
 
   // const { aa } = watch()
 
   const onSubmit = handleSubmit(
-    handleError(
-      currentSlider.id ? updateElektronik : createElektronik,
-      control
-    ),
+    handleError(currentSlider.id ? updateUmum : createUmum, control),
     checkErrorYup
   )
 
@@ -121,7 +118,7 @@ function FormSlider() {
                 <div className="flex-1 items-start">
                   <MyButton
                     disabled={isSubmitting}
-                    onClick={() => deleteElektronik(currentSlider.id)}
+                    onClick={() => deleteUmum(currentSlider.id)}
                     variant="text"
                     size="md"
                   >
@@ -147,7 +144,7 @@ function FormSlider() {
               </MyButton>
               {params?.archived ? (
                 <MyButton
-                  onClick={() => restoreElektronik(currentSlider.id)}
+                  onClick={() => restoreUmum(currentSlider.id)}
                   color="primary"
                   variant="outlined"
                   size="md"

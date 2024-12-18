@@ -23,7 +23,7 @@ import moment from 'moment'
 //   MyTooltip,
 // } from '@interstellar-component'
 import { Box, Divider, Stack } from '@mui/material'
-import { Download, Plus, Search, Upload } from '@icon-park/react'
+import { Download, Plus, Refresh, Search, Upload } from '@icon-park/react'
 import { LinkExternal02 } from '@untitled-ui/icons-react'
 import MyChip from '../../../components/Chip/MyChip'
 import MyButton from '../../../components/Button/MyButton'
@@ -32,7 +32,11 @@ import MyDataTable from '../../../components/Table/MyDataTable'
 import MyColumn from '../../../components/Table/MyColumn'
 
 // import FormSlider from './Sliders/FormSlider'
-import { useElektronik } from './context'
+import { useUmum } from './context'
+import MyModalSlider from '../../../components/ModalSlider/MyModalSlider'
+import DetailSlider from './Sliders/DetailSlider'
+import FormSlider from './Sliders/FormSlider'
+import MyArchiveButton from '../../../components/Button/MyArchiveButton'
 // import DetailSlider from './Sliders/DetailSlider'
 // import ImportSlider from './Sliders/ImportSlider'
 // import { useApp } from '../../../AppContext'
@@ -40,12 +44,18 @@ import { useElektronik } from './context'
 function Umum() {
   const nav = useNavigate()
 
-  const { handleCurrentSlider, params, setParams, umums, setTerminals } =
-    useElektronik()
+  const {
+    handleCurrentSlider,
+    params,
+    setParams,
+    umums,
+    currentSlider,
+    restoreUmum,
+  } = useUmum()
 
   return (
     <>
-      {/* <MyModalSlider
+      <MyModalSlider
         open={currentSlider?.current === 'form-slider'}
         element={<FormSlider />}
         onClose={() => handleCurrentSlider(null)}
@@ -55,7 +65,7 @@ function Umum() {
         element={<DetailSlider />}
         onClose={() => handleCurrentSlider(null)}
       />
-      <MyModalSlider
+      {/* <MyModalSlider
         open={currentSlider?.current === 'import-slider'}
         element={<ImportSlider />}
         onClose={() => handleCurrentSlider(null)}
@@ -78,7 +88,7 @@ function Umum() {
               />
             </Stack>
             <Box className="text-sm-regular text-gray-light/600">
-              List of furniture on the system.
+              List of umum on the system.
             </Box>
           </Stack>
 
@@ -108,18 +118,18 @@ function Umum() {
               <span className="text-sm-semibold">Import</span>
             </MyButton>
             <MyButton
-              // onClick={() =>
-              //   handleCurrentSlider({
-              //     status: true,
-              //     current: 'form-slider',
-              //   })
-              // }
+              onClick={() =>
+                handleCurrentSlider({
+                  status: true,
+                  current: 'form-slider',
+                })
+              }
               color="primary"
               variant="filled"
               size="md"
             >
               <Plus className="size-5" stroke="currentColor" />
-              <span className="text-sm-semibold">New furniture</span>
+              <span className="text-sm-semibold">New umum</span>
             </MyButton>
           </Stack>
         </Stack>
@@ -127,13 +137,12 @@ function Umum() {
         <Divider className="border-gray-light/200" />
 
         <Stack direction="row" className="items-center justify-start gap-3 p-4">
-          {/* <MyArchiveButton
-            isUnavailable
+          <MyArchiveButton
             value={params}
             onChange={(e) => {
               setParams((value) => ({ ...value, archive: e, page: 1 }))
             }}
-          /> */}
+          />
           <Stack
             direction="row"
             className="flex-1 items-center justify-end gap-3"
@@ -224,25 +233,25 @@ function Umum() {
                 </Box>
               )}
             />
-            <MyColumn
+            {/* <MyColumn
               header="Quantity"
               body={({ quantity }) => (
                 <Box className="text-sm-regular text-gray-light/600">
                   {quantity ?? '-'}
                 </Box>
               )}
-            />
-            {/* <MyColumn
+            /> */}
+            <MyColumn
               alignment="right"
               body={(value) =>
                 params.archive !== 1 ? (
                   <MyButton
-                    // onClick={() => {
-                    //   handleCurrentSlider(
-                    //     { status: true, current: 'detail-slider' },
-                    //     value?.id
-                    //   )
-                    // }}
+                    onClick={() => {
+                      handleCurrentSlider(
+                        { status: true, current: 'detail-slider' },
+                        value?.id
+                      )
+                    }}
                     size="md"
                     variant="text"
                   >
@@ -255,19 +264,19 @@ function Umum() {
                   <MyButton
                     onClick={(e) => {
                       e.stopPropagation()
-                      restoreTerminal(value?.id)
+                      restoreUmum(value?.id)
                     }}
                     size="md"
                     variant="text"
                   >
-                    <RefreshCcw01
+                    <Refresh
                       className="size-5 text-gray-light/600"
                       stroke="currentColor"
                     />
                   </MyButton>
                 )
               }
-            /> */}
+            />
           </MyDataTable>
         </div>
       </Stack>

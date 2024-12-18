@@ -36,6 +36,7 @@ import { useElektronik } from './context'
 import MyArchiveButton from '../../../components/Button/MyArchiveButton'
 import MyModalSlider from '../../../components/ModalSlider/MyModalSlider'
 import DetailSlider from './Sliders/DetailSlider'
+import FormSlider from './Sliders/FormSlider'
 // import DetailSlider from './Sliders/DetailSlider'
 // import ImportSlider from './Sliders/ImportSlider'
 // import { useApp } from '../../../AppContext'
@@ -54,11 +55,11 @@ function Elektronik() {
 
   return (
     <>
-      {/* <MyModalSlider
+      <MyModalSlider
         open={currentSlider?.current === 'form-slider'}
         element={<FormSlider />}
         onClose={() => handleCurrentSlider(null)}
-      /> */}
+      />
       <MyModalSlider
         open={currentSlider?.current === 'detail-slider'}
         element={<DetailSlider />}
@@ -78,8 +79,7 @@ function Elektronik() {
                 Elektronik management
               </Box>
               <MyChip
-                // label={`${terminals.meta?.total ?? '-'} item`}
-                label="0 item"
+                label={`${elektronics.meta?.total ?? '-'} item`}
                 rounded="full"
                 color="modern"
                 variant="outlined"
@@ -117,18 +117,18 @@ function Elektronik() {
               <span className="text-sm-semibold">Import</span>
             </MyButton>
             <MyButton
-              // onClick={() =>
-              //   handleCurrentSlider({
-              //     status: true,
-              //     current: 'form-slider',
-              //   })
-              // }
+              onClick={() =>
+                handleCurrentSlider({
+                  status: true,
+                  current: 'form-slider',
+                })
+              }
               color="primary"
               variant="filled"
               size="md"
             >
               <Plus className="size-5" stroke="currentColor" />
-              <span className="text-sm-semibold">New furniture</span>
+              <span className="text-sm-semibold">New elektronik</span>
             </MyButton>
           </Stack>
         </Stack>

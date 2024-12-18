@@ -46,9 +46,8 @@ function UmumProvider({ children }) {
     []
   )
 
-  const searchFurnitureType = useCallback(
-    (searchParams) =>
-      Service.searchFurnitureType(searchParams).catch(myToaster),
+  const searchUmumType = useCallback(
+    (searchParams) => Service.searchUmumType(searchParams).catch(myToaster),
     []
   )
 
@@ -67,77 +66,77 @@ function UmumProvider({ children }) {
     [params]
   )
 
-  //   const showFurniture = useCallback(
-  //     (id) =>
-  //       Service.showFurniture(id)
-  //         .then((res) => res.data)
-  //         .catch(myToaster),
-  //     []
-  //   )
+  const showUmum = useCallback(
+    (id) =>
+      Service.showUmum(id)
+        .then((res) => res.data)
+        .catch(myToaster),
+    []
+  )
 
-  //   const getFurnitureDetail = useCallback(
-  //     (id) =>
-  //       Service.getFurnitureDetail(id)
-  //         .then((res) => res)
-  //         .catch(myToaster),
-  //     []
-  //   )
+  const getUmumDetail = useCallback(
+    (id) =>
+      Service.getUmumDetail(id)
+        .then((res) => res)
+        .catch(myToaster),
+    []
+  )
 
-  //   const createFurniture = useCallback(
-  //     (body) =>
-  //       Service.createFurniture(body)
-  //         .then(myToaster)
-  //         .then(() => handleCurrentSlider({ status: false, current: null }))
-  //         .then(getUmums),
-  //     [getUmums, handleCurrentSlider]
-  //   )
+  const createUmum = useCallback(
+    (body) =>
+      Service.createUmum(body)
+        .then(myToaster)
+        .then(() => handleCurrentSlider({ status: false, current: null }))
+        .then(getUmums),
+    [getUmums, handleCurrentSlider]
+  )
 
-  //   const updateSimcard = useCallback(
-  //     (body) =>
-  //       Service.updateFurniture(currentSlider?.id, body)
-  //         .then(myToaster)
-  //         .then(() => handleCurrentSlider({ status: false, current: null }))
-  //         .then(getUmums),
-  //     [currentSlider, getUmums, handleCurrentSlider]
-  //   )
+  const updateUmum = useCallback(
+    (body) =>
+      Service.updateUmum(currentSlider?.id, body)
+        .then(myToaster)
+        .then(() => handleCurrentSlider({ status: false, current: null }))
+        .then(getUmums),
+    [currentSlider, getUmums, handleCurrentSlider]
+  )
 
-  //   const restoreFurniture = useCallback(
-  //     (id) =>
-  //       Service.restoreFurniture(id)
-  //         .then(myToaster)
-  //         .then(() => handleCurrentSlider({ status: false, current: null }))
-  //         .then(getUmums)
-  //         .catch(myToaster),
-  //     [getUmums, handleCurrentSlider]
-  //   )
+  const restoreUmum = useCallback(
+    (id) =>
+      Service.restoreUmum(id)
+        .then(myToaster)
+        .then(() => handleCurrentSlider({ status: false, current: null }))
+        .then(getUmums)
+        .catch(myToaster),
+    [getUmums, handleCurrentSlider]
+  )
 
-  //   const bulkDeleteFurniture = useCallback(
+  //   const bulkDeleteUmum = useCallback(
   //     (data) =>
-  //       Service.bulkDeleteFurniture({ sim_card_ids: data })
+  //       Service.bulkDeleteUmum({ sim_card_ids: data })
   //         .then(myToaster)
   //         .then(getUmums)
   //         .catch(myToaster),
   //     [getUmums]
   //   )
 
-  //   const deleteFurniture = useCallback(
-  //     (id) => {
-  //       if (window.confirm('Anda yakin ingin menghapus data ini?')) {
-  //         return Service.deleteFurniture(id)
-  //           .then(myToaster)
-  //           .then(() => handleCurrentSlider({ status: false, current: null }))
-  //           .then(getUmums)
-  //           .catch(myToaster)
-  //       }
-  //       return Promise.resolve()
-  //     },
-  //     [getUmums, handleCurrentSlider]
-  //   )
+  const deleteUmum = useCallback(
+    (id) => {
+      if (window.confirm('Anda yakin ingin menghapus data ini?')) {
+        return Service.deleteUmum(id)
+          .then(myToaster)
+          .then(() => handleCurrentSlider({ status: false, current: null }))
+          .then(getUmums)
+          .catch(myToaster)
+      }
+      return Promise.resolve()
+    },
+    [getUmums, handleCurrentSlider]
+  )
 
-  //   const importFurniture = useCallback((values, config) => {
+  //   const importUmum = useCallback((values, config) => {
   //     const formData = new FormData()
-  //     formData.append('simcards', values.simcards)
-  //     return Service.importFurniture(formData, config)
+  //     formData.append('Umums', values.Umums)
+  //     return Service.importUmum(formData, config)
   //   }, [])
 
   //   const downloadTemplateImport = useCallback(() => {
@@ -164,17 +163,17 @@ function UmumProvider({ children }) {
       umums,
       setUmums,
       searchCustomer,
-      searchFurnitureType,
+      searchUmumType,
       searchRack,
       getUmums,
-      //   showFurniture,
-      //   getFurnitureDetail,
-      //   createFurniture,
-      //   updateSimcard,
-      //   deleteFurniture,
-      //   restoreFurniture,
-      //   bulkDeleteFurniture,
-      //   importFurniture,
+      showUmum,
+      getUmumDetail,
+      createUmum,
+      updateUmum,
+      deleteUmum,
+      restoreUmum,
+      //   bulkDeleteUmum,
+      //   importUmum,
       //   downloadTemplateImport,
       //   downloadExport,
     }),
@@ -185,33 +184,26 @@ function UmumProvider({ children }) {
       handleCurrentSlider,
       searchCustomer,
       searchRack,
-      searchFurnitureType,
+      searchUmumType,
       umums,
-      //   bulkDeleteFurniture,
-      //   createFurniture,
-      //   deleteFurniture,
-      //   downloadExport,
-      //   downloadTemplateImport,
-      //   getFurnitureDetail,
-      //   importFurniture,
-      //   restoreFurniture,
-      //   showFurniture,
-      //   updateSimcard,
+      showUmum,
+      getUmumDetail,
+      createUmum,
+      updateUmum,
+      deleteUmum,
+      restoreUmum,
     ]
   )
 
   return (
-    <UmumContext.Provider value={contextValue}>
-      {children}
-    </UmumContext.Provider>
+    <UmumContext.Provider value={contextValue}>{children}</UmumContext.Provider>
   )
 }
 
-const useElektronik = () => {
+const useUmum = () => {
   const context = useContext(UmumContext)
-  if (!context)
-    throw new Error('useElektronik must be used within UmumProvider')
+  if (!context) throw new Error('useUmum must be used within UmumProvider')
   return context
 }
 
-export { UmumProvider, useElektronik }
+export { UmumProvider, useUmum }
