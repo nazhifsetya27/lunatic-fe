@@ -83,23 +83,23 @@ function ElektronikProvider({ children }) {
     []
   )
 
-  //   const createElektronik = useCallback(
-  //     (body) =>
-  //       Service.createElektronik(body)
-  //         .then(myToaster)
-  //         .then(() => handleCurrentSlider({ status: false, current: null }))
-  //         .then(getElektronics),
-  //     [getElektronics, handleCurrentSlider]
-  //   )
+  const createElektronik = useCallback(
+    (body) =>
+      Service.createElektronik(body)
+        .then(myToaster)
+        .then(() => handleCurrentSlider({ status: false, current: null }))
+        .then(getElektronics),
+    [getElektronics, handleCurrentSlider]
+  )
 
-  //   const updateElektronik = useCallback(
-  //     (body) =>
-  //       Service.updateElektronik(currentSlider?.id, body)
-  //         .then(myToaster)
-  //         .then(() => handleCurrentSlider({ status: false, current: null }))
-  //         .then(getElektronics),
-  //     [currentSlider, getElektronics, handleCurrentSlider]
-  //   )
+  const updateElektronik = useCallback(
+    (body) =>
+      Service.updateElektronik(currentSlider?.id, body)
+        .then(myToaster)
+        .then(() => handleCurrentSlider({ status: false, current: null }))
+        .then(getElektronics),
+    [currentSlider, getElektronics, handleCurrentSlider]
+  )
 
   const restoreElektronik = useCallback(
     (id) =>
@@ -120,19 +120,19 @@ function ElektronikProvider({ children }) {
   //     [getElektronics]
   //   )
 
-  //   const deleteElektronik = useCallback(
-  //     (id) => {
-  //       if (window.confirm('Anda yakin ingin menghapus data ini?')) {
-  //         return Service.deleteElektronik(id)
-  //           .then(myToaster)
-  //           .then(() => handleCurrentSlider({ status: false, current: null }))
-  //           .then(getElektronics)
-  //           .catch(myToaster)
-  //       }
-  //       return Promise.resolve()
-  //     },
-  //     [getElektronics, handleCurrentSlider]
-  //   )
+  const deleteElektronik = useCallback(
+    (id) => {
+      if (window.confirm('Anda yakin ingin menghapus data ini?')) {
+        return Service.deleteElektronik(id)
+          .then(myToaster)
+          .then(() => handleCurrentSlider({ status: false, current: null }))
+          .then(getElektronics)
+          .catch(myToaster)
+      }
+      return Promise.resolve()
+    },
+    [getElektronics, handleCurrentSlider]
+  )
 
   //   const importElektronik = useCallback((values, config) => {
   //     const formData = new FormData()
@@ -170,6 +170,9 @@ function ElektronikProvider({ children }) {
       showElektronik,
       getElektronikDetail,
       restoreElektronik,
+      createElektronik,
+      updateElektronik,
+      deleteElektronik,
     }),
     [
       params,
@@ -183,6 +186,9 @@ function ElektronikProvider({ children }) {
       showElektronik,
       getElektronikDetail,
       restoreElektronik,
+      createElektronik,
+      updateElektronik,
+      deleteElektronik,
     ]
   )
 

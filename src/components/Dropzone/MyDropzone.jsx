@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import Dropzone from 'react-dropzone'
 import { DownloadCloud01, UploadCloud02 } from '@untitled-ui/icons-react'
-import Papa from 'papaparse'
 import socketio from 'socket.io-client'
 import * as XLSX from 'xlsx'
+import { set } from 'lodash'
 import {
   convertToMimeDict,
   formatFileExtensions,
@@ -11,7 +11,6 @@ import {
 } from '../../services/Helper'
 import MyCardFile from './MyCardFile'
 import MyButton from '../Button/MyButton'
-import { set } from 'lodash'
 
 // Common MIME types
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
@@ -151,7 +150,7 @@ function MyDropzone({
                         ? 'cursor-pointer border-2 border-brand/600'
                         : 'cursor-pointer border border-gray-light/200'
                   } flex w-full flex-col items-center gap-y-3 rounded-xl px-6 py-4 ${
-                    colorBg ? colorBg : ''
+                    colorBg || ''
                   } `}
                 >
                   <div className="block w-max rounded-lg border border-gray-light/200 p-2.5 shadow-shadows/shadow-xs">

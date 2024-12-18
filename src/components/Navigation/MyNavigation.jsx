@@ -1,6 +1,12 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { LogOut04, Users01, ReceiptCheck, Bank } from '@untitled-ui/icons-react'
+import {
+  LogOut04,
+  Users01,
+  ReceiptCheck,
+  Bank,
+  Settings02,
+} from '@untitled-ui/icons-react'
 import { useCookies } from 'react-cookie'
 import { AllApplication } from '@icon-park/react'
 import MyConfirmModal from '../Modal/MyConfirmModal'
@@ -108,7 +114,7 @@ function SideNavbar({ childs }) {
                     </span>
                   </MyTooltip>
                 </Link> */}
-                {/* <Link to="/settings">
+                <Link to="/settings">
                   <MyTooltip
                     placement="right"
                     target={
@@ -117,11 +123,9 @@ function SideNavbar({ childs }) {
                           location?.pathname.includes('/settings')
                             ? 'bg-gray-light/50 text-gray-light/700'
                             : 'text-gray-light/500'
-                        } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md ${
-                          isAccessAllowed(Access?.SETTING) ? '' : 'hidden'
-                        }`}
+                        } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
                       >
-                        <Settings01
+                        <Settings02
                           data-test="btn-nav-setting"
                           size={24}
                           stroke="currentColor"
@@ -133,7 +137,7 @@ function SideNavbar({ childs }) {
                       Settings
                     </span>
                   </MyTooltip>
-                </Link> */}
+                </Link>
                 <MyTooltip
                   placement="right"
                   target={
