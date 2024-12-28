@@ -68,8 +68,7 @@ function Settings() {
             <MyTabButton value="lantai">Database lantai</MyTabButton>
             <MyTabButton value="ruangan">Database ruangan</MyTabButton>
             <MyTabButton value="kondisi">Database kondisi</MyTabButton>
-            {/* <MyTabButton value="inventory-status">Inventory Status</MyTabButton> */}
-            {/* <MyTabButton value="rack-category">Rack Category</MyTabButton> */}
+            <MyTabButton value="unit">Unit</MyTabButton>
           </MyHorizontalTab>
         </div>
         <Outlet />

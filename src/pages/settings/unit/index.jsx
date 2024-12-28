@@ -12,7 +12,7 @@ import {
 
 import FormSlider from './Sliders/FormSlider'
 import ImportSlider from './Sliders/ImportSlider'
-import { useCondition } from './context'
+import { useUnit } from './context'
 import { useApp } from '../../../AppContext'
 import { Access } from '../../../services/Helper'
 import MyModalSlider from '../../../components/ModalSlider/MyModalSlider'
@@ -23,17 +23,17 @@ import MyTextField from '../../../components/TextField/MyTextField'
 import MyDataTable from '../../../components/Table/MyDataTable'
 import MyColumn from '../../../components/Table/MyColumn'
 
-function Condition() {
+function Unit() {
   const {
     currentSlider,
     handleCurrentSlider,
-    conditions,
+    units,
     params,
     setParams,
     setWarehouses,
     restoreWarehouse,
     bulkDeleteWarehouse,
-  } = useCondition()
+  } = useUnit()
 
   return (
     <>
@@ -54,10 +54,10 @@ function Condition() {
               <div className="flex-1 flex-col gap-1">
                 <div className="flex items-center gap-2">
                   <p className="text-lg-semibold text-gray-light/900">
-                    Database kondisi
+                    Database lantai
                   </p>
                   <MyChip
-                    label={`${conditions?.meta?.total ?? ''} item`}
+                    label={`${units?.meta?.total ?? ''} item`}
                     rounded="full"
                     color="modern"
                     variant="outlined"
@@ -65,7 +65,7 @@ function Condition() {
                   />
                 </div>
                 <p className="text-sm-regular text-gray-light/600">
-                  List of condition databases.
+                  List of lantai databases.
                 </p>
               </div>
               <div className="flex items-start justify-start gap-3">
@@ -78,8 +78,8 @@ function Condition() {
                   <DownloadCloud02 className="size-5" stroke="currentColor" />
                   <span className="text-sm-semibold">Export</span>
                 </MyButton> */}
-
-                {/* <MyButton
+                {/* 
+                <MyButton
                   onClick={() =>
                     handleCurrentSlider({
                       status: true,
@@ -92,7 +92,7 @@ function Condition() {
                 >
                   <UploadCloud02 className="size-5" stroke="currentColor" />
                   <span className="text-sm-semibold">Import</span>
-                </MyButton>
+                </MyButton> */}
                 <MyButton
                   onClick={() =>
                     handleCurrentSlider({
@@ -105,8 +105,8 @@ function Condition() {
                   size="md"
                 >
                   <Plus className="size-5" stroke="currentColor" />
-                  <span className="text-sm-semibold">New warehouse</span>
-                </MyButton> */}
+                  <span className="text-sm-semibold">New unit</span>
+                </MyButton>
               </div>
             </div>
             <hr className="border-gray-light/200" />
@@ -142,7 +142,7 @@ function Condition() {
               </div>
               {/* <MyFilterModal
                 id="filter-ticketing"
-                currentFilters={conditions?.filter}
+                currentFilters={units?.filter}
                 onChange={(filter) => {
                   setParams((prev) => ({
                     ...prev,
@@ -168,7 +168,7 @@ function Condition() {
           </div>
           <div>
             <MyDataTable
-              values={conditions}
+              values={units}
               onClick={(value) => {
                 if (params.archive)
                   handleCurrentSlider(
@@ -192,34 +192,15 @@ function Condition() {
                   <p className="text-sm-medium text-gray-light/900">{name}</p>
                 )}
               />
-              {/* <MyColumn
-                field="Warehouse name"
-                header="Code"
-                isArchived={params.archive}
-                body={(warehouse) => (
-                  <p className="text-sm-medium text-gray-light/900">
-                    {warehouse?.code ?? '-'}
-                  </p>
-                )}
-              /> */}
+
               <MyColumn
                 field=""
-                header="Deskripsi"
-                body={({ description }) => (
-                  <p className="text-sm-regular text-gray-light/600">
-                    {description}
-                  </p>
+                header="Kode"
+                body={({ kode }) => (
+                  <p className="text-sm-regular text-gray-light/600">{kode}</p>
                 )}
               />
-              <MyColumn
-                field="Data property"
-                header="Data property"
-                body={({ property }) => (
-                  <p className="text-sm-regular text-gray-light/600">
-                    {property}
-                  </p>
-                )}
-              />
+
               <MyColumn
                 alignment="right"
                 body={(warehouse) =>
@@ -268,4 +249,4 @@ function Condition() {
   )
 }
 
-export default Condition
+export default Unit
