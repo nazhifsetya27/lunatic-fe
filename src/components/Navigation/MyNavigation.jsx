@@ -8,7 +8,7 @@ import {
   Settings02,
 } from '@untitled-ui/icons-react'
 import { useCookies } from 'react-cookie'
-import { AllApplication } from '@icon-park/react'
+import { AllApplication, StorageCardOne } from '@icon-park/react'
 import MyConfirmModal from '../Modal/MyConfirmModal'
 import MyTooltip from '../Tooltip/MyTooltip'
 import MyButton from '../Button/MyButton'
@@ -86,7 +86,27 @@ function SideNavbar({ childs }) {
                     </div>
                   }
                 >
-                  <p className="text-xs-semibold text-white">User reconcile</p>
+                  <p className="text-xs-semibold text-white">User management</p>
+                </MyTooltip>
+              </Link>
+              <Link to="/storage-management">
+                <MyTooltip
+                  placement="right"
+                  target={
+                    <div
+                      className={`${
+                        location?.pathname.includes('/storage')
+                          ? 'bg-gray-light/50 text-gray-light/700'
+                          : 'text-gray-light/500'
+                      } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
+                    >
+                      <StorageCardOne size={24} stroke="currentColor" />
+                    </div>
+                  }
+                >
+                  <p className="text-xs-semibold text-white">
+                    Storage management
+                  </p>
                 </MyTooltip>
               </Link>
             </div>

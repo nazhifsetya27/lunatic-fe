@@ -16,8 +16,18 @@ import { ElektronikProvider } from './pages/asset-management/elektronik/context'
 import Umum from './pages/asset-management/umum'
 import { UmumProvider } from './pages/asset-management/umum/context'
 import Settings from './pages/settings'
-import Condition from './pages/settings/Kondisi'
-import { ConditionProvider } from './pages/settings/Kondisi/context'
+import Condition from './pages/settings/kondisi'
+import { ConditionProvider } from './pages/settings/kondisi/context'
+import Building from './pages/settings/gedung'
+import { BuildingProvider } from './pages/settings/gedung/context'
+import Floor from './pages/settings/lantai'
+import { FloorProvider } from './pages/settings/lantai/context'
+import Room from './pages/settings/ruangan'
+import { RoomProvider } from './pages/settings/ruangan/context'
+import Unit from './pages/settings/unit'
+import { UnitProvider } from './pages/settings/unit/context'
+import StorageManagement from './pages/Storage-management'
+import { StorageManagementProvider } from './pages/Storage-management/context'
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
@@ -72,6 +82,31 @@ function App() {
                   />
                 </Route>
                 <Route path="/settings" element={<Settings />}>
+                  <Route index element={<Navigate to="gedung" replace />} />
+                  <Route
+                    path="gedung"
+                    element={
+                      <BuildingProvider>
+                        <Building />
+                      </BuildingProvider>
+                    }
+                  />
+                  <Route
+                    path="lantai"
+                    element={
+                      <FloorProvider>
+                        <Floor />
+                      </FloorProvider>
+                    }
+                  />
+                  <Route
+                    path="ruangan"
+                    element={
+                      <RoomProvider>
+                        <Room />
+                      </RoomProvider>
+                    }
+                  />
                   <Route
                     path="kondisi"
                     element={
@@ -80,7 +115,23 @@ function App() {
                       </ConditionProvider>
                     }
                   />
+                  <Route
+                    path="unit"
+                    element={
+                      <UnitProvider>
+                        <Unit />
+                      </UnitProvider>
+                    }
+                  />
                 </Route>
+                <Route
+                  path="/storage-management"
+                  element={
+                    <StorageManagementProvider>
+                      <StorageManagement />
+                    </StorageManagementProvider>
+                  }
+                />
               </Routes>
             </div>
           </div>
