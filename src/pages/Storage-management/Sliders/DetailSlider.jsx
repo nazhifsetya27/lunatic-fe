@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import SimpleBar from 'simplebar-react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import {
@@ -9,37 +8,38 @@ import {
   Trash01,
   ArrowLeft,
 } from '@untitled-ui/icons-react'
-import { validate } from 'uuid'
 import { useStorageManagement } from '../context'
-import { RackManagementSchema } from '../schema'
+import { updateStorageManagementSchema } from '../schema'
 import { handleError, checkErrorYup } from '../../../services/Helper'
-import FormSliderNewRackManagement from './FormSlider'
 import MyDataTable from '../../../components/Table/MyDataTable'
 import MyColumn from '../../../components/Table/MyColumn'
 import MyButton from '../../../components/Button/MyButton'
 import MyAsyncDropdown from '../../../components/Autocomplete/MyAsyncDropdown'
-import MyTextField from '../../../components/TextField/MyTextField'
 
 function FormSliderDetailRackManagement() {
   const {
     currentSlider,
-    showRackManagement,
+    showStorageManagement,
     createRackManagement,
-    updateRackManagement,
+    updateStorageManagement,
     handleCurrentSlider,
     searchRackCategoryList,
     bulkDeleteRackManagement,
     setRackManagement,
     deleteRackManagement,
     validateRack,
+    createStorageManagement,
+    searchFloorList,
+    searchRoomList,
+    category,
+    setcategory,
   } = useStorageManagement()
 
   const [title, setTitle] = useState('')
-  const [children, setChildren] = useState(null)
-  const [totalNewData, setTotalNewData] = useState(0)
-  const [parent, setParent] = useState(null)
-  const [childSubmit, setChildSubmit] = useState({})
-  const [childDefault, setChildDefault] = useState([])
+  const [storage, setStorage] = useState()
+  const [isAddNewStorage, setIsAddNewStorage] = useState(false)
+
+  const existing_ids = storage?.map((val) => val.id)
 
   const {
     setValue,
@@ -50,107 +50,29 @@ function FormSliderDetailRackManagement() {
     reset,
     formState: { isSubmitting, errors },
   } = useForm({
-    resolver: !children?.data ? yupResolver(RackManagementSchema) : null,
+    resolver: yupResolver(updateStorageManagementSchema),
   })
 
-  const { type, parent_grade } = watch()
+  const { type, level } = watch()
 
-  const onSubmit = async (data) => {
-    if (totalNewData) {
-      data.index = totalNewData
-    }
-    if (!data.type) {
-      data.type = { id: children.data[0]?.category.id }
-    }
-    const isCreate = !children.data
-
-    const functionToCall = isCreate
-      ? createRackManagement
-      : updateRackManagement
-    const argumentToPass = isCreate ? data : childSubmit
-
-    handleError(functionToCall, control)(argumentToPass)
-  }
+  const onSubmit = handleSubmit(
+    handleError(
+      currentSlider.id ? updateStorageManagement : createStorageManagement,
+      control
+    ),
+    checkErrorYup
+  )
 
   useEffect(() => {
-    showRackManagement(currentSlider.id).then((data) => {
-      setTitle(`${data?.category?.type} ${data?.index}`)
-      setValue('id', data.id)
-      setValue('parent_grade', data?.category?.grade)
-      setValue('rack_category_id', data.rack_category_id)
-      setParent(data?.parent_id)
-      // setValue('parent_id', )
-      const childrenData =
-        Array.isArray(data.children) && data.children.length > 0
-          ? data.children
-          : null
-      setChildren({ data: childrenData })
-      setChildSubmit({ id: currentSlider.id, data: childrenData })
-      setTotalNewData(0)
-      setChildDefault(childrenData?.map((child) => child.id))
+    showStorageManagement(currentSlider.id).then((data) => {
+      setTitle(`Edit ${data.category}`)
+      setStorage(data.data)
+      setcategory(data.category)
     })
-  }, [currentSlider.id, showRackManagement, setValue, handleCurrentSlider])
+  }, [currentSlider.id, showStorageManagement, setValue, handleCurrentSlider])
 
-  const handleAddNewRackType = () => {
-    const lastIndex =
-      children.data.length > 0
-        ? Math.max(...children.data.map((item) => item.index))
-        : 0
-    const newRack = {
-      id: new Date(),
-      category: {
-        grade: children.data[0]?.category?.grade,
-        type: children.data[0]?.category?.type,
-        id: children.data[0]?.category?.id,
-      },
-      parent_id: children.data[0]?.parent_id,
-      rack_category_id: children.data[0]?.rack_category_id,
-      warehouse_id: children.data[0]?.warehouse_id,
-      index: lastIndex + 1,
-    }
-    const newRackSubmit = {
-      category: {
-        grade: children.data[0]?.category?.grade,
-        type: children.data[0]?.category?.type,
-        id: children.data[0]?.category?.id,
-      },
-      parent_id: children.data[0]?.parent_id,
-      rack_category_id: children.data[0]?.rack_category_id,
-      warehouse_id: children.data[0]?.warehouse_id,
-      index: lastIndex + 1,
-    }
-    setChildren((prev) => ({
-      data: [...prev.data, newRack],
-    }))
-    setChildSubmit((prev) => ({
-      data: [...prev.data, newRackSubmit],
-      id: childSubmit?.id,
-    }))
-    setTotalNewData((prevTotal) => prevTotal + 1)
-  }
-
-  const handleDeleteRackType = async (value) => {
-    if (window.confirm('Do you want to delete this rack?')) {
-      if (value?.id) {
-        try {
-          await validateRack(value.id)
-        } catch (error) {
-          return
-        }
-      }
-      setChildren((prev) => ({
-        data: prev.data.filter((item) => item.index !== value.index),
-      }))
-      if (childDefault.includes(value?.id)) {
-        deleteRackManagement(value?.id)
-      }
-
-      setChildSubmit((prev) => ({
-        data: prev.data.filter((item) => item.index !== value.index),
-        id: childSubmit?.id,
-      }))
-      setTotalNewData((prevTotal) => prevTotal - 1)
-    }
+  const handleAddNewStorage = () => {
+    setIsAddNewStorage(true)
   }
 
   return (
@@ -162,21 +84,23 @@ function FormSliderDetailRackManagement() {
         >
           <XClose size={24} stroke="currentColor" />
         </button>
-        {parent ? (
+        {currentSlider?.data?.category !== 'Lantai' && (
           <button
             className="flex items-center gap-2 text-gray-600"
             onClick={() =>
               handleCurrentSlider(
-                { status: true, current: 'form-detail-slider' },
-                parent
+                {
+                  status: true,
+                  current: 'form-detail-slider',
+                  data: { category: 'Lantai' },
+                },
+                currentSlider?.data?.previous_building_id
               )
             }
           >
             <ArrowLeft stroke="currentColor" className="text-gray size-5" />
             <p className="text-sm-semibold">Back</p>
           </button>
-        ) : (
-          <div className="flex gap-2" />
         )}
 
         <section className="flex flex-col gap-3">
@@ -185,185 +109,138 @@ function FormSliderDetailRackManagement() {
         <div className="gap-10" />
       </header>
       <div className="flex-1 overflow-auto">
-        {children && children.data ? (
-          <>
-            <MyDataTable
-              values={children}
-              // onClick={(value) => {
-              //   if (params.archive) {
-              //     handleCurrentSlider(
-              //       { status: true, current: 'form-detail-slider' },
-              //       value.id
-              //     )
-              //   }
-              // }}
-              onDeleteAll={bulkDeleteRackManagement}
-              selectionMode="multiple"
-              onSelectionChange={(value) => setChildren(value)}
-            >
-              <MyColumn
-                sortable
-                field="type"
-                header={children.data?.[0]?.category?.type}
-                body={(value) => (
-                  <p className="text-sm-medium text-gray-light/900">
-                    {value?.category?.type} {value?.index}
-                  </p>
-                )}
-              />
-              <MyColumn
-                alignment="right"
-                body={(value) => (
-                  <div className="flex items-center justify-end gap-1">
-                    <MyButton
-                      onClick={() =>
-                        handleDeleteRackType({
-                          index: value.index,
-                          id: value?.id,
-                        })
-                      }
-                      size="md"
-                      variant="text"
-                    >
-                      <Trash01
-                        className="size-5 text-gray-light/600"
-                        stroke="currentColor"
-                      />
-                    </MyButton>
-                    <MyButton
-                      onClick={() =>
-                        handleCurrentSlider(
-                          { status: true, current: 'form-detail-slider' },
-                          value.id
-                        )
-                      }
-                      size="md"
-                      variant="text"
-                    >
-                      <LinkExternal02
-                        className="size-5 text-gray-light/600"
-                        stroke="currentColor"
-                      />
-                    </MyButton>
-                  </div>
-                )}
-              />
-            </MyDataTable>
-
-            <MyButton
-              onClick={handleAddNewRackType}
-              color="primary"
-              variant="text"
-              size="md"
-            >
-              <Plus className="size-5" stroke="currentColor" />
-              <span className="text-sm-semibold py-4">
-                Add new {children?.data[0]?.category?.type || 'Rack Type'}
-              </span>
-            </MyButton>
-            <hr className="w-full gap-2 border-gray-light/200" />
-          </>
-        ) : (
-          <div className="flex-1 overflow-hidden">
-            <hr className="w-100% border-gray-light/200" />
-            <SimpleBar forceVisible="y" style={{ height: '100%' }}>
-              <form className="flex h-full flex-col gap-8" onSubmit={onSubmit}>
-                <section className="flex flex-col gap-6 px-4 py-4">
-                  <div className="flex flex-col gap-y-1.5">
-                    <label
-                      htmlFor="name"
-                      className="text-sm-medium mb-2 text-gray-light/700" // Added margin-bottom here
-                    >
-                      Rack type
-                    </label>
-                    <MyAsyncDropdown
-                      trigger={trigger}
-                      name="type"
-                      placeholder="Select rack type"
-                      control={control}
-                      error={errors?.type?.message}
-                      isOptionEqualToValue={(option, value) =>
-                        option.id === value.id
-                      }
-                      getOptionLabel={(e) => e?.type}
-                      value={type}
-                      extraData={{ grade: parent_grade }}
-                      asyncFunction={searchRackCategoryList}
-                      onChange={(e, value) => {
-                        setValue('type', value)
-                      }}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-y-1.5">
-                    <label
-                      htmlFor="customer"
-                      className="text-sm-medium text-gray-light/700"
-                    >
-                      Quantity
-                    </label>
-                    <MyTextField
-                      name="index"
-                      type="number"
-                      control={control}
-                      placeholder="Input quantity"
-                    />
-                  </div>
-                </section>
-                <footer className="flex items-center justify-center gap-4 border-t border-gray-light/200 px-4 py-4">
+        <MyDataTable
+          values={{ data: storage }}
+          // onClick={(value) => {
+          //   if (params.archive) {
+          //     handleCurrentSlider(
+          //       { status: true, current: 'form-detail-slider' },
+          //       value.id
+          //     )
+          //   }
+          // }}
+          onDeleteAll={bulkDeleteRackManagement}
+          // selectionMode="multiple"
+          // onSelectionChange={(value) => setChildren(value)}
+        >
+          <MyColumn
+            sortable
+            field="type"
+            header={category}
+            body={({ name }) => (
+              <p className="text-sm-medium text-gray-light/900">{name}</p>
+            )}
+          />
+          <MyColumn
+            alignment="right"
+            body={(value) => (
+              <div className="flex items-center justify-end gap-1">
+                <MyButton
+                  // onClick={() =>
+                  //   handleDeleteRackType({
+                  //     index: value.index,
+                  //     id: value?.id,
+                  //   })
+                  // }
+                  size="md"
+                  variant="text"
+                >
+                  <Trash01
+                    className="size-5 text-gray-light/600"
+                    stroke="currentColor"
+                  />
+                </MyButton>
+                {currentSlider?.data?.category !== 'Ruangan' && (
                   <MyButton
-                    expanded
-                    disabled={isSubmitting}
-                    type="button"
-                    color="primary"
-                    variant="filled"
+                    onClick={() => {
+                      handleCurrentSlider(
+                        {
+                          status: true,
+                          current: 'form-detail-slider',
+                          data: {
+                            category: 'Ruangan',
+                            previous_building_id: currentSlider?.id,
+                          },
+                        },
+                        value.id
+                      )
+                      setIsAddNewStorage(false)
+                    }}
                     size="md"
-                    onClick={handleSubmit(onSubmit)}
+                    variant="text"
                   >
-                    <Plus className="size-5" stroke="currentColor" />
-                    <p className="text-sm-semibold">New rack type</p>
+                    <LinkExternal02
+                      className="size-5 text-gray-light/600"
+                      stroke="currentColor"
+                    />
                   </MyButton>
-                </footer>
-              </form>
-            </SimpleBar>
+                )}
+              </div>
+            )}
+          />
+        </MyDataTable>
+
+        <MyButton
+          onClick={handleAddNewStorage}
+          color="primary"
+          variant="text"
+          size="md"
+          disabled={isAddNewStorage}
+        >
+          <Plus className="size-5" stroke="currentColor" />
+          <span className="text-sm-semibold py-4">Tambah {category}</span>
+        </MyButton>
+        <hr className="w-full gap-2 border-gray-light/200" />
+        {isAddNewStorage && (
+          <div className="flex flex-col gap-y-1.5 px-3 pt-2">
+            <label
+              htmlFor="name"
+              className="text-sm-medium text-gray-light/700"
+            >
+              {category}*
+            </label>
+            <MyAsyncDropdown
+              trigger={trigger}
+              name="level"
+              control={control}
+              error={errors?.level?.message}
+              placeholder={`Select ${category}`}
+              multiple
+              isOptionEqualToValue={(option, value) => option.id == value.id}
+              getOptionLabel={(e) => e.name}
+              value={level}
+              asyncFunction={
+                category === 'Lantai' ? searchFloorList : searchRoomList
+              }
+              extraData={{ existing_ids }}
+              onChange={(e, value) => {
+                if (
+                  value.some(
+                    (obj) => obj.id === '97424fda-70f1-44ae-b4f5-29ba854ab71e' // All warehouse
+                  )
+                ) {
+                  setValue('buildings', null)
+                  setValue('buildings', [value[value.length - 1]])
+                } else {
+                  setValue('level', value)
+                }
+              }}
+            />
           </div>
         )}
       </div>
-      {children && children.data && (
-        <footer className="flex items-center justify-end gap-4 border-t border-gray-light/200 px-4 py-4">
-          {/* <MyButton
-            disabled={isSubmitting}
-            color="secondary"
-            variant="outlined"
-            size="md"
-            onClick={() => {
-              reset()
-              showRackManagement(currentSlider.id).then((data) => {
-                setTitle(data?.category?.type + ' ' + data?.index)
-                setValue('id', data.id)
-                setValue('rack_category_id', data.rack_category_id)
-                const childrenData =
-                  Array.isArray(data.children) && data.children.length > 0
-                    ? data.children
-                    : null
-                setChildren({ data: childrenData })
-                setTotalNewData(0)
-              })
-            }}
-          >
-            <p className="text-sm-semibold">Reset</p>
-          </MyButton> */}
-          <MyButton
-            disabled={isSubmitting}
-            type="submit"
-            color="primary"
-            variant="filled"
-            size="md"
-            onClick={handleSubmit(onSubmit)}
-          >
-            <p className="text-sm-semibold">Submit</p>
-          </MyButton>
-        </footer>
-      )}
+      <footer className="flex items-center justify-end gap-4 border-t border-gray-light/200 px-4 py-4">
+        <MyButton
+          disabled={isSubmitting}
+          type="submit"
+          color="primary"
+          variant="filled"
+          size="md"
+          onClick={handleSubmit(onSubmit)}
+        >
+          <p className="text-sm-semibold">Submit</p>
+        </MyButton>
+      </footer>
     </div>
   )
 }

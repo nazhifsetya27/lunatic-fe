@@ -202,7 +202,7 @@ function Furniture() {
           >
             <MyColumn
               header="Nama"
-              // hideCheckBoxHeader
+              hideCheckBoxHeader
               // isArchived={params.archive}
               body={({ name }) => (
                 <Box className="text-sm-medium text-gray-light/900">
@@ -220,14 +220,38 @@ function Furniture() {
                 </Box>
               )}
             />
-            {/* <MyColumn
-              header="Quantity"
-              body={({ quantity }) => (
+            <MyColumn
+              header="Unit"
+              body={({ storage }) => (
                 <Box className="text-sm-regular text-gray-light/600">
-                  {quantity ?? '-'}
+                  {storage?.unit?.name ?? '-'}
                 </Box>
               )}
-            /> */}
+            />
+            <MyColumn
+              header="gedung"
+              body={({ storage }) => (
+                <Box className="text-sm-regular text-gray-light/600">
+                  {storage?.building?.name ?? '-'}
+                </Box>
+              )}
+            />
+            <MyColumn
+              header="Lantai"
+              body={({ storage }) => (
+                <Box className="text-sm-regular text-gray-light/600">
+                  {storage?.storage_floor?.name ?? '-'}
+                </Box>
+              )}
+            />
+            <MyColumn
+              header="Ruangan"
+              body={({ storage }) => (
+                <Box className="text-sm-regular text-gray-light/600">
+                  {storage?.storage_room?.name ?? '-'}
+                </Box>
+              )}
+            />
             <MyColumn
               alignment="right"
               body={(value) =>

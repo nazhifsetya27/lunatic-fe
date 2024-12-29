@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { XClose, RefreshCcw01, Plus } from '@untitled-ui/icons-react'
 import { useStorageManagement } from '../context'
-import { RackManagementSchema } from '../schema'
+import { StorageManagementSchema } from '../schema'
 
 import { handleError, checkErrorYup } from '../../../services/Helper'
 import MyAsyncDropdown from '../../../components/Autocomplete/MyAsyncDropdown'
@@ -15,7 +15,7 @@ function FormSliderNewRackManagement() {
   const {
     currentSlider,
     showRackManagement,
-    createRackManagement,
+    createStorageManagement,
     updateRackManagement,
     params,
     handleCurrentSlider,
@@ -25,7 +25,7 @@ function FormSliderNewRackManagement() {
     searchRackCategoryList,
     searchBuildingList,
   } = useStorageManagement()
-  console.log('currentSlider: ', currentSlider)
+  // console.log('currentSlider: ', currentSlider)
 
   const {
     setValue,
@@ -35,16 +35,18 @@ function FormSliderNewRackManagement() {
     trigger,
     formState: { isSubmitting, errors },
   } = useForm({
-    resolver: yupResolver(RackManagementSchema),
+    resolver: yupResolver(StorageManagementSchema),
   })
+
   const onSubmit = handleSubmit(
     handleError(
-      currentSlider.id ? updateRackManagement : createRackManagement,
+      currentSlider.id ? updateRackManagement : createStorageManagement,
       control
     ),
     checkErrorYup
   )
   const { immune, deleted_at, type, buildings } = watch()
+
   const [title, setTitle] = useState('Add new rack type')
   useEffect(() => {}, [])
   return (
@@ -105,7 +107,7 @@ function FormSliderNewRackManagement() {
                   trigger={trigger}
                   name="buildings"
                   control={control}
-                  error={errors?.warehouses?.message}
+                  error={errors?.buildings?.message}
                   placeholder="Select gedung"
                   multiple
                   isOptionEqualToValue={(option, value) =>

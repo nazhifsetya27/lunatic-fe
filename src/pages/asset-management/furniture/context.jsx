@@ -84,11 +84,21 @@ function FurnitureProvider({ children }) {
   )
 
   const createFurniture = useCallback(
-    (body) =>
-      Service.createFurniture(body)
+    (body) => {
+      const formData = new FormData()
+
+      formData.append('name', body?.name)
+      formData.append('kode', body?.kode)
+      formData.append('unit_id', body?.unit?.id)
+      formData.append('building_id', body?.building?.id)
+      formData.append('floor_id', body?.floor?.id)
+      formData.append('room_id', body?.room?.id)
+
+      Service.createFurniture(formData)
         .then(myToaster)
         .then(() => handleCurrentSlider({ status: false, current: null }))
-        .then(getFurnitures),
+        .then(getFurnitures)
+    },
     [getFurnitures, handleCurrentSlider]
   )
 
@@ -150,6 +160,15 @@ function FurnitureProvider({ children }) {
   //     window.open(url, '_blank').focus()
   //   }, [params])
 
+  const searchUnitList = async (param) =>
+    Service.searchUnitList(param).catch(myToaster)
+  const searchBuildingList = async (param) =>
+    Service.searchBuildingList(param).catch(myToaster)
+  const searchFloorList = async (param) =>
+    Service.searchFloorList(param).catch(myToaster)
+  const searchRoomList = async (param) =>
+    Service.searchRoomList(param).catch(myToaster)
+
   useEffect(() => {
     getFurnitures()
   }, [getFurnitures])
@@ -173,6 +192,10 @@ function FurnitureProvider({ children }) {
       updateFurniture,
       deleteFurniture,
       restoreFurniture,
+      searchUnitList,
+      searchBuildingList,
+      searchFloorList,
+      searchRoomList,
     }),
     [
       params,
@@ -189,6 +212,10 @@ function FurnitureProvider({ children }) {
       updateFurniture,
       deleteFurniture,
       restoreFurniture,
+      searchUnitList,
+      searchBuildingList,
+      searchFloorList,
+      searchRoomList,
     ]
   )
 
