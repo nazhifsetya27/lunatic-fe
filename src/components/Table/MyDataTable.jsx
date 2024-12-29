@@ -139,17 +139,17 @@ function MyDataTable({
   const [startScrollLeft, setStartScrollLeft] = useState(0) // To track the initial scroll position
 
   // Update the size of the scroll thumb dynamically
-  const updateScrollThumb = () => {
-    const contentWidth = scrollContentRef.current.scrollWidth
-    const containerWidth = scrollContentRef.current.clientWidth
-    const scrollbarWidth = scrollThumbRef.current.parentElement.clientWidth
+  // const updateScrollThumb = () => {
+  //   const contentWidth = scrollContentRef.current.scrollWidth
+  //   const containerWidth = scrollContentRef.current.clientWidth
+  //   const scrollbarWidth = scrollThumbRef.current.parentElement.clientWidth
 
-    const thumbWidth = Math.max(
-      (containerWidth / contentWidth) * scrollbarWidth,
-      50
-    )
-    scrollThumbRef.current.style.width = `${thumbWidth}px`
-  }
+  //   const thumbWidth = Math.max(
+  //     (containerWidth / contentWidth) * scrollbarWidth,
+  //     50
+  //   )
+  //   scrollThumbRef.current.style.width = `${thumbWidth}px`
+  // }
 
   // Sync content scrolling with the floating scrollbar
   const handleScroll = () => {
@@ -200,8 +200,8 @@ function MyDataTable({
     const scrollContent = scrollContentRef.current
 
     // Handle resize and initial thumb update
-    updateScrollThumb()
-    window.addEventListener('resize', updateScrollThumb)
+    // updateScrollThumb()
+    // window.addEventListener('resize', updateScrollThumb)
 
     // Handle scroll synchronization
     scrollContent.addEventListener('scroll', handleScroll)
@@ -210,7 +210,7 @@ function MyDataTable({
 
     // Cleanup event listeners on unmount
     return () => {
-      window.removeEventListener('resize', updateScrollThumb)
+      // window.removeEventListener('resize', updateScrollThumb)
       scrollContent.removeEventListener('scroll', handleScroll)
       document.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mouseup', handleMouseUp)
@@ -225,13 +225,13 @@ function MyDataTable({
             ref={scrollContentRef}
             className="scroll-content min-w-full overflow-x-auto"
           >
-            <div className="floating-scrollbar fixed bottom-4 left-0 mx-[100px] h-2 w-full bg-gray-100">
-              <div
+            {/* <div className="floating-scrollbar fixed bottom-4 left-0 mx-[100px] h-2 w-full bg-gray-100"> */}
+            {/* <div
                 ref={scrollThumbRef}
                 className="scroll-thumb absolute h-full cursor-pointer rounded-full bg-gray-300"
                 onMouseDown={handleMouseDown}
-              />
-            </div>
+              /> */}
+            {/* </div> */}
             <table className="table w-full border-collapse">
               <thead className="border-t border-gray-light/200 p-0">
                 {headerColumnGroup &&

@@ -128,7 +128,7 @@ function StorageManagement() {
                     <div className="flex flex-1 flex-col gap-1">
                       <div className="flex items-center gap-2">
                         <p className="text-lg-semibold text-gray-light/900">
-                          List of rack
+                          List of storage
                         </p>
                         <MyChip
                           label={`${storageManagement?.meta?.total ?? '-'} item`}
@@ -139,7 +139,7 @@ function StorageManagement() {
                         />
                       </div>
                       <p className="text-sm-regular text-gray-light/600">
-                        Manage rack in this warehouse.
+                        Manage storage in this unit.
                       </p>
                     </div>
                     <div className="flex flex-1 items-start justify-start gap-3">
@@ -262,8 +262,12 @@ function StorageManagement() {
                           <MyButton
                             onClick={() =>
                               handleCurrentSlider(
-                                { status: true, current: 'form-detail-slider' },
-                                value.id
+                                {
+                                  status: true,
+                                  current: 'form-detail-slider',
+                                  data: { category: 'Lantai' },
+                                },
+                                value.Gedung.id
                               )
                             }
                             size="md"
@@ -314,7 +318,7 @@ function StorageManagement() {
                     size="md"
                   >
                     <Plus className="size-5" stroke="currentColor" />
-                    <span className="text-sm-semibold">Tambah lokasi baru</span>
+                    <span className="text-sm-semibold">Tambah gedung</span>
                   </MyButton>
                 </div>
               </div>
