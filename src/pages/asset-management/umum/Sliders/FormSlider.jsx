@@ -8,6 +8,7 @@ import { schema } from '../schema'
 import { handleError, checkErrorYup } from '../../../../services/Helper'
 import MyTextField from '../../../../components/TextField/MyTextField'
 import MyButton from '../../../../components/Button/MyButton'
+import MyAsyncDropdown from '../../../../components/Autocomplete/MyAsyncDropdown'
 
 function FormSlider() {
   const {
@@ -20,6 +21,10 @@ function FormSlider() {
     restoreUmum,
     setParams,
     params,
+    searchUnitList,
+    searchBuildingList,
+    searchFloorList,
+    searchRoomList,
   } = useUmum()
 
   const {
@@ -34,7 +39,7 @@ function FormSlider() {
     resolver: yupResolver(schema),
   })
 
-  const [title, setTitle] = useState('Add elektronik')
+  const [title, setTitle] = useState('Add umum')
 
   useEffect(() => {
     if (currentSlider.id) {
@@ -44,6 +49,10 @@ function FormSlider() {
         setTitle(elektronik.name)
         setValue('name', elektronik.name)
         setValue('kode', elektronik.kode)
+        setValue('unit', elektronik?.storage?.unit)
+        setValue('building', elektronik?.storage?.building)
+        setValue('floor', elektronik?.storage?.storage_floor)
+        setValue('room', elektronik?.storage?.storage_room)
         if (elektronik.deleted_at)
           setParams((value) => ({
             ...value,
@@ -53,7 +62,7 @@ function FormSlider() {
     }
   }, [currentSlider.id, setValue, showUmum])
 
-  // const { aa } = watch()
+  const { unit, building, floor, room } = watch()
 
   const onSubmit = handleSubmit(
     handleError(currentSlider.id ? updateUmum : createUmum, control),
@@ -109,6 +118,103 @@ function FormSlider() {
                   control={control}
                   placeholder="Input elektronik's code"
                   errors={errors?.name?.message}
+                />
+              </label>
+
+              <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
+                <span className="after:ml-0.5 after:content-['*']">Unit</span>
+                <MyAsyncDropdown
+                  getOnRender={false}
+                  trigger={trigger}
+                  // disabled={isArchived}
+                  name="unit"
+                  placeholder="Pilih unit"
+                  control={control}
+                  error={errors?.unit?.message}
+                  isOptionEqualToValue={(option, value) =>
+                    option.id === value.id
+                  }
+                  getOptionLabel={(e) => e?.name}
+                  value={unit}
+                  asyncFunction={searchUnitList}
+                  onChange={(e, value) => {
+                    setValue('unit', value)
+                  }}
+                />
+              </label>
+
+              <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
+                <span className="after:ml-0.5 after:content-['*']">Gedung</span>
+                <MyAsyncDropdown
+                  getOnRender={false}
+                  trigger={trigger}
+                  disabled={!unit}
+                  name="building"
+                  placeholder="Pilih gedung"
+                  control={control}
+                  error={errors?.building?.message}
+                  isOptionEqualToValue={(option, value) =>
+                    option.id === value.id
+                  }
+                  getOptionLabel={(e) => e?.name}
+                  value={building}
+                  asyncFunction={searchBuildingList}
+                  extraData={{ unit_id: unit?.id }}
+                  onChange={(e, value) => {
+                    setValue('building', value)
+                  }}
+                />
+              </label>
+
+              <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
+                <span className="after:ml-0.5 after:content-['*']">Lantai</span>
+                <MyAsyncDropdown
+                  getOnRender={false}
+                  trigger={trigger}
+                  disabled={!building}
+                  name="floor"
+                  placeholder="Pilih lantai"
+                  control={control}
+                  error={errors?.floor?.message}
+                  isOptionEqualToValue={(option, value) =>
+                    option.id === value.id
+                  }
+                  getOptionLabel={(e) => e?.name}
+                  value={floor}
+                  asyncFunction={searchFloorList}
+                  extraData={{ unit_id: unit?.id, building_id: building?.id }}
+                  onChange={(e, value) => {
+                    setValue('floor', value)
+                  }}
+                />
+              </label>
+
+              <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
+                <span className="after:ml-0.5 after:content-['*']">
+                  Ruangan
+                </span>
+                <MyAsyncDropdown
+                  getOnRender={false}
+                  trigger={trigger}
+                  disabled={!floor}
+                  name="room"
+                  placeholder="Pilih ruangan"
+                  control={control}
+                  error={errors?.room?.message}
+                  isOptionEqualToValue={(option, value) =>
+                    option.id === value.id
+                  }
+                  getOptionLabel={(e) => e?.name}
+                  value={room}
+                  asyncFunction={searchRoomList}
+                  extraData={{
+                    unit_id: unit?.id,
+                    building_id: building?.id,
+                    floor_id: floor?.id,
+                  }}
+                  onChange={(e, value) => {
+                    setValue('room', value)
+                  }}
                 />
               </label>
             </div>

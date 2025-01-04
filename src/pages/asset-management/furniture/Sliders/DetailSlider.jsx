@@ -18,7 +18,7 @@ function DetailSlider() {
   const { data } = currentSlider
 
   const [furnitureDetail, setFurnitureDetail] = useState({})
-  console.log('furnitureDetail: ', furnitureDetail)
+  // console.log('furnitureDetail: ', furnitureDetail)
 
   useEffect(() => {
     if (currentSlider.id)

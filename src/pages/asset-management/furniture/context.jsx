@@ -103,11 +103,21 @@ function FurnitureProvider({ children }) {
   )
 
   const updateFurniture = useCallback(
-    (body) =>
-      Service.updateFurniture(currentSlider?.id, body)
+    (body) => {
+      const formData = new FormData()
+
+      formData.append('name', body?.name)
+      formData.append('kode', body?.kode)
+      formData.append('unit_id', body?.unit?.id)
+      formData.append('building_id', body?.building?.id)
+      formData.append('floor_id', body?.floor?.id)
+      formData.append('room_id', body?.room?.id)
+
+      Service.updateFurniture(currentSlider?.id, formData)
         .then(myToaster)
         .then(() => handleCurrentSlider({ status: false, current: null }))
-        .then(getFurnitures),
+        .then(getFurnitures)
+    },
     [currentSlider, getFurnitures, handleCurrentSlider]
   )
 

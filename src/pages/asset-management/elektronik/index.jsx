@@ -232,14 +232,38 @@ function Elektronik() {
                 </Box>
               )}
             />
-            {/* <MyColumn
-              header="Quantity"
-              body={({ quantity }) => (
+            <MyColumn
+              header="Unit"
+              body={({ storage }) => (
                 <Box className="text-sm-regular text-gray-light/600">
-                  {quantity ?? '-'}
+                  {storage?.unit?.name ?? '-'}
                 </Box>
               )}
-            /> */}
+            />
+            <MyColumn
+              header="gedung"
+              body={({ storage }) => (
+                <Box className="text-sm-regular text-gray-light/600">
+                  {storage?.building?.name ?? '-'}
+                </Box>
+              )}
+            />
+            <MyColumn
+              header="Lantai"
+              body={({ storage }) => (
+                <Box className="text-sm-regular text-gray-light/600">
+                  {storage?.storage_floor?.name ?? '-'}
+                </Box>
+              )}
+            />
+            <MyColumn
+              header="Ruangan"
+              body={({ storage }) => (
+                <Box className="text-sm-regular text-gray-light/600">
+                  {storage?.storage_room?.name ?? '-'}
+                </Box>
+              )}
+            />
             <MyColumn
               alignment="right"
               body={(value) =>
