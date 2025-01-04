@@ -49,6 +49,10 @@ function FormSlider() {
         setTitle(furniture.name)
         setValue('name', furniture.name)
         setValue('kode', furniture.kode)
+        setValue('unit', furniture?.storage?.unit)
+        setValue('building', furniture?.storage?.building)
+        setValue('floor', furniture?.storage?.storage_floor)
+        setValue('room', furniture?.storage?.storage_room)
         if (furniture.deleted_at)
           setParams((value) => ({
             ...value,

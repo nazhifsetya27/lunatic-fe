@@ -209,6 +209,9 @@ function FormSliderDetailRackManagement() {
               isOptionEqualToValue={(option, value) => option.id == value.id}
               getOptionLabel={(e) => e.name}
               value={level}
+              renderOption={(e) =>
+                category === 'Ruangan' ? `${e.name} - ${e.kode}` : e.name
+              }
               asyncFunction={
                 category === 'Lantai' ? searchFloorList : searchRoomList
               }

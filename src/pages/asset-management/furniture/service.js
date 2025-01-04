@@ -17,7 +17,7 @@ const Service = {
   deleteFurniture: async (id) => remove(`/asset/furniture/${id}`),
   restoreFurniture: async (id) => patch(`/asset/furniture/${id}/restore`),
 
-  //
+  // option
   searchUnitList: async (params) =>
     await get('/asset/asset-option/unit-list', params),
   searchBuildingList: async (params) =>

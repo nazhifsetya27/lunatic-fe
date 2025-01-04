@@ -83,20 +83,39 @@ function UmumProvider({ children }) {
   )
 
   const createUmum = useCallback(
-    (body) =>
-      Service.createUmum(body)
+    (body) => {
+      const formData = new FormData()
+
+      formData.append('name', body?.name)
+      formData.append('kode', body?.kode)
+      formData.append('unit_id', body?.unit?.id)
+      formData.append('building_id', body?.building?.id)
+      formData.append('floor_id', body?.floor?.id)
+      formData.append('room_id', body?.room?.id)
+      Service.createUmum(formData)
         .then(myToaster)
         .then(() => handleCurrentSlider({ status: false, current: null }))
-        .then(getUmums),
+        .then(getUmums)
+    },
     [getUmums, handleCurrentSlider]
   )
 
   const updateUmum = useCallback(
-    (body) =>
-      Service.updateUmum(currentSlider?.id, body)
+    (body) => {
+      const formData = new FormData()
+
+      formData.append('name', body?.name)
+      formData.append('kode', body?.kode)
+      formData.append('unit_id', body?.unit?.id)
+      formData.append('building_id', body?.building?.id)
+      formData.append('floor_id', body?.floor?.id)
+      formData.append('room_id', body?.room?.id)
+
+      Service.updateUmum(currentSlider?.id, formData)
         .then(myToaster)
         .then(() => handleCurrentSlider({ status: false, current: null }))
-        .then(getUmums),
+        .then(getUmums)
+    },
     [currentSlider, getUmums, handleCurrentSlider]
   )
 
@@ -149,6 +168,15 @@ function UmumProvider({ children }) {
   //     window.open(url, '_blank').focus()
   //   }, [params])
 
+  const searchUnitList = async (param) =>
+    Service.searchUnitList(param).catch(myToaster)
+  const searchBuildingList = async (param) =>
+    Service.searchBuildingList(param).catch(myToaster)
+  const searchFloorList = async (param) =>
+    Service.searchFloorList(param).catch(myToaster)
+  const searchRoomList = async (param) =>
+    Service.searchRoomList(param).catch(myToaster)
+
   useEffect(() => {
     getUmums()
   }, [getUmums])
@@ -172,10 +200,10 @@ function UmumProvider({ children }) {
       updateUmum,
       deleteUmum,
       restoreUmum,
-      //   bulkDeleteUmum,
-      //   importUmum,
-      //   downloadTemplateImport,
-      //   downloadExport,
+      searchUnitList,
+      searchBuildingList,
+      searchFloorList,
+      searchRoomList,
     }),
     [
       params,
@@ -192,6 +220,10 @@ function UmumProvider({ children }) {
       updateUmum,
       deleteUmum,
       restoreUmum,
+      searchUnitList,
+      searchBuildingList,
+      searchFloorList,
+      searchRoomList,
     ]
   )
 
