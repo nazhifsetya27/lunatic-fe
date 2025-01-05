@@ -14,6 +14,7 @@ import { WhatsApp } from '../../components/Icon/MediaSosial'
 
 function Profile() {
   const { getProfile, updateProfile } = useProfile()
+  const mediaUrl = import.meta.env.VITE_API_MEDIA_URL
 
   const [initialValues, setInitialValues] = useState({
     name: '',
@@ -30,12 +31,15 @@ function Profile() {
     control,
     watch,
     trigger,
-    formState: { isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(ProfileSchema),
   })
+
   const { photo, name } = watch()
   const [role, setRole] = useState(null)
+
+  console.log('photo', photo)
 
   const onSubmit = handleSubmit(
     handleError(updateProfile, control),
@@ -46,21 +50,16 @@ function Profile() {
     getProfile().then((data) => {
       setInitialValues({
         name: data?.name ?? '',
-        username: data?.username ?? '',
         email: data?.email ?? '',
-        whatsapp: data?.whatsapp ?? '',
         photo: data?.photo_url ?? '',
-        role: data?.role?.name ?? '',
+        role: data?.role ?? '',
       })
       setValue('name', data?.name)
-      setValue('username', data?.username)
       setValue('email', data?.email)
-      setValue('whatsapp', data?.whatsapp)
-      setValue('photo', data?.photo_url)
+      setValue('photo', data?.photo_url ? `${mediaUrl}${data?.photo_url}` : '')
       setValue('role', data?.role)
-      setRole(data?.role?.name)
+      setRole(data?.role)
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleCancel = () => {
@@ -107,7 +106,7 @@ function Profile() {
                 <MyTextField
                   name="name"
                   control={control}
-                  //   errors={errors?.name}
+                  errors={errors?.name}
                 />
               </div>
               <div>
@@ -121,7 +120,8 @@ function Profile() {
                 <MyTextField
                   name="role"
                   control={control}
-                  //   errors={errors?.name}
+                  errors={errors?.role}
+                  disabled
                 />
               </div>
 
@@ -137,7 +137,7 @@ function Profile() {
                   name="email"
                   trigger={trigger}
                   control={control}
-                  //   errors={errors?.email}
+                  errors={errors?.email}
                   startAdornment={<Mail01 stroke="grey" />}
                 />
               </div>
