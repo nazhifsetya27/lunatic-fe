@@ -3,15 +3,9 @@ import * as Yup from 'yup'
 
 export const ProfileSchema = Yup.object().shape({
   name: Yup.string().required(),
-  username: Yup.string().required(),
+  role: Yup.string().required(),
   email: Yup.string()
     .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'email must be a valid email')
-    .required(),
-  whatsapp: Yup.string()
-    .matches(
-      /^(^(62)[0-9]{7,15}$|^(0)[0-9]{7,15}$)$/,
-      'WhatsApp number must be a valid number '
-    )
     .required(),
 })
 

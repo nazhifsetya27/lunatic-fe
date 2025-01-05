@@ -1,26 +1,19 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import {
-  LogOut04,
-  Users01,
-  ReceiptCheck,
-  Bank,
-  Settings02,
-} from '@untitled-ui/icons-react'
+import { LogOut04, Users01, Settings02 } from '@untitled-ui/icons-react'
 import { useCookies } from 'react-cookie'
 import { AllApplication, StorageCardOne } from '@icon-park/react'
 import MyConfirmModal from '../Modal/MyConfirmModal'
 import MyTooltip from '../Tooltip/MyTooltip'
 import MyButton from '../Button/MyButton'
 import MyAvatar from '../Avatar/MyAvatar'
+import { useApp } from '../../AppContext'
 
-// import MyAvatar from './MyAvatar'
-// import MyButton from './MyButton'
-// import MyTooltip from './MyTooltip'
-// import MyConfirmModal from './MyConfirmModal'
+const mediaUrl = import.meta.env.VITE_API_MEDIA_URL
 
 function SideNavbar({ childs }) {
   const location = useLocation()
+  const { user } = useApp()
 
   const [loading, setLoading] = useState(true)
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
@@ -192,12 +185,11 @@ function SideNavbar({ childs }) {
                       <MyAvatar
                         size={48}
                         stroke="currentColor"
-                        // photo={
-                        //   user?.photo_url
-                        //     ? // ? `${user?.photo_url}?time=${new Date().getTime()}`
-                        //       user?.photo_url
-                        //     : null
-                        // }
+                        photo={
+                          user?.photo_url
+                            ? `${mediaUrl}${user?.photo_url}?time=${new Date().getTime()}`
+                            : null
+                        }
                       />
                     </div>
                   }
