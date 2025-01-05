@@ -30,6 +30,8 @@ import StorageManagement from './pages/Storage-management'
 import { StorageManagementProvider } from './pages/Storage-management/context'
 import Profile from './pages/Profile'
 import { ProfileProvider } from './pages/Profile/context'
+import User from './pages/user'
+import { UserProvider } from './pages/user/context'
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
@@ -126,6 +128,14 @@ function App() {
                     }
                   />
                 </Route>
+                <Route
+                  path="/user"
+                  element={
+                    <UserProvider>
+                      <User />
+                    </UserProvider>
+                  }
+                />
                 <Route
                   path="/profile"
                   element={
