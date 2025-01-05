@@ -79,8 +79,7 @@ function Umum() {
                 Umum management
               </Box>
               <MyChip
-                // label={`${terminals.meta?.total ?? '-'} item`}
-                label="0 item"
+                label={`${umums.meta?.total ?? '-'} item`}
                 rounded="full"
                 color="modern"
                 variant="outlined"
@@ -129,7 +128,7 @@ function Umum() {
               size="md"
             >
               <Plus className="size-5" stroke="currentColor" />
-              <span className="text-sm-semibold">New umum</span>
+              <span className="text-sm-semibold">Asset umum</span>
             </MyButton>
           </Stack>
         </Stack>
@@ -230,6 +229,16 @@ function Umum() {
               body={({ kode }) => (
                 <Box className="text-sm-medium text-gray-light/900">
                   {kode ?? '-'}
+                </Box>
+              )}
+            />
+            <MyColumn
+              header="Kondisi"
+              hideCheckBoxHeader
+              // isArchived={params.archive}
+              body={({ condition }) => (
+                <Box className="text-sm-medium text-gray-light/900">
+                  {condition?.name ?? '-'}
                 </Box>
               )}
             />

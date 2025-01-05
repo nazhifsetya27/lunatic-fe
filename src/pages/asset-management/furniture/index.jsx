@@ -116,7 +116,7 @@ function Furniture() {
               size="md"
             >
               <Plus className="size-5" stroke="currentColor" />
-              <span className="text-sm-semibold">New furniture</span>
+              <span className="text-sm-semibold">Asset furniture</span>
             </MyButton>
           </Stack>
         </Stack>
@@ -217,6 +217,15 @@ function Furniture() {
               body={({ kode }) => (
                 <Box className="text-sm-medium text-gray-light/900">
                   {kode ?? '-'}
+                </Box>
+              )}
+            />
+            <MyColumn
+              header="Kondisi"
+              hideCheckBoxHeader
+              body={({ condition }) => (
+                <Box className="text-sm-medium text-gray-light/900">
+                  {condition?.name ?? '-'}
                 </Box>
               )}
             />

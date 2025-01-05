@@ -163,14 +163,9 @@ function SideNavbar({ childs }) {
                   target={
                     <div
                       className={`${'text-gray-light/500'} flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
+                      onClick={() => setConfirmModalOpen(true)}
                     >
-                      <MyButton
-                        // onClick={() => {
-                        //   if (window.confirm('Anda yakin ingin logout?'))
-                        //     logout()
-                        // }}
-                        onClick={() => setConfirmModalOpen(true)}
-                      >
+                      <MyButton onClick={() => setConfirmModalOpen(true)}>
                         <LogOut04
                           data-test="btn-nav-setting"
                           size={24}

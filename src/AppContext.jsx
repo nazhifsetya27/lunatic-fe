@@ -10,9 +10,10 @@ import { useCookies } from 'react-cookie'
 import { debounce } from 'lodash'
 import { get } from './services/NetworkUtils'
 import { Access } from './services/Helper'
+import { myToaster } from './components/Toaster/MyToaster'
 
 const AppService = {
-  getSession: async () => await get('/v1/auth/session'),
+  getSession: async () => await get('/auth/session'),
 }
 
 const AppContext = createContext()
@@ -22,48 +23,39 @@ function AppProvider({ children }) {
   const [user, setUser] = useState({})
   const [accesses, setAccesses] = useState([])
   const [cookies] = useCookies(['token'])
-  // console.log(accesses)
 
-  // const getSession = useCallback(
-  //   () =>
-  //     AppService.getSession()
-  //       .then((res) => {
-  //         setUser({
-  //           ...res.data,
-  //           photo_url: `${res.data.photo_url}?time=${new Date().getTime()}`,
-  //         })
-  //       })
-  //       .catch(myToaster),
-  //   []
-  // )
-
-  const getAccess = (accesName) =>
-    accesses?.find(
-      (acc) =>
-        acc.name === accesName || acc.name === Access?.ALL_MODULE_WAREHOUSE
-    )
+  const getSession = useCallback(
+    () =>
+      AppService.getSession()
+        .then((res) => {
+          setUser({
+            ...res.data,
+            photo_url: `${res.data.photo_url}?time=${new Date().getTime()}`,
+          })
+        })
+        .catch(myToaster),
+    []
+  )
 
   useEffect(() => {
-    // getSession()
+    getSession()
   }, [])
 
+  const contextValue = useMemo(
+    () => ({
+      slider,
+      setSlider,
+      user,
+      setUser,
+      accesses,
+      setAccesses,
+      getSession,
+    }),
+    [slider, user, accesses]
+  )
+
   return (
-    <AppContext.Provider
-      // eslint-disable-next-line react/jsx-no-constructed-context-values
-      value={{
-        slider,
-        setSlider,
-        user,
-        setUser,
-        // chatSocket,
-        accesses,
-        setAccesses,
-        getAccess,
-        // getSession,
-      }}
-    >
-      {children}
-    </AppContext.Provider>
+    <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>
   )
 }
 

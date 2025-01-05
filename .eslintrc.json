@@ -43,6 +43,7 @@
     "react/no-children-prop": "off",
     "import/no-extraneous-dependencies": "off",
     "no-nested-ternary": "off",
-    "react-hooks/exhaustive-deps": "off"
+    "react-hooks/exhaustive-deps": "off",
+    "import/prefer-default-export": "off"
   }
 }

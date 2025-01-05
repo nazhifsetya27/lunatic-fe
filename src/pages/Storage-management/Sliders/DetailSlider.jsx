@@ -20,14 +20,9 @@ function FormSliderDetailRackManagement() {
   const {
     currentSlider,
     showStorageManagement,
-    createRackManagement,
     updateStorageManagement,
     handleCurrentSlider,
-    searchRackCategoryList,
     bulkDeleteRackManagement,
-    setRackManagement,
-    deleteRackManagement,
-    validateRack,
     createStorageManagement,
     searchFloorList,
     searchRoomList,
@@ -47,13 +42,12 @@ function FormSliderDetailRackManagement() {
     control,
     watch,
     trigger,
-    reset,
     formState: { isSubmitting, errors },
   } = useForm({
     resolver: yupResolver(updateStorageManagementSchema),
   })
 
-  const { type, level } = watch()
+  const { level } = watch()
 
   const onSubmit = handleSubmit(
     handleError(
@@ -204,9 +198,9 @@ function FormSliderDetailRackManagement() {
               name="level"
               control={control}
               error={errors?.level?.message}
-              placeholder={`Select ${category}`}
+              placeholder={`Pilih ${category}`}
               multiple
-              isOptionEqualToValue={(option, value) => option.id == value.id}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               getOptionLabel={(e) => e.name}
               value={level}
               renderOption={(e) =>

@@ -64,10 +64,10 @@ function Settings() {
             type="underline"
             onChange={(value) => navigate(value)}
           >
-            <MyTabButton value="gedung">Database gedung</MyTabButton>
-            <MyTabButton value="lantai">Database lantai</MyTabButton>
-            <MyTabButton value="ruangan">Database ruangan</MyTabButton>
-            <MyTabButton value="kondisi">Database kondisi</MyTabButton>
+            <MyTabButton value="gedung">Gedung</MyTabButton>
+            <MyTabButton value="lantai">Lantai</MyTabButton>
+            <MyTabButton value="ruangan">Ruangan</MyTabButton>
+            <MyTabButton value="kondisi">Kondisi</MyTabButton>
             <MyTabButton value="unit">Unit</MyTabButton>
           </MyHorizontalTab>
         </div>

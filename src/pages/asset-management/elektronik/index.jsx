@@ -128,7 +128,7 @@ function Elektronik() {
               size="md"
             >
               <Plus className="size-5" stroke="currentColor" />
-              <span className="text-sm-semibold">New elektronik</span>
+              <span className="text-sm-semibold">Asset elektronik</span>
             </MyButton>
           </Stack>
         </Stack>
@@ -229,6 +229,14 @@ function Elektronik() {
               body={({ kode }) => (
                 <Box className="text-sm-medium text-gray-light/900">
                   {kode ?? '-'}
+                </Box>
+              )}
+            />
+            <MyColumn
+              header="Kondisi"
+              body={({ condition }) => (
+                <Box className="text-sm-regular text-gray-light/600">
+                  {condition?.name ?? '-'}
                 </Box>
               )}
             />

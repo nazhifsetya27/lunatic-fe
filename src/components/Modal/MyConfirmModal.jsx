@@ -1,5 +1,6 @@
 import { Save01, XClose } from '@untitled-ui/icons-react'
 
+import { useEffect } from 'react'
 import MyModal from './MyModal'
 import MyButton from '../Button/MyButton'
 import MyBgPatternDecorativeCircle from '../Decorative/MyBgPatternDecorativeCircle'
@@ -41,6 +42,23 @@ function ConfirmModalView({
   icon,
   bgColor,
 }) {
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter') {
+        onConfirm()
+        onClose()
+      } else if (event.key === 'Escape' || event.key === 'Backspace') {
+        onClose()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [onConfirm, onClose])
+
   return (
     <div className="flex w-[400px] flex-col gap-5 overflow-hidden rounded-lg bg-base-white">
       <header className="relative flex items-start gap-x-4 pt-6">

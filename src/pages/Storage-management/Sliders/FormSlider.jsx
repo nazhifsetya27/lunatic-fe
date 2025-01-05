@@ -2,30 +2,22 @@ import React, { useEffect, useState } from 'react'
 import SimpleBar from 'simplebar-react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { XClose, RefreshCcw01, Plus } from '@untitled-ui/icons-react'
+import { XClose, Plus } from '@untitled-ui/icons-react'
 import { useStorageManagement } from '../context'
 import { StorageManagementSchema } from '../schema'
 
 import { handleError, checkErrorYup } from '../../../services/Helper'
 import MyAsyncDropdown from '../../../components/Autocomplete/MyAsyncDropdown'
-import MyTextField from '../../../components/TextField/MyTextField'
 import MyButton from '../../../components/Button/MyButton'
 
 function FormSliderNewRackManagement() {
   const {
     currentSlider,
-    showRackManagement,
     createStorageManagement,
     updateRackManagement,
-    params,
     handleCurrentSlider,
-    deleteRackManagement,
-    restoreRackManagement,
-    searchProject,
-    searchRackCategoryList,
     searchBuildingList,
   } = useStorageManagement()
-  // console.log('currentSlider: ', currentSlider)
 
   const {
     setValue,
@@ -45,10 +37,10 @@ function FormSliderNewRackManagement() {
     ),
     checkErrorYup
   )
-  const { immune, deleted_at, type, buildings } = watch()
+  const { buildings } = watch()
 
-  const [title, setTitle] = useState('Add new rack type')
-  useEffect(() => {}, [])
+  const [title, setTitle] = useState('Tambah Gedung')
+
   return (
     <div className="flex h-screen w-[375px] flex-col gap-8">
       <header className="relative flex items-start gap-x-4 px-4 pt-6">
@@ -62,7 +54,7 @@ function FormSliderNewRackManagement() {
           <section className="flex flex-col gap-1">
             <p className="text-xl-semibold text-gray-light/900">{title}</p>
             <p className="text-sm-regular text-gray-light/600">
-              Add the highest level of rack type in this warehouse.
+              Tambahkan gedung baru
             </p>
           </section>
           <hr className="w-100% border-gray-light/200" />
@@ -72,30 +64,6 @@ function FormSliderNewRackManagement() {
         <SimpleBar forceVisible="y" style={{ height: '100%' }}>
           <form className="flex h-full flex-col gap-8" onSubmit={onSubmit}>
             <section className="flex flex-col gap-6 px-4">
-              {/* <div className="flex flex-col gap-y-1.5">
-                <label
-                  htmlFor="name"
-                  className="text-sm-medium text-gray-light/700"
-                >
-                  Rack type
-                </label>
-                <MyAsyncDropdown
-                  trigger={trigger}
-                  name="type"
-                  placeholder="Select rack type"
-                  control={control}
-                  error={errors?.type?.message}
-                  isOptionEqualToValue={(option, value) =>
-                    option.id === value.id
-                  }
-                  getOptionLabel={(e) => e?.type}
-                  value={type}
-                  asyncFunction={searchRackCategoryList}
-                  onChange={(e, value) => {
-                    setValue('type', value)
-                  }}
-                />
-              </div> */}
               <div className="flex flex-col gap-y-1.5">
                 <label
                   htmlFor="name"
@@ -108,10 +76,10 @@ function FormSliderNewRackManagement() {
                   name="buildings"
                   control={control}
                   error={errors?.buildings?.message}
-                  placeholder="Select gedung"
+                  placeholder="Pilih gedung"
                   multiple
                   isOptionEqualToValue={(option, value) =>
-                    option.id == value.id
+                    option.id === value.id
                   }
                   getOptionLabel={(e) => e.name}
                   value={buildings}
@@ -132,21 +100,6 @@ function FormSliderNewRackManagement() {
                   }}
                 />
               </div>
-              {/* <div className="flex flex-col gap-y-1.5">
-                <label
-                  htmlFor="customer"
-                  className="text-sm-medium text-gray-light/700"
-                >
-                  Quantity
-                </label>
-                <MyTextField
-                  name="index"
-                  type="number"
-                  control={control}
-                  placeholder="Input quantity"
-                  // errors={errors?.message}
-                />
-              </div> */}
             </section>
             <footer className="flex items-center justify-center gap-4 border-t border-gray-light/200 px-4 py-4">
               <MyButton

@@ -335,10 +335,11 @@ function StorageManagement() {
                 </div>
                 <div className="z-20 flex flex-col gap-2 text-center">
                   <p className="text-xl-semibold text-gray-light/900">
-                    No storage found
+                    Database storage tidak ditemukan
                   </p>
                   <p className="text-md-regular text-gray-light/600">
-                    Your highest storage didn't found. Please create first
+                    Tidak ada data storage yang ditemukan. Silahkan tambahkan
+                    terlebih dahulu.
                   </p>
                 </div>
                 <div className="z-10">
