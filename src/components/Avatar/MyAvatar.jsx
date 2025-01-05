@@ -1,12 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { User01 } from '@untitled-ui/icons-react'
 
-function MyAvatar({
-  photo,
-  size = 40,
-  iconSize = 24,
-  showOnlineStatus = false,
-}) {
+function MyAvatar({ photo, size = 40, iconSize, showOnlineStatus = false }) {
   const [isPhotoError, setIsPhotoError] = useState(false)
   const ref = useRef()
 
@@ -44,7 +39,7 @@ function MyAvatar({
           <div className="flex h-full w-full items-center justify-center bg-gray-light/100">
             <User01
               size={iconSize}
-              className="text-gray-light/500"
+              className={`${iconSize ? `size-${iconSize}` : ''} text-gray-light/500`}
               stroke="currentColor"
             />
           </div>
