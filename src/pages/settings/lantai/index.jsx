@@ -3,18 +3,14 @@ import { debounce } from 'lodash'
 import {
   Edit01,
   Plus,
-  UploadCloud02,
   SearchLg,
   FilterLines,
-  DownloadCloud02,
   RefreshCcw01,
 } from '@untitled-ui/icons-react'
 
+import { Refresh } from '@icon-park/react'
 import FormSlider from './Sliders/FormSlider'
-import ImportSlider from './Sliders/ImportSlider'
 import { useFloor } from './context'
-import { useApp } from '../../../AppContext'
-import { Access } from '../../../services/Helper'
 import MyModalSlider from '../../../components/ModalSlider/MyModalSlider'
 import MyChip from '../../../components/Chip/MyChip'
 import MyButton from '../../../components/Button/MyButton'
@@ -30,9 +26,9 @@ function Floor() {
     floors,
     params,
     setParams,
-    setWarehouses,
-    restoreWarehouse,
-    bulkDeleteWarehouse,
+    setFloors,
+    restoreFloor,
+    bulkDeleteFloor,
   } = useFloor()
 
   return (
@@ -42,11 +38,6 @@ function Floor() {
         element={<FormSlider />}
         onClose={() => handleCurrentSlider(null)}
       />
-      {/* <MyModalSlider
-        open={currentSlider?.current === 'import-slider'}
-        element={<ImportSlider />}
-        onClose={() => handleCurrentSlider(null)}
-      /> */}
       <div className="w-full px-8">
         <div className="w-full rounded-xl border border-gray-light/200 shadow-shadows/shadow-xs">
           <div className="flex flex-col gap-5">
@@ -69,30 +60,6 @@ function Floor() {
                 </p>
               </div>
               <div className="flex items-start justify-start gap-3">
-                {/* <MyButton
-                  // onClick={handleDownloadExport}
-                  color="primary"
-                  variant="outlined"
-                  size="md"
-                >
-                  <DownloadCloud02 className="size-5" stroke="currentColor" />
-                  <span className="text-sm-semibold">Export</span>
-                </MyButton> */}
-
-                {/* <MyButton
-                  onClick={() =>
-                    handleCurrentSlider({
-                      status: true,
-                      current: 'import-slider',
-                    })
-                  }
-                  color="secondary"
-                  variant="outlined"
-                  size="md"
-                >
-                  <UploadCloud02 className="size-5" stroke="currentColor" />
-                  <span className="text-sm-semibold">Import</span>
-                </MyButton>
                 <MyButton
                   onClick={() =>
                     handleCurrentSlider({
@@ -105,8 +72,8 @@ function Floor() {
                   size="md"
                 >
                   <Plus className="size-5" stroke="currentColor" />
-                  <span className="text-sm-semibold">New warehouse</span>
-                </MyButton> */}
+                  <span className="text-sm-semibold">New Floor</span>
+                </MyButton>
               </div>
             </div>
             <hr className="border-gray-light/200" />
@@ -180,9 +147,9 @@ function Floor() {
               onChangePagination={(page) => {
                 setParams((value) => ({ ...value, page }))
               }}
-              onDeleteAll={bulkDeleteWarehouse}
+              onDeleteAll={bulkDeleteFloor}
               selectionMode="multiple"
-              onSelectionChange={(value) => setWarehouses(value)}
+              onSelectionChange={(value) => setFloors(value)}
             >
               <MyColumn
                 field="name"
@@ -227,12 +194,12 @@ function Floor() {
                       <MyButton
                         onClick={(e) => {
                           e.stopPropagation()
-                          restoreWarehouse(warehouse.id)
+                          restoreFloor(warehouse.id)
                         }}
                         size="md"
                         variant="text"
                       >
-                        <RefreshCcw01
+                        <Refresh
                           className="size-5 text-gray-light/600"
                           stroke="currentColor"
                         />

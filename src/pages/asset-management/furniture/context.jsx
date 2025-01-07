@@ -91,8 +91,9 @@ function FurnitureProvider({ children }) {
       formData.append('kode', body?.kode)
       formData.append('unit_id', body?.unit?.id)
       formData.append('building_id', body?.building?.id)
-      formData.append('floor_id', body?.floor?.id)
-      formData.append('room_id', body?.room?.id)
+
+      if (body?.floor?.id) formData.append('floor_id', body.floor.id)
+      if (body?.room?.id) formData.append('room_id', body.room.id)
 
       Service.createFurniture(formData)
         .then(myToaster)
@@ -110,8 +111,9 @@ function FurnitureProvider({ children }) {
       formData.append('kode', body?.kode)
       formData.append('unit_id', body?.unit?.id)
       formData.append('building_id', body?.building?.id)
-      formData.append('floor_id', body?.floor?.id)
-      formData.append('room_id', body?.room?.id)
+
+      if (body?.floor?.id) formData.append('floor_id', body.floor.id)
+      if (body?.room?.id) formData.append('room_id', body.room.id)
 
       Service.updateFurniture(currentSlider?.id, formData)
         .then(myToaster)

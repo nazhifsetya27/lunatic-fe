@@ -156,15 +156,15 @@ function Elektronik() {
                     stroke="currentColor"
                   />
                 }
-                // onChangeForm={debounce(
-                //   (e) =>
-                //     setParams((value) => ({
-                //       ...value,
-                //       search: e.target.value,
-                //       page: 1,
-                //     })),
-                //   300
-                // )}
+                onChangeForm={debounce(
+                  (e) =>
+                    setParams((value) => ({
+                      ...value,
+                      search: e.target.value,
+                      page: 1,
+                    })),
+                  300
+                )}
               />
             </div>
             {/* <MyFilterModal

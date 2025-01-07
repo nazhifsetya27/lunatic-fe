@@ -10,11 +10,9 @@ import {
   RefreshCcw01,
 } from '@untitled-ui/icons-react'
 
+import { Refresh } from '@icon-park/react'
 import FormSlider from './Sliders/FormSlider'
-import ImportSlider from './Sliders/ImportSlider'
 import { useRoom } from './context'
-import { useApp } from '../../../AppContext'
-import { Access } from '../../../services/Helper'
 import MyModalSlider from '../../../components/ModalSlider/MyModalSlider'
 import MyChip from '../../../components/Chip/MyChip'
 import MyButton from '../../../components/Button/MyButton'
@@ -30,9 +28,9 @@ function Room() {
     rooms,
     params,
     setParams,
-    setWarehouses,
-    restoreWarehouse,
-    bulkDeleteWarehouse,
+    setRooms,
+    restoreRoom,
+    bulkDeleteRoom,
   } = useRoom()
 
   return (
@@ -42,11 +40,6 @@ function Room() {
         element={<FormSlider />}
         onClose={() => handleCurrentSlider(null)}
       />
-      {/* <MyModalSlider
-        open={currentSlider?.current === 'import-slider'}
-        element={<ImportSlider />}
-        onClose={() => handleCurrentSlider(null)}
-      /> */}
       <div className="w-full px-8">
         <div className="w-full rounded-xl border border-gray-light/200 shadow-shadows/shadow-xs">
           <div className="flex flex-col gap-5">
@@ -79,20 +72,6 @@ function Room() {
                   <span className="text-sm-semibold">Export</span>
                 </MyButton> */}
 
-                {/* <MyButton
-                  onClick={() =>
-                    handleCurrentSlider({
-                      status: true,
-                      current: 'import-slider',
-                    })
-                  }
-                  color="secondary"
-                  variant="outlined"
-                  size="md"
-                >
-                  <UploadCloud02 className="size-5" stroke="currentColor" />
-                  <span className="text-sm-semibold">Import</span>
-                </MyButton>
                 <MyButton
                   onClick={() =>
                     handleCurrentSlider({
@@ -105,8 +84,8 @@ function Room() {
                   size="md"
                 >
                   <Plus className="size-5" stroke="currentColor" />
-                  <span className="text-sm-semibold">New warehouse</span>
-                </MyButton> */}
+                  <span className="text-sm-semibold">New room</span>
+                </MyButton>
               </div>
             </div>
             <hr className="border-gray-light/200" />
@@ -180,9 +159,9 @@ function Room() {
               onChangePagination={(page) => {
                 setParams((value) => ({ ...value, page }))
               }}
-              onDeleteAll={bulkDeleteWarehouse}
+              onDeleteAll={bulkDeleteRoom}
               selectionMode="multiple"
-              onSelectionChange={(value) => setWarehouses(value)}
+              onSelectionChange={(value) => setRooms(value)}
             >
               <MyColumn
                 field="name"
@@ -198,6 +177,16 @@ function Room() {
                 header="Kode"
                 body={({ kode }) => (
                   <p className="text-sm-regular text-gray-light/600">{kode}</p>
+                )}
+              />
+
+              <MyColumn
+                field=""
+                header="Description"
+                body={({ description }) => (
+                  <p className="text-sm-regular text-gray-light/600">
+                    {description ?? '-'}
+                  </p>
                 )}
               />
 
@@ -227,12 +216,12 @@ function Room() {
                       <MyButton
                         onClick={(e) => {
                           e.stopPropagation()
-                          restoreWarehouse(warehouse.id)
+                          restoreRoom(warehouse.id)
                         }}
                         size="md"
                         variant="text"
                       >
-                        <RefreshCcw01
+                        <Refresh
                           className="size-5 text-gray-light/600"
                           stroke="currentColor"
                         />

@@ -108,7 +108,7 @@ function FormSlider() {
                   disabled={params?.archived}
                   name="name"
                   control={control}
-                  placeholder="Input elektronik's name"
+                  placeholder="Input name"
                   errors={errors?.name?.message}
                 />
               </label>
@@ -119,7 +119,7 @@ function FormSlider() {
                   disabled={params?.archived}
                   name="kode"
                   control={control}
-                  placeholder="Input elektronik's code"
+                  placeholder="Input code"
                   errors={errors?.name?.message}
                 />
               </label>
@@ -131,7 +131,7 @@ function FormSlider() {
                   trigger={trigger}
                   // disabled={isArchived}
                   name="unit"
-                  placeholder="Pilih unit"
+                  placeholder="Select unit"
                   control={control}
                   error={errors?.unit?.message}
                   isOptionEqualToValue={(option, value) =>
@@ -153,7 +153,7 @@ function FormSlider() {
                   trigger={trigger}
                   disabled={!unit}
                   name="building"
-                  placeholder="Pilih gedung"
+                  placeholder="Select gedung"
                   control={control}
                   error={errors?.building?.message}
                   isOptionEqualToValue={(option, value) =>
@@ -176,7 +176,7 @@ function FormSlider() {
                   trigger={trigger}
                   disabled={!building}
                   name="floor"
-                  placeholder="Pilih lantai"
+                  placeholder="Select lantai"
                   control={control}
                   error={errors?.floor?.message}
                   isOptionEqualToValue={(option, value) =>
@@ -201,7 +201,7 @@ function FormSlider() {
                   trigger={trigger}
                   disabled={!floor}
                   name="room"
-                  placeholder="Pilih ruangan"
+                  placeholder="Select ruangan"
                   control={control}
                   error={errors?.room?.message}
                   isOptionEqualToValue={(option, value) =>
