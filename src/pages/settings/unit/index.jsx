@@ -31,7 +31,7 @@ function Unit() {
     params,
     setParams,
     setWarehouses,
-    restoreWarehouse,
+    restoreUnit,
     bulkDeleteWarehouse,
   } = useUnit()
 
@@ -227,7 +227,7 @@ function Unit() {
                       <MyButton
                         onClick={(e) => {
                           e.stopPropagation()
-                          restoreWarehouse(warehouse.id)
+                          restoreUnit(warehouse.id)
                         }}
                         size="md"
                         variant="text"

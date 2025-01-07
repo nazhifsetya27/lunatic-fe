@@ -1,20 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { debounce } from 'lodash'
-import {
-  Edit01,
-  Plus,
-  UploadCloud02,
-  SearchLg,
-  FilterLines,
-  DownloadCloud02,
-  RefreshCcw01,
-} from '@untitled-ui/icons-react'
+import { Edit01, Plus, SearchLg } from '@untitled-ui/icons-react'
 
+import { Refresh } from '@icon-park/react'
 import FormSlider from './Sliders/FormSlider'
-import ImportSlider from './Sliders/ImportSlider'
 import { useBuilding } from './context'
-import { useApp } from '../../../AppContext'
-import { Access } from '../../../services/Helper'
 import MyModalSlider from '../../../components/ModalSlider/MyModalSlider'
 import MyChip from '../../../components/Chip/MyChip'
 import MyButton from '../../../components/Button/MyButton'
@@ -31,7 +21,7 @@ function Building() {
     params,
     setParams,
     setWarehouses,
-    restoreWarehouse,
+    restoreBuilding,
     bulkDeleteWarehouse,
   } = useBuilding()
 
@@ -42,11 +32,6 @@ function Building() {
         element={<FormSlider />}
         onClose={() => handleCurrentSlider(null)}
       />
-      {/* <MyModalSlider
-        open={currentSlider?.current === 'import-slider'}
-        element={<ImportSlider />}
-        onClose={() => handleCurrentSlider(null)}
-      /> */}
       <div className="w-full px-8">
         <div className="w-full rounded-xl border border-gray-light/200 shadow-shadows/shadow-xs">
           <div className="flex flex-col gap-5">
@@ -69,30 +54,6 @@ function Building() {
                 </p>
               </div>
               <div className="flex items-start justify-start gap-3">
-                {/* <MyButton
-                  // onClick={handleDownloadExport}
-                  color="primary"
-                  variant="outlined"
-                  size="md"
-                >
-                  <DownloadCloud02 className="size-5" stroke="currentColor" />
-                  <span className="text-sm-semibold">Export</span>
-                </MyButton> */}
-
-                {/* <MyButton
-                  onClick={() =>
-                    handleCurrentSlider({
-                      status: true,
-                      current: 'import-slider',
-                    })
-                  }
-                  color="secondary"
-                  variant="outlined"
-                  size="md"
-                >
-                  <UploadCloud02 className="size-5" stroke="currentColor" />
-                  <span className="text-sm-semibold">Import</span>
-                </MyButton>
                 <MyButton
                   onClick={() =>
                     handleCurrentSlider({
@@ -105,8 +66,8 @@ function Building() {
                   size="md"
                 >
                   <Plus className="size-5" stroke="currentColor" />
-                  <span className="text-sm-semibold">New warehouse</span>
-                </MyButton> */}
+                  <span className="text-sm-semibold">New building</span>
+                </MyButton>
               </div>
             </div>
             <hr className="border-gray-light/200" />
@@ -227,12 +188,12 @@ function Building() {
                       <MyButton
                         onClick={(e) => {
                           e.stopPropagation()
-                          restoreWarehouse(warehouse.id)
+                          restoreBuilding(warehouse.id)
                         }}
                         size="md"
                         variant="text"
                       >
-                        <RefreshCcw01
+                        <Refresh
                           className="size-5 text-gray-light/600"
                           stroke="currentColor"
                         />

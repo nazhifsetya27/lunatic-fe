@@ -90,8 +90,10 @@ function UmumProvider({ children }) {
       formData.append('kode', body?.kode)
       formData.append('unit_id', body?.unit?.id)
       formData.append('building_id', body?.building?.id)
-      formData.append('floor_id', body?.floor?.id)
-      formData.append('room_id', body?.room?.id)
+
+      if (body?.floor?.id) formData.append('floor_id', body.floor.id)
+      if (body?.room?.id) formData.append('room_id', body.room.id)
+
       Service.createUmum(formData)
         .then(myToaster)
         .then(() => handleCurrentSlider({ status: false, current: null }))
@@ -108,8 +110,9 @@ function UmumProvider({ children }) {
       formData.append('kode', body?.kode)
       formData.append('unit_id', body?.unit?.id)
       formData.append('building_id', body?.building?.id)
-      formData.append('floor_id', body?.floor?.id)
-      formData.append('room_id', body?.room?.id)
+
+      if (body?.floor?.id) formData.append('floor_id', body.floor.id)
+      if (body?.room?.id) formData.append('room_id', body.room.id)
 
       Service.updateUmum(currentSlider?.id, formData)
         .then(myToaster)

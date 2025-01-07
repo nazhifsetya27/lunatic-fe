@@ -9,7 +9,6 @@ import React, {
 import FormData from 'form-data'
 import Service from './service'
 import { useApp } from '../../../AppContext'
-import { appendFormdata } from '../../../services/Helper'
 import { myToaster } from '../../../components/Toaster/MyToaster'
 
 const FloorContext = createContext()
@@ -24,11 +23,6 @@ function FloorProvider({ children }) {
   })
 
   const [params, setParams] = useState({ page: 1, filter: [], archive: 0 })
-
-  const [currentModal, setCurrentModal] = useState({
-    status: false,
-    current: null,
-  })
 
   const [currentSlider, setCurrentSlider] = useState({
     status: false,
@@ -52,7 +46,7 @@ function FloorProvider({ children }) {
 
   const getFloor = useCallback(
     () =>
-      Service.getFloors(params)
+      Service.getFloor(params)
         .then((res) => {
           setFloors({ data: res.data, filter: res.filter, meta: res.meta })
         })
@@ -60,82 +54,50 @@ function FloorProvider({ children }) {
     [params]
   )
 
-  // const showFloor = async (id) =>
-  //   await Service.showFloor(id)
-  //     .then((res) => res.data)
-  //     .catch(myToaster)
+  const showFloor = async (id) =>
+    await Service.showFloor(id)
+      .then((res) => res.data)
+      .catch(myToaster)
 
-  // const createFloor = async (body) => {
-  //   console.log('create body: ', body)
+  const createFloor = async (body) => {
+    const formData = new FormData()
+    formData.append('name', body.name)
+    formData.append('kode', body.kode)
 
-  //   const formData = new FormData()
-  //   formData.append('name', body.name)
-  //   formData.append('code', body.code)
-  //   formData.append('phone_number', body.phone_number)
-  //   formData.append('province_id', body.province.id)
-  //   formData.append('city_id', body.city.id)
-  //   formData.append('district_id', body.district.id)
-  //   formData.append('sub_district_id', body.zip_code.id)
-  //   formData.append('zip_code_id', body.zip_code.id)
-  //   formData.append('address', body.address)
-  //   if (body.technician[0] !== null) {
-  //     body.technician.map((technisi, index) =>
-  //       formData.append(`technician_ids[${index}]`, technisi.id)
-  //     )
-  //   }
-  //   // formData.append('territory_type', body.territory_type)
-  //   // body.adm_areas.map((area, index) =>
-  //   //   formData.append(`adm_areas[${index}]`, area.id)
-  //   // )
-  //   await Service.createFloor(formData)
-  //     .then(myToaster)
-  //     .then(() => handleCurrentSlider({ status: false, current: null }))
-  //     .then(getFloor)
-  // }
-  // const updateFloor = async (body) => {
-  //   const formData = new FormData()
-  //   console.log('update body: ', body)
+    await Service.createFloor(formData)
+      .then(myToaster)
+      .then(() => handleCurrentSlider({ status: false, current: null }))
+      .then(getFloor)
+  }
 
-  //   formData.append('name', body.name)
-  //   formData.append('code', body.code)
-  //   formData.append('phone_number', body.phone_number)
-  //   formData.append('province_id', body.province.id)
-  //   formData.append('city_id', body.city.id)
-  //   formData.append('district_id', body.district.id)
-  //   formData.append('sub_district_id', body.zip_code.id)
-  //   formData.append('zip_code_id', body.zip_code.id)
-  //   formData.append('address', body.address)
-  //   if (body.technician[0] !== null) {
-  //     body.technician.map((technisi, index) =>
-  //       formData.append(`technician_ids[${index}]`, technisi.id)
-  //     )
-  //   }
-  //   // formData.append('territory_type', body.territory_type)
-  //   // body.adm_areas.map((area, index) =>
-  //   //   formData.append(`adm_areas[${index}]`, area.id)
-  //   // )
-  //   await Service.updateFloor(currentSlider?.id, formData, {
-  //     previous_technician_ids: currentTechnicianIds,
-  //   })
-  //     .then(myToaster)
-  //     .then(() => handleCurrentSlider({ status: false, current: null }))
-  //     .then(getFloor)
-  // }
-  // const deleteFloor = async (id) => {
-  //   if (window.confirm('Anda yakin ingin menghapus data ini?'))
-  //     return await Service.deleteFloor(id)
-  //       .then(myToaster)
-  //       .then(() => handleCurrentSlider({ status: false, current: null }))
-  //       .then(getFloor)
-  //       .catch(myToaster)
-  // }
-  // const restoreFloor = async (id) => {
-  //   await Service.restoreFloor(id)
-  //     .then(myToaster)
-  //     .then(() => handleCurrentSlider({ status: false, current: null }))
-  //     .then(getFloor)
-  //     .catch(myToaster)
-  // }
+  const updateFloor = async (body) => {
+    const formData = new FormData()
+
+    formData.append('name', body.name)
+    formData.append('kode', body.kode)
+
+    await Service.updateFloor(currentSlider?.id, formData)
+      .then(myToaster)
+      .then(() => handleCurrentSlider({ status: false, current: null }))
+      .then(getFloor)
+  }
+
+  const deleteFloor = async (id) => {
+    if (window.confirm('Anda yakin ingin menghapus data ini?'))
+      return await Service.deleteFloor(id)
+        .then(myToaster)
+        .then(() => handleCurrentSlider({ status: false, current: null }))
+        .then(getFloor)
+        .catch(myToaster)
+  }
+
+  const restoreFloor = async (id) => {
+    await Service.restoreFloor(id)
+      .then(myToaster)
+      .then(() => handleCurrentSlider({ status: false, current: null }))
+      .then(getFloor)
+      .catch(myToaster)
+  }
 
   useEffect(() => {
     getFloor()
@@ -149,8 +111,22 @@ function FloorProvider({ children }) {
       params,
       setParams,
       floors,
+      showFloor,
+      createFloor,
+      updateFloor,
+      deleteFloor,
+      restoreFloor,
     }),
-    [params, currentSlider, floors]
+    [
+      params,
+      currentSlider,
+      floors,
+      showFloor,
+      createFloor,
+      updateFloor,
+      deleteFloor,
+      restoreFloor,
+    ]
   )
 
   return (
