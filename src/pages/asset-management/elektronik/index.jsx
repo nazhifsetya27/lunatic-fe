@@ -24,7 +24,7 @@ import moment from 'moment'
 // } from '@interstellar-component'
 import { Box, Divider, Stack } from '@mui/material'
 import { Download, Plus, Refresh, Search, Upload } from '@icon-park/react'
-import { LinkExternal02 } from '@untitled-ui/icons-react'
+import { FilterLines, LinkExternal02 } from '@untitled-ui/icons-react'
 import MyChip from '../../../components/Chip/MyChip'
 import MyButton from '../../../components/Button/MyButton'
 import MyTextField from '../../../components/TextField/MyTextField'
@@ -37,6 +37,7 @@ import MyArchiveButton from '../../../components/Button/MyArchiveButton'
 import MyModalSlider from '../../../components/ModalSlider/MyModalSlider'
 import DetailSlider from './Sliders/DetailSlider'
 import FormSlider from './Sliders/FormSlider'
+import MyFilterModal from '../../../components/Modal/MyFilterModal'
 // import DetailSlider from './Sliders/DetailSlider'
 // import ImportSlider from './Sliders/ImportSlider'
 // import { useApp } from '../../../AppContext'
@@ -167,9 +168,9 @@ function Elektronik() {
                 )}
               />
             </div>
-            {/* <MyFilterModal
+            <MyFilterModal
               id="filter-terminal"
-              currentFilters={terminals?.filter}
+              currentFilters={elektronics?.filter}
               onChange={(filter) => {
                 setParams((prev) => ({
                   ...prev,
@@ -190,7 +191,7 @@ function Elektronik() {
                   <span className="text-sm-semibold">Filters</span>
                 </MyButton>
               )}
-            /> */}
+            />
           </Stack>
         </Stack>
 
