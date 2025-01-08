@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { LogOut04, Users01, Settings02 } from '@untitled-ui/icons-react'
 import { useCookies } from 'react-cookie'
-import { AllApplication, StorageCardOne } from '@icon-park/react'
+import { AdProduct, AllApplication, StorageCardOne } from '@icon-park/react'
 import MyConfirmModal from '../Modal/MyConfirmModal'
 import MyTooltip from '../Tooltip/MyTooltip'
 import MyButton from '../Button/MyButton'
@@ -102,31 +102,31 @@ function SideNavbar({ childs }) {
                   </p>
                 </MyTooltip>
               </Link>
+              <Link to="/stock-adjustment">
+                <MyTooltip
+                  placement="right"
+                  target={
+                    <div
+                      className={`${
+                        location?.pathname.includes('/stock-adjustment')
+                          ? 'bg-gray-light/50 text-gray-light/700'
+                          : 'text-gray-light/500'
+                      } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
+                    >
+                      <AdProduct size={24} stroke="currentColor" />
+                    </div>
+                  }
+                >
+                  <p className="text-xs-semibold text-white">
+                    Stock adjustment
+                  </p>
+                </MyTooltip>
+              </Link>
             </div>
 
             {/* bottom */}
             <div className="flex w-full flex-col items-center gap-y-6 pb-6">
               <div className="flex flex-col gap-y-2">
-                {/* <Link to="/profile">
-                  <MyTooltip
-                    placement="right"
-                    target={
-                      <div
-                        className={`${
-                          location?.pathname === '/terminal'
-                            ? 'bg-gray-light/50 text-gray-light/700'
-                            : 'text-gray-light/500'
-                        } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
-                      >
-                        <Signal01 size={24} stroke="currentColor" />
-                      </div>
-                    }
-                  >
-                    <span className="text-xs-semibold text-white">
-                      Terminal diagnostic
-                    </span>
-                  </MyTooltip>
-                </Link> */}
                 <Link to="/settings">
                   <MyTooltip
                     placement="right"
