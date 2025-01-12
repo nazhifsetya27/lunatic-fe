@@ -32,6 +32,12 @@ import Profile from './pages/Profile'
 import { ProfileProvider } from './pages/Profile/context'
 import User from './pages/user'
 import { UserProvider } from './pages/user/context'
+import StockAdjustment from './pages/stock-adjustment'
+import { StockAdjustmentProvider } from './pages/stock-adjustment/context'
+import NotFound from './pages/404'
+import StockAdjustmentInventory from './pages/stock-adjustment-inventory'
+import { StockAdjustmentInventoryProvider } from './pages/stock-adjustment-inventory/context'
+import FurnitureStockAdjustment from './pages/stock-adjustment-inventory/furniture'
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
@@ -58,6 +64,7 @@ function App() {
               <Routes>
                 <Route path="/login" element={<Navigate to="/" replace />} />
                 <Route path="/" element={<Welcome />} />
+                {/* ASSET */}
                 <Route path="/asset" element={<AssetManagement />}>
                   <Route index element={<Navigate to="furniture" replace />} />
                   <Route
@@ -85,6 +92,7 @@ function App() {
                     }
                   />
                 </Route>
+                {/* SETTINGS */}
                 <Route path="/settings" element={<Settings />}>
                   <Route index element={<Navigate to="gedung" replace />} />
                   <Route
@@ -152,6 +160,30 @@ function App() {
                     </StorageManagementProvider>
                   }
                 />
+                <Route
+                  path="/stock-adjustment"
+                  element={
+                    <StockAdjustmentProvider>
+                      <StockAdjustment />
+                    </StockAdjustmentProvider>
+                  }
+                />
+                <Route
+                  path="/stock-adjustment/:stock_adjustment_id"
+                  element={
+                    <StockAdjustmentInventoryProvider>
+                      <StockAdjustmentInventory />
+                    </StockAdjustmentInventoryProvider>
+                  }
+                >
+                  <Route index element={<Navigate to="furniture" replace />} />
+                  <Route
+                    path="furniture"
+                    element={<FurnitureStockAdjustment />}
+                  />
+                </Route>
+                <Route path="/404" element={<NotFound />} />
+                <Route path="*" element={<Navigate to="/404" replace />} />
               </Routes>
             </div>
           </div>
