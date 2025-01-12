@@ -124,7 +124,7 @@ function MyFilterModal({ id, target, currentFilters, onChange }) {
     setOptions(currentFilters)
   }, [currentFilters])
 
-  console.log('options', options)
+  // console.log('options', options)
   return (
     <MyPopper
       id={id}
