@@ -20,11 +20,17 @@ function UmumProvider({ children }) {
     meta: [],
     filter: [],
   })
-  const [params, setParams] = useState({ page: 1, filter: [], archive: 0 })
+  const [params, setParams] = useState({
+    page: 1,
+    filter: [],
+    archive: 0,
+    detailtab: 'general',
+  })
   const [currentSlider, setCurrentSlider] = useState({
     status: false,
     current: null,
   })
+  const [print, setPrint] = useState()
 
   useEffect(() => {
     setSlider(currentSlider.status)
@@ -78,6 +84,14 @@ function UmumProvider({ children }) {
     (id) =>
       Service.getUmumDetail(id)
         .then((res) => res)
+        .catch(myToaster),
+    []
+  )
+
+  const getPrint = useCallback(
+    (id) =>
+      Service.getPrint(id)
+        .then((res) => setPrint(res?.data?.printCode))
         .catch(myToaster),
     []
   )
@@ -207,6 +221,8 @@ function UmumProvider({ children }) {
       searchBuildingList,
       searchFloorList,
       searchRoomList,
+      getPrint,
+      print,
     }),
     [
       params,

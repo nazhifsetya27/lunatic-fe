@@ -20,11 +20,17 @@ function FurnitureProvider({ children }) {
     meta: [],
     filter: [],
   })
-  const [params, setParams] = useState({ page: 1, filter: [], archive: 0 })
+  const [params, setParams] = useState({
+    page: 1,
+    filter: [],
+    archive: 0,
+    detailtab: 'general',
+  })
   const [currentSlider, setCurrentSlider] = useState({
     status: false,
     current: null,
   })
+  const [print, setPrint] = useState()
 
   useEffect(() => {
     setSlider(currentSlider.status)
@@ -79,6 +85,13 @@ function FurnitureProvider({ children }) {
     (id) =>
       Service.getFurnitureDetail(id)
         .then((res) => res)
+        .catch(myToaster),
+    []
+  )
+  const getPrint = useCallback(
+    (id) =>
+      Service.getPrint(id)
+        .then((res) => setPrint(res?.data?.printCode))
         .catch(myToaster),
     []
   )
@@ -208,6 +221,8 @@ function FurnitureProvider({ children }) {
       searchBuildingList,
       searchFloorList,
       searchRoomList,
+      getPrint,
+      print,
     }),
     [
       params,

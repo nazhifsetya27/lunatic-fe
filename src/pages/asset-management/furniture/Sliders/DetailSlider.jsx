@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Edit01, XClose, RefreshCcw01 } from '@untitled-ui/icons-react'
-import SimpleBar from 'simplebar-react'
 import { useFurniture } from '../context'
-import MyDetailView from '../../../../components/DetailView/MyDetailView'
 import MyButton from '../../../../components/Button/MyButton'
+import General from '../Tabs/General'
+import MyHorizontalTab from '../../../../components/HorizontalTab/MyHorizontalTab'
+import MyTabButton from '../../../../components/HorizontalTab/MyTabButton'
+import Print from '../Tabs/Print'
 
 function DetailSlider() {
   const {
@@ -12,20 +14,31 @@ function DetailSlider() {
     getFurnitureDetail,
     deleteFurniture,
     restoreFurniture,
+    setParams,
+    params,
+    getPrint,
+    print,
   } = useFurniture()
 
-  // console.log('currentSlider: ', currentSlider)
   const { data } = currentSlider
 
   const [furnitureDetail, setFurnitureDetail] = useState({})
-  // console.log('furnitureDetail: ', furnitureDetail)
 
   useEffect(() => {
-    if (currentSlider.id)
+    if (currentSlider.id) {
       getFurnitureDetail(currentSlider.id).then((detail) => {
         setFurnitureDetail(detail.data)
       })
+      getPrint(currentSlider.id)
+    }
   }, [currentSlider.id, getFurnitureDetail])
+
+  useEffect(() => {
+    setParams((prev) => ({
+      ...prev,
+      detailtab: 'general',
+    }))
+  }, [])
 
   return (
     <div className="flex h-screen w-[375px] flex-col">
@@ -49,28 +62,28 @@ function DetailSlider() {
             <p className="text-md-regular text-gray-light/600">Furniture</p>
           </div>
         </div>
-        <hr className="border-gray-light/200" />
       </header>
 
-      <div className="flex-1 overflow-hidden">
-        <SimpleBar forceVisible="y" style={{ height: '100%' }}>
-          <div className="flex flex-1 flex-col gap-8 pb-8 pt-4">
-            <div className="flex flex-col gap-6">
-              <div className="flex-col px-4">
-                <p className="text-sm-semibold text-gray-light/700">
-                  Furniture information
-                </p>
-                <p className="text-sm-regular text-gray-light/600">
-                  Detail furniture information.
-                </p>
-              </div>
-              <div className="flex flex-1 flex-col">
-                <MyDetailView datas={furnitureDetail ?? {}} />
-              </div>
-            </div>
-          </div>
-        </SimpleBar>
+      <div className="px-3">
+        <MyHorizontalTab
+          type="underline"
+          value={params?.detailtab}
+          onChange={(value) =>
+            setParams((prev) => ({
+              ...prev,
+              detailtab: value,
+            }))
+          }
+        >
+          <MyTabButton value="general">General</MyTabButton>
+          <MyTabButton value="print">Print</MyTabButton>
+        </MyHorizontalTab>
       </div>
+
+      {params?.detailtab === 'general' && (
+        <General furnitureDetail={furnitureDetail} />
+      )}
+      {params?.detailtab === 'print' && <Print print={print} />}
 
       <footer className="flex items-center justify-end gap-4 border-t border-gray-light/200 px-4 py-4">
         {furnitureDetail.raw?.deleted_at ? (

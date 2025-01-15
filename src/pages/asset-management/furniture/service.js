@@ -10,6 +10,7 @@ import {
 const Service = {
   getFurnitures: async (params) => await get(`/asset/furniture`, params),
   getFurnitureDetail: async (id) => await get(`/asset/furniture/${id}/detail`),
+  getPrint: async (id) => await get(`/asset/furniture/${id}/print`),
   showFurniture: async (id) => await get(`/asset/furniture/${id}`),
   createFurniture: async (data) => post('/asset/furniture', data),
   updateFurniture: async (id, data) =>
