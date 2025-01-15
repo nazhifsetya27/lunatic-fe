@@ -1,12 +1,6 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 // Libraries
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useMemo,
-} from 'react'
+import React, { createContext, useContext, useState, useEffect } from 'react'
 
 // Context
 import { useNavigate, useParams } from 'react-router-dom'
@@ -63,7 +57,6 @@ function StockAdjustmentInventoryProvider({ children }) {
   const navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState(false)
-  // console.log('isLoading: ', isLoading)
   const { stock_adjustment_id } = useParams()
 
   /* ----------------------------------------------------- */
@@ -111,11 +104,10 @@ function StockAdjustmentInventoryProvider({ children }) {
 
   // eslint-disable-next-line no-shadow
   const createStockAdjustmentInventory = async (body, stock_adjustment_id) => {
-    console.log('create body adjustment', body)
+    // console.log('create body adjustment', body)
     const formData = new FormData()
 
     formData.append('stock_adjustment_id', stock_adjustment_id)
-    console.log(body)
 
     formData.append('asset_id', body.id)
     formData.append('previous_condition_id', body.condition.id)
@@ -160,20 +152,21 @@ function StockAdjustmentInventoryProvider({ children }) {
   }
 
   const deleteStockAdjustmentInventory = async (
-    stock_adjustment_inventory_ids
+    stock_adjustment_inventory_id
   ) => {
     if (window.confirm('Anda yakin ingin menghapus data ini?')) {
-      return Service.deleteStockAdjustmentInventory({
-        stock_adjustment_inventory_ids,
-      })
+      return Service.deleteStockAdjustmentInventory(
+        stock_adjustment_inventory_id
+      )
         .then(myToaster)
         .then(() => getStockAdjustmentInventory(stock_adjustment_id))
         .catch(myToaster)
     }
     return Promise.resolve()
   }
-  const showRackManagementList = async (params) =>
-    await Service.showRackManagementList(params)
+
+  const showRackManagementList = async (rackParams) =>
+    await Service.showRackManagementList(rackParams)
       .then((res) => res.data)
       .catch(myToaster)
 

@@ -3,12 +3,9 @@ import { get, post, patch, remove, download } from '../../services/NetworkUtils'
 const Service = {
   getStockAdjustment: async (params) => await get('/stock-adjustment', params),
   getStockAdjustmentDetail: async (id, params) =>
-    await get(`/v1/stock-adjustment/${id}/detail`, params),
+    await get(`/stock-adjustment/${id}/detail`, params),
   getDetailStockAdjustmentResult: async (id, params) =>
-    await get(
-      `/v1/stock-adjustment/${id}/detail-stock-adjustment-result`,
-      params
-    ),
+    await get(`/stock-adjustment/${id}/detail-stock-adjustment-result`, params),
   downloadExport: (id, params) =>
     download(`/v1/stock-adjustment/${id}/export`, params),
 

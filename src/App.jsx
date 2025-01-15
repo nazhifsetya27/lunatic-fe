@@ -38,6 +38,8 @@ import NotFound from './pages/404'
 import StockAdjustmentInventory from './pages/stock-adjustment-inventory'
 import { StockAdjustmentInventoryProvider } from './pages/stock-adjustment-inventory/context'
 import FurnitureStockAdjustment from './pages/stock-adjustment-inventory/furniture'
+import ElektronikStockAdjustment from './pages/stock-adjustment-inventory/elektronik'
+import UmumStockAdjustment from './pages/stock-adjustment-inventory/umum'
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
@@ -181,6 +183,11 @@ function App() {
                     path="furniture"
                     element={<FurnitureStockAdjustment />}
                   />
+                  <Route
+                    path="elektronik"
+                    element={<ElektronikStockAdjustment />}
+                  />
+                  <Route path="umum" element={<UmumStockAdjustment />} />
                 </Route>
                 <Route path="/404" element={<NotFound />} />
                 <Route path="*" element={<Navigate to="/404" replace />} />

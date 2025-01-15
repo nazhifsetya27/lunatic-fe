@@ -17,10 +17,8 @@ import SimpleBar from 'simplebar-react'
 import { debounce } from 'lodash'
 
 // Sliders
-// import FormSlider from './Sliders/FormSlider'
-// import DetailsSlider from './Sliders/DetailSlider'
-// import DetailsModal from './Sliders/DetailsModal'
-// import DetailsItemOpen from './Sliders/DetailsItemOpen'
+import FormSlider from './slider/FormSlider'
+import DetailSlider from './slider/DetailSlider'
 
 // Context
 import { useStockAdjustment } from './context'
@@ -34,18 +32,26 @@ import MyTextField from '../../components/TextField/MyTextField'
 import MyFilterModal from '../../components/Modal/MyFilterModal'
 import MyAvatar from '../../components/Avatar/MyAvatar'
 import MyButtonGroupV2 from '../../components/Button/MyButtonGroupV2'
-import FormSlider from './slider/FormSlider'
-// import SliderSamCardOpen from './SubSliders/SliderSamCardOpen'
-// import SliderSimCardOpen from './SubSliders/SliderSimCardOpen'
-// import SliderTerminalOpen from './SubSliders/SliderTerminalOpen'
-// import SliderThermalOpen from './SubSliders/SliderThermalOpen'
-// import SliderPeripheralOpen from './SubSliders/SliderPeripheralOpen'
+import DetailsItem from './slider/DetailsItem'
+import Modal from './slider/DetailsItemOpen'
 
 const getChip = (status) => {
   if (status === 'done-with-attention') {
     return (
       <MyChip
         label="Attention"
+        endAdornment={<AlertCircle className="size-5 text-warning/500" />}
+        color="warning"
+        variant="filled"
+        rounded="full"
+        size="lg"
+      />
+    )
+  }
+  if (status === 'Waiting for approval') {
+    return (
+      <MyChip
+        label="Waiting for approval"
         endAdornment={<AlertCircle className="size-5 text-warning/500" />}
         color="warning"
         variant="filled"
@@ -87,11 +93,16 @@ function StockAdjustment() {
         element={<FormSlider />}
         onClose={() => handleCurrentSlider(null)}
       />
-      {/* <MyModalSlider
+      <MyModalSlider
         open={currentSlider?.current === 'details-slider'}
-        element={<DetailsSlider />}
+        element={<DetailSlider />}
         onClose={() => handleCurrentSlider(null)}
-      /> */}
+      />
+      <MyModalSlider
+        open={currentSlider?.current === 'details-item'}
+        element={<Modal />}
+        onClose={() => handleCurrentSlider(null)}
+      />
 
       <SimpleBar
         forceVisible="y"
@@ -158,8 +169,8 @@ function StockAdjustment() {
                   /> */}
                   <MyButtonGroupV2
                     buttons={[
-                      { label: 'View all', value: 'view all' },
-                      { label: 'Attention', value: 'attention' },
+                      { label: 'View all', value: 'view_all' },
+                      { label: 'On progress', value: 'on_progress' },
                     ]}
                     value={params.type}
                     onChange={(e) => {
@@ -295,7 +306,8 @@ function StockAdjustment() {
                     <MyColumn
                       alignment="right"
                       body={(value) => {
-                        console.log('value: ', value)
+                        // console.log('value: ', value)
+                        const a = 'temp'
 
                         return (
                           <div className="flex items-center justify-end gap-1">
