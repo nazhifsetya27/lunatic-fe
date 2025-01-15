@@ -48,8 +48,6 @@ const User = () => {
     getUsers()
   }, [params])
 
-  console.log(currentSlider)
-
   return (
     <>
       <MyModalSlider
@@ -247,6 +245,24 @@ const User = () => {
                   body={(value) => (
                     <p className="text-sm-regular text-gray-light/600">
                       {value?.role ? value?.role : '-'}
+                    </p>
+                  )}
+                ></MyColumn>
+                <MyColumn
+                  field="role"
+                  header="Role"
+                  body={(value) => (
+                    <p className="text-sm-regular text-gray-light/600">
+                      {value?.role ? value?.role : '-'}
+                    </p>
+                  )}
+                ></MyColumn>
+                <MyColumn
+                  field="unit"
+                  header="Unit"
+                  body={(value) => (
+                    <p className="text-sm-regular text-gray-light/600">
+                      {value?.unit?.name ? value?.unit?.name : '-'}
                     </p>
                   )}
                 ></MyColumn>

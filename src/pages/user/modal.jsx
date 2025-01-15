@@ -31,8 +31,7 @@ const Modal = () => {
     createUser,
     showUser,
     searchRole,
-    searchTerritoryType,
-    searchCoverage,
+    unitList,
     // searchReportTo,
     generatePassword,
     createdPassword,
@@ -59,15 +58,7 @@ const Modal = () => {
     // },
   })
 
-  const {
-    role,
-    deleted_at,
-    coverage_type,
-    login_access,
-    photo,
-    coverage,
-    report_to,
-  } = watch()
+  const { role, deleted_at, login_access, photo, unit_id, report_to } = watch()
 
   const onSubmit = handleSubmit(
     handleError(currentSlider.id ? updateUser : createUser, control),
@@ -98,6 +89,7 @@ const Modal = () => {
         setValue('name', data.name)
         setValue('email', data.email)
         setValue('role', data.role)
+        setValue('unit', data.unit)
       })
     }
   }, [currentSlider.id])
@@ -185,7 +177,7 @@ const Modal = () => {
                       placeholder={'Input email'}
                     />
                   </div>
-                  {/* email */}
+                  {/* role */}
                   <div className="flex flex-col gap-y-1.5">
                     <label
                       htmlFor="name"
@@ -193,16 +185,48 @@ const Modal = () => {
                     >
                       Role*
                     </label>
-                    <MyTextField
-                      startAdornment={<Mail01 stroke={'grey'} />}
-                      name="role"
+                    <MyAsyncDropDown
                       trigger={trigger}
                       disabled={Boolean(deleted_at)}
+                      name={'role'}
+                      placeholder={'Select role'}
                       control={control}
-                      placeholder={'Input role'}
+                      error={errors?.role?.message}
+                      isOptionEqualToValue={(option, value) => option === value}
+                      getOptionLabel={(e) => e}
+                      value={role}
+                      asyncFunction={searchRole}
+                      onChange={(e, value) => {
+                        setValue('role', value)
+                      }}
                     />
                   </div>
-                  {/* whatsapp */}
+                  {/* unit */}
+                  <div className="flex flex-col gap-y-1.5">
+                    <label
+                      htmlFor="name"
+                      className="text-sm-medium text-gray-light/700"
+                    >
+                      Unit*
+                    </label>
+                    <MyAsyncDropDown
+                      trigger={trigger}
+                      // disabled={!notification?.ticket_approaching_sla}
+                      name={'unit_id'}
+                      control={control}
+                      error={errors?.unit_id?.message}
+                      isOptionEqualToValue={(option, value) =>
+                        option.id === value?.id
+                      }
+                      getOptionLabel={(e) => e.name}
+                      value={unit_id}
+                      placeholder={'Select unit'}
+                      asyncFunction={unitList}
+                      onChange={(e, value) => {
+                        setValue(`unit_id`, value)
+                      }}
+                    />
+                  </div>
                 </div>
                 {/* END OF PERSONAL INFORMATION */}
 
