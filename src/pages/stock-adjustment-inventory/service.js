@@ -21,9 +21,9 @@ const Service = {
       'form-data'
     ),
   submitInventory: async (stock_adjustment_id) =>
-    patch(`/v1/stock-adjustment-inventory/${stock_adjustment_id}`),
-  deleteStockAdjustmentInventory: async (stock_adjustment_inventory_ids) =>
-    remove(`/v1/stock-adjustment-inventory`, stock_adjustment_inventory_ids),
+    patch(`/stock-adjustment-inventory/${stock_adjustment_id}/submit`),
+  deleteStockAdjustmentInventory: async (stock_adjustment_inventory_id) =>
+    remove(`/stock-adjustment-inventory/${stock_adjustment_inventory_id}`),
 
   searchInventoryList: async (query) => get('/option/asset-list', query),
   searchTerminalSNList: async (query) => get(`/v1/option/terminal-list`, query),

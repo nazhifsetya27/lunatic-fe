@@ -36,10 +36,10 @@ function StockAdjustmentProvider({ children }) {
   const [params, setParams] = useState({
     page: 1,
     page_detail: 1,
-    type: 'view all',
+    type: 'view_all',
     filter: [],
     archive: 0,
-    detailTab: 'terminal',
+    detailTab: 'furniture',
   })
   const [currentModalTabs, setCurrentModalTabs] = useState({
     page: 1,
@@ -103,22 +103,21 @@ function StockAdjustmentProvider({ children }) {
 
   // CREATE, UPDATE
   const createstockAdjustment = async (body) => {
-    console.log('createstockAdjustment body', body)
+    // console.log('createstockAdjustment body', body)
     const formData = new FormData()
 
     formData.append('name', body.name)
 
     return await Service.createStockAdjustment(formData)
       .then((res) => {
-        console.log('res: ', res)
+        // console.log('res: ', res)
 
         handleCurrentSlider(null)
         navigate(`/stock-adjustment/${res.data.id}`, {
-          //   state: {
-          //     code: body.stock_adjustment_id,
-          //     warehouse_id: body.warehouse.id,
-          //     stock_adjustment_id: res.data.id,
-          //   },
+          state: {
+            name: body.stock_adjustment_id,
+            stock_adjustment_id: res.data.id,
+          },
         })
         return res
       })

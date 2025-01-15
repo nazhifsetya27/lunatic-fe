@@ -31,7 +31,6 @@ function FormSlider() {
     mode: 'all',
     resolver: yupResolver(stockAdjustmentSchema),
   })
-  console.log(errors)
 
   const {
     handleCurrentSlider,

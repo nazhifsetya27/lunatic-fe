@@ -5,7 +5,7 @@ import MyColumn from '../../../components/Table/MyColumn'
 import MyButton from '../../../components/Button/MyButton'
 import MyChip from '../../../components/Chip/MyChip'
 
-function FurnitureStockAdjustment() {
+function ElektronikStockAdjustment() {
   const {
     stockAdjustmentInventory,
     handleCurrentSlider,
@@ -115,4 +115,4 @@ function FurnitureStockAdjustment() {
   )
 }
 
-export default FurnitureStockAdjustment
+export default ElektronikStockAdjustment

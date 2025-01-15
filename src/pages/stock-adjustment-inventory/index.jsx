@@ -203,16 +203,18 @@ function StockAdjustmentInventory() {
                             <div className="flex flex-col gap-1">
                               {/* BARIS 1 */}
                               <div className="flex gap-3">
-                                <p className="text-sm-semibold text-gray-light/700">
-                                  {option?.name ?? '-'}
-                                </p>
-                                <MyChip
-                                  label={option.kode ?? '-'}
-                                  rounded="lg"
-                                  variant="filled"
-                                  color="gray"
-                                  size="sm"
-                                />
+                                <div className="flex flex-col gap-1">
+                                  <p className="text-sm-semibold text-center text-gray-light/700">
+                                    {option?.name ?? '-'}
+                                  </p>
+                                  <MyChip
+                                    label={option.kode ?? '-'}
+                                    rounded="lg"
+                                    variant="filled"
+                                    color="gray"
+                                    size="sm"
+                                  />
+                                </div>
                                 <p className="text-sm-semibold text-gray-light/700">
                                   {option?.category ?? '-'}
                                 </p>
