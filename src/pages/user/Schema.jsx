@@ -26,6 +26,7 @@ const UserSchema = Yup.object().shape({
       is: (v) => v === true,
       then: () => Yup.object().required(),
     }),
+  unit_id: Yup.object().required('Unit is a required field'),
 })
 
 export default UserSchema

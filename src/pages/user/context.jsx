@@ -66,6 +66,7 @@ const UserProvider = (props) => {
     formData.append('password', body.password)
     formData.append('email', body.email)
     formData.append('role', body.role)
+    formData.append('unit_id', body.unit_id.id)
 
     return await Service.createUser(formData)
       .then(myToaster)
@@ -79,6 +80,18 @@ const UserProvider = (props) => {
       .catch(myToaster)
   }
 
+  const unitList = async (query) => {
+    return Service.unitList(query).catch(myToaster)
+  }
+
+  const searchRole = async ({ search }) => {
+    return {
+      data: ['Administrator', 'User', 'Approver'].filter((e) =>
+        search ? e.toLowerCase().includes(search.toLowerCase()) : true
+      ),
+    }
+  }
+
   const updateUser = async (body) => {
     const formData = new FormData()
     if (body.photo) formData.append('photo', body.photo)
@@ -88,6 +101,7 @@ const UserProvider = (props) => {
     }
     formData.append('name', body.name)
     formData.append('email', body.email)
+    formData.append('unit_id', body.unit_id.id)
     await Service.updateUser(currentSlider?.id, formData)
       .then(myToaster)
       .then(() => handleCurrentSlider({ status: false, current: null }))
@@ -122,6 +136,8 @@ const UserProvider = (props) => {
         getUsers,
         getUserDetail,
         createUser,
+        searchRole,
+        unitList,
         showUser,
         updateUser,
         deleteUser,

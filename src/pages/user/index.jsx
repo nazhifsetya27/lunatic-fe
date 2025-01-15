@@ -48,8 +48,6 @@ const User = () => {
     getUsers()
   }, [params])
 
-  console.log(currentSlider)
-
   return (
     <>
       <MyModalSlider
@@ -99,7 +97,7 @@ const User = () => {
                 </div>
 
                 <div className="flex items-start justify-start gap-3">
-                  <MyButton
+                  {/* <MyButton
                     // onClick={handleDownloadExport}
                     color="primary"
                     variant="outlined"
@@ -107,8 +105,8 @@ const User = () => {
                   >
                     <DownloadCloud02 size={20} stroke="currentColor" />
                     <p className="text-sm-semibold">Export</p>
-                  </MyButton>
-                  <div>
+                  </MyButton> */}
+                  {/* <div>
                     <MyButton
                       color="secondary"
                       variant="outlined"
@@ -123,7 +121,7 @@ const User = () => {
                       <UploadCloud02 size={20} stroke="currentColor" />
                       <p className="text-sm-semibold">Import</p>
                     </MyButton>
-                  </div>
+                  </div> */}
 
                   <div>
                     <MyButton
@@ -247,6 +245,24 @@ const User = () => {
                   body={(value) => (
                     <p className="text-sm-regular text-gray-light/600">
                       {value?.role ? value?.role : '-'}
+                    </p>
+                  )}
+                ></MyColumn>
+                <MyColumn
+                  field="role"
+                  header="Role"
+                  body={(value) => (
+                    <p className="text-sm-regular text-gray-light/600">
+                      {value?.role ? value?.role : '-'}
+                    </p>
+                  )}
+                ></MyColumn>
+                <MyColumn
+                  field="unit"
+                  header="Unit"
+                  body={(value) => (
+                    <p className="text-sm-regular text-gray-light/600">
+                      {value?.unit?.name ? value?.unit?.name : '-'}
                     </p>
                   )}
                 ></MyColumn>
