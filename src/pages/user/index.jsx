@@ -99,7 +99,7 @@ const User = () => {
                 </div>
 
                 <div className="flex items-start justify-start gap-3">
-                  <MyButton
+                  {/* <MyButton
                     // onClick={handleDownloadExport}
                     color="primary"
                     variant="outlined"
@@ -107,8 +107,8 @@ const User = () => {
                   >
                     <DownloadCloud02 size={20} stroke="currentColor" />
                     <p className="text-sm-semibold">Export</p>
-                  </MyButton>
-                  <div>
+                  </MyButton> */}
+                  {/* <div>
                     <MyButton
                       color="secondary"
                       variant="outlined"
@@ -123,7 +123,7 @@ const User = () => {
                       <UploadCloud02 size={20} stroke="currentColor" />
                       <p className="text-sm-semibold">Import</p>
                     </MyButton>
-                  </div>
+                  </div> */}
 
                   <div>
                     <MyButton
