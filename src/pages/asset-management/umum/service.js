@@ -10,6 +10,7 @@ import {
 const Service = {
   getUmums: async (params) => await get(`/asset/umum`, params),
   getUmumDetail: async (id) => await get(`/asset/umum/${id}/detail`),
+  getPrint: async (id) => await get(`/asset/furniture/${id}/print`),
   showUmum: async (id) => await get(`/asset/umum/${id}`),
   createUmum: async (data) => post('/asset/umum', data),
   updateUmum: async (id, data) =>

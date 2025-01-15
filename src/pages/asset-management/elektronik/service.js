@@ -11,6 +11,7 @@ const Service = {
   getElektronics: async (params) => await get(`/asset/elektronik`, params),
   getElektronikDetail: async (id) =>
     await get(`/asset/elektronik/${id}/detail`),
+  getPrint: async (id) => await get(`/asset/furniture/${id}/print`),
   showElektronik: async (id) => await get(`/asset/elektronik/${id}`),
   createElektronik: async (data) => post('/asset/elektronik', data),
   updateElektronik: async (id, data) =>
