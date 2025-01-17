@@ -92,7 +92,7 @@ function ElektronikProvider({ children }) {
   const getPrint = useCallback(
     (id) =>
       Service.getPrint(id)
-        .then((res) => setPrint(res?.data?.printCode))
+        .then((res) => setPrint(res?.data))
         .catch(myToaster),
     []
   )

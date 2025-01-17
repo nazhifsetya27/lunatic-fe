@@ -335,11 +335,10 @@ function StorageManagement() {
                 </div>
                 <div className="z-20 flex flex-col gap-2 text-center">
                   <p className="text-xl-semibold text-gray-light/900">
-                    Database storage tidak ditemukan
+                    Database storage not found
                   </p>
                   <p className="text-md-regular text-gray-light/600">
-                    Tidak ada data storage yang ditemukan. Silahkan tambahkan
-                    terlebih dahulu.
+                    No storage data found. Please add first.
                   </p>
                 </div>
                 <div className="z-10">
@@ -355,7 +354,7 @@ function StorageManagement() {
                     size="md"
                   >
                     <Plus className="size-5" stroke="currentColor" />
-                    <span className="text-sm-semibold">Tambah gedung</span>
+                    <span className="text-sm-semibold">New building</span>
                   </MyButton>
                 </div>
               </div>

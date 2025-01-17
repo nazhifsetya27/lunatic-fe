@@ -5,6 +5,8 @@ import html2canvas from 'html2canvas'
 import MyTextField from '../../../../components/TextField/MyTextField'
 import MyButton from '../../../../components/Button/MyButton'
 
+const baseUrl = import.meta.env.VITE_API_BARCODE_URL
+
 function Print({ print }) {
   const qrStickerRef = useRef()
 
@@ -24,7 +26,7 @@ function Print({ print }) {
     // Trigger download
     const link = document.createElement('a')
     link.href = pngFile
-    link.download = print
+    link.download = print?.printCode
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -89,7 +91,10 @@ function Print({ print }) {
                 </p> */}
 
                 {/* QR Code */}
-                <QRCode value={print} size={150} />
+                <QRCode
+                  value={`${baseUrl}/login?isScan=true&asset_id=${print?.asset_id}`}
+                  size={150}
+                />
 
                 {/* Text Below QR */}
                 <p
@@ -100,7 +105,7 @@ function Print({ print }) {
                     // wordBreak: 'break-word',
                   }}
                 >
-                  {print}
+                  {print?.printCode}
                 </p>
               </div>
 

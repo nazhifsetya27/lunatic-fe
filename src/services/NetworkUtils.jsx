@@ -31,7 +31,7 @@ const deleteCookie = (key) => {
 // deleteCookie('token)
 const logout = () => {
   setCookie('token', null, '-1')
-  window.location.href = '/login'
+  // window.location.href = '/login'
 }
 
 const getHeader = (type) => {

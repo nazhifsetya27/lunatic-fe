@@ -103,6 +103,7 @@ function ElektronikTabPanel({
             srcImages={detailStockAdjustmentResult?.data
               ?.map((item) => item?.evidence_url)
               ?.filter((item) => !!item)}
+            data={detailStockAdjustmentResult?.data}
           >
             <MyButton
               color="primary"

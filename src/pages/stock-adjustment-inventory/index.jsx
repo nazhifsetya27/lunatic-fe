@@ -132,7 +132,7 @@ function StockAdjustmentInventory() {
                   </MyButton>
                 </div>
                 <div className="px-8">
-                  <p className="display-sm-semibold text-gray-light/900">
+                  <p className="text-xl-semibold text-gray-light/900">
                     {stockAdjustmentState?.name}
                   </p>
                   <p className="text-gray-light/600">
@@ -179,9 +179,7 @@ function StockAdjustmentInventory() {
                         getOptionLabel={(e) => e?.name}
                         getOptionValue={(e) => e?.name}
                         asyncFunction={(e) => searchInventoryList({ ...e })}
-                        // extraData={{
-                        //   warehouse_id: stockAdjustmentState?.warehouse_id,
-                        // }}
+                        extraData={{ isStockAdjustment: true }}
                         isSearchInventory
                         // onClick={(value) => console.log(value)}
                         onChangeInput={(e, value, rawValue) => {

@@ -1,9 +1,15 @@
 import './App.css'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import {
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-import SimpleBar from 'simplebar-react'
 import { useCookies } from 'react-cookie'
-import { AppProvider } from './AppContext'
+import { useEffect } from 'react'
+import { AppProvider, useApp } from './AppContext'
 import Welcome from './pages/Welcome'
 import AssetManagement from './pages/asset-management'
 import Furniture from './pages/asset-management/furniture'
@@ -40,9 +46,36 @@ import { StockAdjustmentInventoryProvider } from './pages/stock-adjustment-inven
 import FurnitureStockAdjustment from './pages/stock-adjustment-inventory/furniture'
 import ElektronikStockAdjustment from './pages/stock-adjustment-inventory/elektronik'
 import UmumStockAdjustment from './pages/stock-adjustment-inventory/umum'
+import { myToaster } from './components/Toaster/MyToaster'
 
 function App() {
+  const { createStockAdjustmentFromQR } = useApp()
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
+  const [searchParams, setSearchParams] = useSearchParams()
+  const nav = useNavigate()
+
+  // from scan QR
+  const isScan = searchParams.get('isScan')
+  const asset_id = searchParams.get('asset_id')
+
+  useEffect(() => {
+    const handleScan = async () => {
+      if (isScan === 'true') {
+        try {
+          await createStockAdjustmentFromQR(asset_id)
+        } catch (error) {
+          console.error('Error creating stock adjustment:', error)
+          myToaster({
+            status: 'error',
+            message: 'An error occurred while processing the scan.',
+          })
+          nav('/')
+        }
+      }
+    }
+
+    handleScan() // Call the async function
+  }, [isScan, asset_id, nav])
 
   return (
     <>
