@@ -8,17 +8,21 @@ import {
   View,
 } from '@react-pdf/renderer'
 
+const baseUrl = import.meta.env.VITE_API_BASE_URL
+
 export default function MyImageToPdf({
   children,
   isDownloaded = false,
   fileName = '',
   srcImages = [],
+  data,
   ...props
 }) {
   // console.log('src images: ', srcImages)
+  // console.log(data)
 
   return (
-    <BlobProvider document={<PdfDocument srcImages={srcImages} />}>
+    <BlobProvider document={<PdfDocument srcImages={srcImages} data={data} />}>
       {({ url }) => (
         <Link
           href={url}
@@ -34,12 +38,12 @@ export default function MyImageToPdf({
   )
 }
 
-function PdfDocument({ srcImages = [] }) {
+function PdfDocument({ srcImages = [], data }) {
   // console.log('src images: ', srcImages)
 
   return (
     <Document>
-      {srcImages.map((src) => (
+      {srcImages.map((src, index) => (
         <Page key={src} size="A4" style={{ padding: '1cm' }}>
           <View
             style={{
@@ -72,7 +76,16 @@ function PdfDocument({ srcImages = [] }) {
               right: '1.5cm',
             }}
           />
-          <Image src={src} style={{ maxHeight: '90%' }} />
+          <Text
+            style={{
+              fontSize: '1cm',
+              marginBottom: '0.5cm',
+              textAlign: 'center',
+            }}
+          >
+            {data[index].asset?.name || 'No Name Provided'}
+          </Text>
+          <Image src={`${baseUrl}/${src}`} style={{ maxHeight: '90%' }} />
         </Page>
       ))}
     </Document>

@@ -200,7 +200,7 @@ function StockAdjustment() {
                         )}
                       />
                     </div>
-                    <MyFilterModal
+                    {/* <MyFilterModal
                       id="filter-ticketing"
                       currentFilters={stockAdjustment?.filter}
                       onChange={(filter) => {
@@ -226,7 +226,7 @@ function StockAdjustment() {
                           <p className="text-sm-semibold">Filters</p>
                         </MyButton>
                       )}
-                    />
+                    /> */}
                   </div>
                 </div>
                 <div>

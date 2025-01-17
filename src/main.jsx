@@ -7,11 +7,14 @@ import './index.css'
 import 'react-toastify/dist/ReactToastify.css'
 import 'simplebar-react/dist/simplebar.min.css'
 import 'react-calendar/dist/Calendar.css'
+import { AppProvider } from './AppContext'
 
 createRoot(document.getElementById('root')).render(
   // <StrictMode>
   <BrowserRouter>
-    <App />
+    <AppProvider>
+      <App />
+    </AppProvider>
   </BrowserRouter>
   // </StrictMode>
 )

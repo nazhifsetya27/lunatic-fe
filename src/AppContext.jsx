@@ -8,12 +8,15 @@ import React, {
 } from 'react'
 import { useCookies } from 'react-cookie'
 import { debounce } from 'lodash'
-import { get } from './services/NetworkUtils'
+import { useNavigate } from 'react-router-dom'
+import { get, post } from './services/NetworkUtils'
 import { Access } from './services/Helper'
 import { myToaster } from './components/Toaster/MyToaster'
 
 const AppService = {
   getSession: async () => await get('/auth/session'),
+  createStockAdjustmentFromQR: async (asset_id) =>
+    post(`/stock-adjustment/${asset_id}`),
 }
 
 const AppContext = createContext()
@@ -23,6 +26,7 @@ function AppProvider({ children }) {
   const [user, setUser] = useState({})
   const [accesses, setAccesses] = useState([])
   const [cookies] = useCookies(['token'])
+  const nav = useNavigate()
 
   const getSession = useCallback(
     () =>
@@ -31,6 +35,28 @@ function AppProvider({ children }) {
           setUser({
             ...res.data,
             photo_url: `${res.data.photo_url}?time=${new Date().getTime()}`,
+          })
+        })
+        .catch(myToaster),
+    []
+  )
+
+  const createStockAdjustmentFromQR = useCallback(
+    (asset_id) =>
+      AppService.createStockAdjustmentFromQR(asset_id)
+        .then((res) => {
+          console.log(res)
+          nav(`/stock-adjustment/${res?.data?.id}`, {
+            state: {
+              stock_adjustment_id: res?.data?.id,
+              name: res?.data?.name,
+            },
+          })
+
+          myToaster({
+            status: 200,
+            title: 'success create stock adjustment',
+            message: 'please adjust your inventory',
           })
         })
         .catch(myToaster),
@@ -50,6 +76,7 @@ function AppProvider({ children }) {
       accesses,
       setAccesses,
       getSession,
+      createStockAdjustmentFromQR,
     }),
     [slider, user, accesses]
   )

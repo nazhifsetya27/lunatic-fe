@@ -17,8 +17,13 @@ import MyCheckbox from '../../components/Checkbox/MyCheckbox'
 import MyButton from '../../components/Button/MyButton'
 
 function Login() {
-  const { login } = useLogin()
+  const { login, isScan } = useLogin()
   const nav = useNavigate()
+  console.log(isScan)
+
+  if (isScan) {
+    nav('stock-adjustment')
+  }
 
   const [show, setShow] = useState(false)
 
