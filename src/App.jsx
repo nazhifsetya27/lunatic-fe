@@ -17,6 +17,8 @@ import MyNavigation from './components/Navigation/MyNavigation'
 import { FurnitureProvider } from './pages/asset-management/furniture/context'
 import Login from './pages/Login'
 import { LoginProvider } from './pages/Login/context'
+import ApprovalWarehouse from './pages/Approval'
+import { ApprovalProvider } from './pages/Approval/context'
 import Elektronik from './pages/asset-management/elektronik'
 import { ElektronikProvider } from './pages/asset-management/elektronik/context'
 import Umum from './pages/asset-management/umum'
@@ -222,6 +224,15 @@ function App() {
                   />
                   <Route path="umum" element={<UmumStockAdjustment />} />
                 </Route>
+                {/* Approval */}
+                <Route
+                  path="/approval"
+                  element={
+                    <ApprovalProvider>
+                      <ApprovalWarehouse />
+                    </ApprovalProvider>
+                  }
+                />
                 <Route path="/404" element={<NotFound />} />
                 <Route path="*" element={<Navigate to="/404" replace />} />
               </Routes>

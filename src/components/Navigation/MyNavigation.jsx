@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { LogOut04, Users01, Settings02 } from '@untitled-ui/icons-react'
+import {
+  LogOut04,
+  Users01,
+  Settings02,
+  CheckDone01,
+} from '@untitled-ui/icons-react'
 import { useCookies } from 'react-cookie'
 import { AdProduct, AllApplication, StorageCardOne } from '@icon-park/react'
 import MyConfirmModal from '../Modal/MyConfirmModal'
@@ -62,6 +67,24 @@ function SideNavbar({ childs }) {
                   <p className="text-xs-semibold text-white">
                     Asset management
                   </p>
+                </MyTooltip>
+              </Link>
+              <Link to="/approval">
+                <MyTooltip
+                  placement="right"
+                  target={
+                    <div
+                      className={`${
+                        location?.pathname.includes('/approval')
+                          ? 'bg-gray-light/50 text-gray-light/700'
+                          : 'text-gray-light/500'
+                      } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
+                    >
+                      <CheckDone01 size={24} stroke="currentColor" />
+                    </div>
+                  }
+                >
+                  <span className="text-xs-semibold text-white">Approval</span>
                 </MyTooltip>
               </Link>
               <Link to="/user">
