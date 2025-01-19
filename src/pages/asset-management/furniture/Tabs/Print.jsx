@@ -9,7 +9,7 @@ const baseUrl = import.meta.env.VITE_API_BARCODE_URL
 
 function Print({ print }) {
   const qrStickerRef = useRef()
-  console.log(print)
+  // console.log(print)
   console.log(`${baseUrl}/login?isScan=true&asset_id=${print?.assetId}`)
 
   const handleDownloadSticker = async () => {

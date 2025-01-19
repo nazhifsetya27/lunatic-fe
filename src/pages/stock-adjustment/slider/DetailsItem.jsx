@@ -1,5 +1,6 @@
 import { ArrowLeft, DownloadCloud01, XClose } from '@untitled-ui/icons-react'
 import SimpleBar from 'simplebar-react'
+import { useMediaQuery } from '@mui/material'
 import MyButton from '../../../components/Button/MyButton'
 import MyHorizontalTab from '../../../components/HorizontalTab/MyHorizontalTab'
 import MyTabButton from '../../../components/HorizontalTab/MyTabButton'
@@ -25,10 +26,12 @@ function DetailsItem({ context = {}, data }) {
     downloadExportStockOpname,
   } = context
 
-  // console.log('currentSlider detailItem: ', currentSlider)
+  const isMobile = useMediaQuery('(max-width:640px)')
 
   return (
-    <div className="flex h-screen w-[50vw] flex-col">
+    <div
+      className={`flex h-screen ${isMobile ? 'w-[360px]' : 'w-[50vw]'} flex-col`}
+    >
       <header className="relative flex flex-col pl-4">
         <div className="relative flex items-start gap-x-4 pb-4 pt-8">
           <button className="absolute right-[12px] top-[12px] flex h-11 w-11 items-center justify-center rounded-lg p-2 text-gray-light/400">
@@ -73,7 +76,7 @@ function DetailsItem({ context = {}, data }) {
             </div>
           </div>
         </div>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <MyButton
             color="primary"
             variant="outlined"
@@ -87,7 +90,7 @@ function DetailsItem({ context = {}, data }) {
             <DownloadCloud01 size="20" />
             <p className="text-sm-semibold">Export</p>
           </MyButton>
-        </div>
+        </div> */}
       </header>
 
       <div className="flex-1 overflow-hidden">

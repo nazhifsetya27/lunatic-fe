@@ -28,7 +28,7 @@ import MyButton from '../../components/Button/MyButton'
 import MyBgPatternDecorativeCircle from '../../components/Decorative/MyBgPatternDecorativeCircle'
 
 function StorageManagement() {
-  const { user } = useApp()
+  const { user, isLoading } = useApp()
   const {
     storageManagement,
     setRackManagement,
@@ -47,15 +47,24 @@ function StorageManagement() {
 
   // console.log('storageManagement: ', storageManagement)
 
-  useEffect(() => {
-    setParams((value) => ({
-      ...value,
-      unit: pick(unit?.find((e) => e) ?? {}, ['id', 'name']),
-    }))
-  }, [unit])
+  // useEffect(() => {
+  //   setParams((value) => ({
+  //     ...value,
+  //     unit: pick(unit?.find((e) => e) ?? {}, ['id', 'name']),
+  //   }))
+  // }, [unit])
 
   useEffect(() => {
-    getStorageManagement(params?.unit?.id)
+    if (!isLoading) {
+      setParams((prev) => ({
+        ...prev,
+        unit: user?.unit,
+      }))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (params?.unit?.id) getStorageManagement(params?.unit?.id)
   }, [params])
 
   return (
@@ -111,7 +120,7 @@ function StorageManagement() {
                     getOptionLabel={(e) => e?.name}
                     asyncFunction={searchUnitList}
                     extraData={{ user_id: user?.id }}
-                    disabled={user?.warehouses?.length < 2}
+                    disabled
                   />
                 </div>
               </div>
