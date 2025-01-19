@@ -38,12 +38,14 @@ import MyModalSlider from '../../../components/ModalSlider/MyModalSlider'
 import DetailSlider from './Sliders/DetailSlider'
 import FormSlider from './Sliders/FormSlider'
 import MyFilterModal from '../../../components/Modal/MyFilterModal'
+import { useApp } from '../../../AppContext'
 // import DetailSlider from './Sliders/DetailSlider'
 // import ImportSlider from './Sliders/ImportSlider'
 // import { useApp } from '../../../AppContext'
 
 function Elektronik() {
-  const nav = useNavigate()
+  const { user } = useApp()
+  console.log(user.role)
 
   const {
     handleCurrentSlider,
@@ -92,46 +94,48 @@ function Elektronik() {
             </Box>
           </Stack>
 
-          <Stack direction="row" className="gap-3">
-            <MyButton
-              // onClick={downloadExport}
-              color="primary"
-              variant="outlined"
-              size="md"
-            >
-              <Download className="size-5" stroke="currentColor" />
-              <span className="text-sm-semibold">Export</span>
-            </MyButton>
+          {user?.role !== 'User' && (
+            <Stack direction="row" className="gap-3">
+              <MyButton
+                // onClick={downloadExport}
+                color="primary"
+                variant="outlined"
+                size="md"
+              >
+                <Download className="size-5" stroke="currentColor" />
+                <span className="text-sm-semibold">Export</span>
+              </MyButton>
 
-            <MyButton
-              // onClick={() =>
-              //   handleCurrentSlider({
-              //     status: true,
-              //     current: 'import-slider',
-              //   })
-              // }
-              color="secondary"
-              variant="outlined"
-              size="md"
-            >
-              <Upload className="size-5" stroke="currentColor" />
-              <span className="text-sm-semibold">Import</span>
-            </MyButton>
-            <MyButton
-              onClick={() =>
-                handleCurrentSlider({
-                  status: true,
-                  current: 'form-slider',
-                })
-              }
-              color="primary"
-              variant="filled"
-              size="md"
-            >
-              <Plus className="size-5" stroke="currentColor" />
-              <span className="text-sm-semibold">Asset elektronik</span>
-            </MyButton>
-          </Stack>
+              <MyButton
+                // onClick={() =>
+                //   handleCurrentSlider({
+                //     status: true,
+                //     current: 'import-slider',
+                //   })
+                // }
+                color="secondary"
+                variant="outlined"
+                size="md"
+              >
+                <Upload className="size-5" stroke="currentColor" />
+                <span className="text-sm-semibold">Import</span>
+              </MyButton>
+              <MyButton
+                onClick={() =>
+                  handleCurrentSlider({
+                    status: true,
+                    current: 'form-slider',
+                  })
+                }
+                color="primary"
+                variant="filled"
+                size="md"
+              >
+                <Plus className="size-5" stroke="currentColor" />
+                <span className="text-sm-semibold">Asset elektronik</span>
+              </MyButton>
+            </Stack>
+          )}
         </Stack>
 
         <Divider className="border-gray-light/200" />
@@ -224,7 +228,7 @@ function Elektronik() {
               )}
             />
             <MyColumn
-              header="Kode"
+              header="Code"
               hideCheckBoxHeader
               // isArchived={params.archive}
               body={({ kode }) => (
@@ -234,7 +238,7 @@ function Elektronik() {
               )}
             />
             <MyColumn
-              header="Kondisi"
+              header="Condition"
               body={({ condition }) => (
                 <Box className="text-sm-regular text-gray-light/600">
                   {condition?.name ?? '-'}
@@ -250,7 +254,7 @@ function Elektronik() {
               )}
             />
             <MyColumn
-              header="gedung"
+              header="Building"
               body={({ storage }) => (
                 <Box className="text-sm-regular text-gray-light/600">
                   {storage?.building?.name ?? '-'}
@@ -258,7 +262,7 @@ function Elektronik() {
               )}
             />
             <MyColumn
-              header="Lantai"
+              header="Floor"
               body={({ storage }) => (
                 <Box className="text-sm-regular text-gray-light/600">
                   {storage?.storage_floor?.name ?? '-'}
@@ -266,7 +270,7 @@ function Elektronik() {
               )}
             />
             <MyColumn
-              header="Ruangan"
+              header="Room"
               body={({ storage }) => (
                 <Box className="text-sm-regular text-gray-light/600">
                   {storage?.storage_room?.name ?? '-'}

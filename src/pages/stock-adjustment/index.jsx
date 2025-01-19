@@ -35,6 +35,8 @@ import MyButtonGroupV2 from '../../components/Button/MyButtonGroupV2'
 import DetailsItem from './slider/DetailsItem'
 import Modal from './slider/DetailsItemOpen'
 
+const mediaUrl = import.meta.env.VITE_API_MEDIA_URL
+
 const getChip = (status) => {
   if (status === 'done-with-attention') {
     return (
@@ -171,6 +173,10 @@ function StockAdjustment() {
                     buttons={[
                       { label: 'View all', value: 'view_all' },
                       { label: 'On progress', value: 'on_progress' },
+                      {
+                        label: 'Waiting for approval',
+                        value: 'waiting_for_approval',
+                      },
                     ]}
                     value={params.type}
                     onChange={(e) => {
@@ -279,7 +285,7 @@ function StockAdjustment() {
                             }}
                           >
                             <MyAvatar
-                              photo={created_by?.photo_url ?? null}
+                              photo={`${mediaUrl}${created_by?.photo_url ?? null}`}
                               size={40}
                             />
                           </div>
