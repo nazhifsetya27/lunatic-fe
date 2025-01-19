@@ -19,7 +19,7 @@ import MyButton from '../../components/Button/MyButton'
 function Login() {
   const { login, isScan } = useLogin()
   const nav = useNavigate()
-  console.log(isScan)
+  // console.log(isScan)
 
   if (isScan) {
     nav('stock-adjustment')
@@ -68,7 +68,7 @@ function Login() {
   const onSubmit = handleSubmit(handleError(login, control), checkErrorYup)
 
   return (
-    <main className="flex h-screen w-full items-center justify-evenly">
+    <main className="flex h-screen w-full items-center justify-evenly px-7 sm:px-0">
       {/* LEFT SECTION */}
       <div className="flex items-center justify-center">
         <div className="w-full sm:mx-7 md:w-[360px]">

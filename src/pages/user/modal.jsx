@@ -7,21 +7,21 @@ import {
   RefreshCw05,
 } from '@untitled-ui/icons-react'
 import SimpleBar from 'simplebar-react'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import $ from 'jquery'
 import MyButton from '../../components/Button/MyButton'
 import MyAsyncDropDown from '../../components/Autocomplete/MyAsyncDropdown'
 import MyAvatar from '../../components/Avatar/MyAvatar'
 import MySwicth from '../../components/Switch/MySwitch'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
 import { handleError, checkErrorYup } from '../../services/Helper'
 import MyTooltip from '../../components/Tooltip/MyTooltip'
-import $ from 'jquery'
 import { useApp } from '../../AppContext'
 import MyTextField from '../../components/TextField/MyTextField'
 import UserSchema from './Schema'
 import { useUser } from './context'
 
-const Modal = () => {
+function Modal() {
   const { user } = useApp()
   const formRef = useRef(null)
   const {
@@ -89,7 +89,7 @@ const Modal = () => {
         setValue('name', data.name)
         setValue('email', data.email)
         setValue('role', data.role)
-        setValue('unit', data.unit)
+        setValue('unit_id', data.unit)
       })
     }
   }, [currentSlider.id])
@@ -97,7 +97,7 @@ const Modal = () => {
   useEffect(() => {
     // Scroll to the first error element upon submission
     if (Object.keys(errors).length > 0) {
-      const errorElement = $('[name="' + Object.keys(errors)[0] + '"]')
+      const errorElement = $(`[name="${Object.keys(errors)[0]}"]`)
       if (errorElement.length > 0) {
         errorElement
           ?.get(0)
@@ -114,7 +114,7 @@ const Modal = () => {
           onClick={() => handleCurrentSlider(null)}
           className="absolute right-[12px] top-[12px] flex h-11 w-11 items-center justify-center rounded-lg p-2 text-gray-light/400"
         >
-          <XClose size={24} stroke={'currentColor'} />
+          <XClose size={24} stroke="currentColor" />
         </button>
         <section className="flex w-[310px] flex-col gap-1">
           <p className="text-xl-semibold text-gray-light/900">{title}</p>
@@ -154,9 +154,9 @@ const Modal = () => {
                       Name*
                     </label>
                     <MyTextField
-                      placeholder={'Input name'}
+                      placeholder="Input name"
                       disabled={Boolean(deleted_at)}
-                      name={'name'}
+                      name="name"
                       control={control}
                     />
                   </div>
@@ -169,12 +169,12 @@ const Modal = () => {
                       Email*
                     </label>
                     <MyTextField
-                      startAdornment={<Mail01 stroke={'grey'} />}
+                      startAdornment={<Mail01 stroke="grey" />}
                       name="email"
                       trigger={trigger}
                       disabled={Boolean(deleted_at)}
                       control={control}
-                      placeholder={'Input email'}
+                      placeholder="Input email"
                     />
                   </div>
                   {/* role */}
@@ -188,8 +188,8 @@ const Modal = () => {
                     <MyAsyncDropDown
                       trigger={trigger}
                       disabled={Boolean(deleted_at)}
-                      name={'role'}
-                      placeholder={'Select role'}
+                      name="role"
+                      placeholder="Select role"
                       control={control}
                       error={errors?.role?.message}
                       isOptionEqualToValue={(option, value) => option === value}
@@ -212,7 +212,7 @@ const Modal = () => {
                     <MyAsyncDropDown
                       trigger={trigger}
                       // disabled={!notification?.ticket_approaching_sla}
-                      name={'unit_id'}
+                      name="unit_id"
                       control={control}
                       error={errors?.unit_id?.message}
                       isOptionEqualToValue={(option, value) =>
@@ -220,7 +220,7 @@ const Modal = () => {
                       }
                       getOptionLabel={(e) => e.name}
                       value={unit_id}
-                      placeholder={'Select unit'}
+                      placeholder="Select unit"
                       asyncFunction={unitList}
                       onChange={(e, value) => {
                         setValue(`unit_id`, value)
@@ -296,7 +296,7 @@ const Modal = () => {
                     Password*
                   </label>
                   <MyTextField
-                    name={'password'}
+                    name="password"
                     // disabled={true}
                     // value={createdPassword}
                     control={control}
@@ -314,16 +314,16 @@ const Modal = () => {
               <MyButton
                 // disabled={isSubmitting}
                 onClick={() => deleteUser(currentSlider.id)}
-                variant={'text'}
-                size={'md'}
+                variant="text"
+                size="md"
               >
-                <p className={'text-sm-semibold text-error/700'}>Delete</p>
+                <p className="text-sm-semibold text-error/700">Delete</p>
               </MyButton>
             </div>
             <MyButton
-              color={'secondary'}
-              variant={'outlined'}
-              size={'md'}
+              color="secondary"
+              variant="outlined"
+              size="md"
               onClick={() => handleCurrentSlider(null)}
             >
               <p className="text-sm-semibold">Close</p>
@@ -334,20 +334,20 @@ const Modal = () => {
                   e.stopPropagation()
                   restoreUser(currentSlider.id)
                 }}
-                type={'reset'}
-                color={'primary'}
-                variant={'outlined'}
-                size={'md'}
+                type="reset"
+                color="primary"
+                variant="outlined"
+                size="md"
               >
-                <RefreshCcw01 size={20} stroke={'currentColor'} />
+                <RefreshCcw01 size={20} stroke="currentColor" />
                 <p className="text-sm-semibold">Restore</p>
               </MyButton>
             ) : (
               <MyButton
-                type={'submit'}
-                color={'primary'}
-                variant={'filled'}
-                size={'md'}
+                type="submit"
+                color="primary"
+                variant="filled"
+                size="md"
                 disabled={isSubmitting}
               >
                 <p className="text-sm-semibold">Submit</p>

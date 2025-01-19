@@ -51,10 +51,24 @@ import UmumStockAdjustment from './pages/stock-adjustment-inventory/umum'
 import { myToaster } from './components/Toaster/MyToaster'
 
 function App() {
-  const { createStockAdjustmentFromQR } = useApp()
+  const { createStockAdjustmentFromQR, user } = useApp()
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
   const [searchParams, setSearchParams] = useSearchParams()
   const nav = useNavigate()
+
+  const isAllowed = (role, allowedRoles) => allowedRoles.includes(role)
+
+  // Access control logic
+  function ProtectedRoute({ element, allowedRoles }) {
+    if (!isAllowed(user?.role, allowedRoles)) {
+      myToaster({
+        status: 'error',
+        message: 'Access denied',
+      })
+      return <Navigate to="/" replace />
+    }
+    return element
+  }
 
   // from scan QR
   const isScan = searchParams.get('isScan')
@@ -130,7 +144,15 @@ function App() {
                   />
                 </Route>
                 {/* SETTINGS */}
-                <Route path="/settings" element={<Settings />}>
+                <Route
+                  path="/settings"
+                  element={
+                    <ProtectedRoute
+                      element={<Settings />}
+                      allowedRoles={['Administrator', 'Approver']}
+                    />
+                  }
+                >
                   <Route index element={<Navigate to="gedung" replace />} />
                   <Route
                     path="gedung"
@@ -173,14 +195,21 @@ function App() {
                     }
                   />
                 </Route>
+                {/* USER */}
                 <Route
                   path="/user"
                   element={
-                    <UserProvider>
-                      <User />
-                    </UserProvider>
+                    <ProtectedRoute
+                      element={
+                        <UserProvider>
+                          <User />
+                        </UserProvider>
+                      }
+                      allowedRoles={['Administrator']}
+                    />
                   }
                 />
+                {/* PROFILE */}
                 <Route
                   path="/profile"
                   element={
@@ -189,14 +218,21 @@ function App() {
                     </ProfileProvider>
                   }
                 />
+                {/* STORAGE MANAGEMENT */}
                 <Route
                   path="/storage-management"
                   element={
-                    <StorageManagementProvider>
-                      <StorageManagement />
-                    </StorageManagementProvider>
+                    <ProtectedRoute
+                      element={
+                        <StorageManagementProvider>
+                          <StorageManagement />
+                        </StorageManagementProvider>
+                      }
+                      allowedRoles={['Administrator', 'Approver']}
+                    />
                   }
                 />
+                {/* STOCK ADJUSTMENT */}
                 <Route
                   path="/stock-adjustment"
                   element={
@@ -205,6 +241,7 @@ function App() {
                     </StockAdjustmentProvider>
                   }
                 />
+                {/* STOCK ADJUSTMENT INVENTORY */}
                 <Route
                   path="/stock-adjustment/:stock_adjustment_id"
                   element={
@@ -224,13 +261,18 @@ function App() {
                   />
                   <Route path="umum" element={<UmumStockAdjustment />} />
                 </Route>
-                {/* Approval */}
+                {/* APPROVAL */}
                 <Route
                   path="/approval"
                   element={
-                    <ApprovalProvider>
-                      <ApprovalWarehouse />
-                    </ApprovalProvider>
+                    <ProtectedRoute
+                      element={
+                        <ApprovalProvider>
+                          <ApprovalWarehouse />
+                        </ApprovalProvider>
+                      }
+                      allowedRoles={['Administrator', 'Approver']}
+                    />
                   }
                 />
                 <Route path="/404" element={<NotFound />} />

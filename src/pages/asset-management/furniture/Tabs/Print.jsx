@@ -9,6 +9,8 @@ const baseUrl = import.meta.env.VITE_API_BARCODE_URL
 
 function Print({ print }) {
   const qrStickerRef = useRef()
+  console.log(print)
+  console.log(`${baseUrl}/login?isScan=true&asset_id=${print?.assetId}`)
 
   const handleDownloadSticker = async () => {
     const element = qrStickerRef.current
@@ -92,7 +94,7 @@ function Print({ print }) {
 
                 {/* QR Code */}
                 <QRCode
-                  value={`${baseUrl}/login?isScan=true&asset_id=${print?.asset_id}`}
+                  value={`${baseUrl}/login?isScan=true&asset_id=${print?.assetId}`}
                   size={150}
                 />
 

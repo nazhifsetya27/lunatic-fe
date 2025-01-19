@@ -9,8 +9,10 @@ import { handleError, checkErrorYup } from '../../../../services/Helper'
 import MyTextField from '../../../../components/TextField/MyTextField'
 import MyButton from '../../../../components/Button/MyButton'
 import MyAsyncDropdown from '../../../../components/Autocomplete/MyAsyncDropdown'
+import { useApp } from '../../../../AppContext'
 
 function FormSlider() {
+  const { user } = useApp()
   const {
     currentSlider,
     handleCurrentSlider,
@@ -49,7 +51,8 @@ function FormSlider() {
         setTitle(elektronik.name)
         setValue('name', elektronik.name)
         setValue('kode', elektronik.kode)
-        setValue('unit', elektronik?.storage?.unit)
+        // unit got from the user
+        setValue('unit', user?.unit)
         setValue('building', elektronik?.storage?.building)
         setValue('floor', elektronik?.storage?.storage_floor)
         setValue('room', elektronik?.storage?.storage_room)
@@ -59,6 +62,9 @@ function FormSlider() {
             archived: true,
           }))
       })
+    } else {
+      // unit got from the user
+      setValue('unit', user?.unit)
     }
   }, [currentSlider.id, setValue, showUmum])
 
@@ -121,7 +127,7 @@ function FormSlider() {
                 />
               </label>
 
-              <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
+              {/* <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
                 <span className="after:ml-0.5 after:content-['*']">Unit</span>
                 <MyAsyncDropdown
                   getOnRender={false}
@@ -141,7 +147,7 @@ function FormSlider() {
                     setValue('unit', value)
                   }}
                 />
-              </label>
+              </label> */}
 
               <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
                 <span className="after:ml-0.5 after:content-['*']">Gedung</span>

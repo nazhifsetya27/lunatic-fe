@@ -166,7 +166,7 @@ function StockAdjustmentInventory() {
                   <div className="flex w-72 flex-1 flex-col gap-4">
                     <div className="flex flex-col gap-y-1.5">
                       <MySuggestionField
-                        placeholder="Add inventory manually"
+                        placeholder="Add inventory"
                         isOptionEqualToValue={(option, value) =>
                           option.id === value.id
                         }
@@ -193,34 +193,29 @@ function StockAdjustmentInventory() {
                           }
                         }}
                         showResult
-                        renderOption={(option) => {
-                          // console.log('option:', option)
-                          const a = 'temp'
-
-                          return (
-                            <div className="flex flex-col gap-1">
-                              {/* BARIS 1 */}
-                              <div className="flex gap-3">
-                                <div className="flex flex-col gap-1">
-                                  <p className="text-sm-semibold text-center text-gray-light/700">
-                                    {option?.name ?? '-'}
-                                  </p>
-                                  <MyChip
-                                    label={option.kode ?? '-'}
-                                    rounded="lg"
-                                    variant="filled"
-                                    color="gray"
-                                    size="sm"
-                                  />
-                                </div>
-                                <p className="text-sm-semibold text-gray-light/700">
-                                  {option?.category ?? '-'}
+                        renderOption={(option) => (
+                          <div className="flex flex-col gap-1">
+                            {/* BARIS 1 */}
+                            <div className="flex gap-3">
+                              <div className="flex flex-col gap-1">
+                                <p className="text-sm-semibold text-center text-gray-light/700">
+                                  {option?.name ?? '-'}
                                 </p>
+                                <MyChip
+                                  label={option.kode ?? '-'}
+                                  rounded="lg"
+                                  variant="filled"
+                                  color="gray"
+                                  size="sm"
+                                />
                               </div>
-                              <hr className="mb-1 mt-3 border-gray-light/200" />
+                              <p className="text-sm-bold text-gray-light/700">
+                                {option?.category ?? '-'}
+                              </p>
                             </div>
-                          )
-                        }}
+                            <hr className="mb-1 mt-3 border-gray-light/200" />
+                          </div>
+                        )}
                       />
                     </div>
                   </div>

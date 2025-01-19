@@ -38,12 +38,13 @@ import DetailSlider from './Sliders/DetailSlider'
 import FormSlider from './Sliders/FormSlider'
 import MyArchiveButton from '../../../components/Button/MyArchiveButton'
 import MyFilterModal from '../../../components/Modal/MyFilterModal'
+import { useApp } from '../../../AppContext'
 // import DetailSlider from './Sliders/DetailSlider'
 // import ImportSlider from './Sliders/ImportSlider'
 // import { useApp } from '../../../AppContext'
 
 function Umum() {
-  const nav = useNavigate()
+  const { user } = useApp()
 
   const {
     handleCurrentSlider,
@@ -92,46 +93,48 @@ function Umum() {
             </Box>
           </Stack>
 
-          <Stack direction="row" className="gap-3">
-            <MyButton
-              // onClick={downloadExport}
-              color="primary"
-              variant="outlined"
-              size="md"
-            >
-              <Download className="size-5" stroke="currentColor" />
-              <span className="text-sm-semibold">Export</span>
-            </MyButton>
+          {user?.role !== 'User' && (
+            <Stack direction="row" className="gap-3">
+              <MyButton
+                // onClick={downloadExport}
+                color="primary"
+                variant="outlined"
+                size="md"
+              >
+                <Download className="size-5" stroke="currentColor" />
+                <span className="text-sm-semibold">Export</span>
+              </MyButton>
 
-            <MyButton
-              // onClick={() =>
-              //   handleCurrentSlider({
-              //     status: true,
-              //     current: 'import-slider',
-              //   })
-              // }
-              color="secondary"
-              variant="outlined"
-              size="md"
-            >
-              <Upload className="size-5" stroke="currentColor" />
-              <span className="text-sm-semibold">Import</span>
-            </MyButton>
-            <MyButton
-              onClick={() =>
-                handleCurrentSlider({
-                  status: true,
-                  current: 'form-slider',
-                })
-              }
-              color="primary"
-              variant="filled"
-              size="md"
-            >
-              <Plus className="size-5" stroke="currentColor" />
-              <span className="text-sm-semibold">Asset umum</span>
-            </MyButton>
-          </Stack>
+              <MyButton
+                // onClick={() =>
+                //   handleCurrentSlider({
+                //     status: true,
+                //     current: 'import-slider',
+                //   })
+                // }
+                color="secondary"
+                variant="outlined"
+                size="md"
+              >
+                <Upload className="size-5" stroke="currentColor" />
+                <span className="text-sm-semibold">Import</span>
+              </MyButton>
+              <MyButton
+                onClick={() =>
+                  handleCurrentSlider({
+                    status: true,
+                    current: 'form-slider',
+                  })
+                }
+                color="primary"
+                variant="filled"
+                size="md"
+              >
+                <Plus className="size-5" stroke="currentColor" />
+                <span className="text-sm-semibold">Asset umum</span>
+              </MyButton>
+            </Stack>
+          )}
         </Stack>
 
         <Divider className="border-gray-light/200" />
@@ -224,7 +227,7 @@ function Umum() {
               )}
             />
             <MyColumn
-              header="Kode"
+              header="Code"
               hideCheckBoxHeader
               // isArchived={params.archive}
               body={({ kode }) => (
@@ -234,7 +237,7 @@ function Umum() {
               )}
             />
             <MyColumn
-              header="Kondisi"
+              header="Condition"
               hideCheckBoxHeader
               // isArchived={params.archive}
               body={({ condition }) => (
@@ -252,7 +255,7 @@ function Umum() {
               )}
             />
             <MyColumn
-              header="gedung"
+              header="Building"
               body={({ storage }) => (
                 <Box className="text-sm-regular text-gray-light/600">
                   {storage?.building?.name ?? '-'}
@@ -260,7 +263,7 @@ function Umum() {
               )}
             />
             <MyColumn
-              header="Lantai"
+              header="Floor"
               body={({ storage }) => (
                 <Box className="text-sm-regular text-gray-light/600">
                   {storage?.storage_floor?.name ?? '-'}
@@ -268,7 +271,7 @@ function Umum() {
               )}
             />
             <MyColumn
-              header="Ruangan"
+              header="Room"
               body={({ storage }) => (
                 <Box className="text-sm-regular text-gray-light/600">
                   {storage?.storage_room?.name ?? '-'}
