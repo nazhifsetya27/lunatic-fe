@@ -3,12 +3,15 @@ import {
   Navigate,
   Route,
   Routes,
+  useLocation,
   useNavigate,
   useSearchParams,
 } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { useCookies } from 'react-cookie'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useMediaQuery } from '@mui/material'
+import { Menu01 } from '@untitled-ui/icons-react'
 import { AppProvider, useApp } from './AppContext'
 import Welcome from './pages/Welcome'
 import AssetManagement from './pages/asset-management'
@@ -49,18 +52,40 @@ import FurnitureStockAdjustment from './pages/stock-adjustment-inventory/furnitu
 import ElektronikStockAdjustment from './pages/stock-adjustment-inventory/elektronik'
 import UmumStockAdjustment from './pages/stock-adjustment-inventory/umum'
 import { myToaster } from './components/Toaster/MyToaster'
+import MyModalSlider from './components/ModalSlider/MyModalSlider'
+import MyButtonIcon from './components/Button/MyButtonIcon'
 
 function App() {
-  const { createStockAdjustmentFromQR, user } = useApp()
+  const { createStockAdjustmentFromQR, user, isLoading } = useApp()
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
   const [searchParams, setSearchParams] = useSearchParams()
   const nav = useNavigate()
+  const location = useLocation()
+  const isMobile = useMediaQuery('(max-width:640px)')
 
-  const isAllowed = (role, allowedRoles) => allowedRoles.includes(role)
+  const [currentSlider, setCurrentSlider] = useState({
+    status: false,
+    current: null,
+  })
+
+  const handleCurrentSlider = (slider, id) => {
+    if (slider) {
+      setCurrentSlider((value) => ({ ...value, ...slider, id }))
+    } else {
+      setCurrentSlider({ current: null })
+    }
+  }
+
+  const isAllowed = (role, allowedRoles) => allowedRoles?.includes(role)
 
   // Access control logic
   function ProtectedRoute({ element, allowedRoles }) {
-    if (!isAllowed(user?.role, allowedRoles)) {
+    if (isLoading) {
+      // Show a loading spinner or placeholder while user data is being fetched
+      return <div>Loading...</div>
+    }
+
+    if (!isAllowed(user?.role, allowedRoles) && isLoading) {
       myToaster({
         status: 'error',
         message: 'Access denied',
@@ -90,7 +115,11 @@ function App() {
       }
     }
 
-    handleScan() // Call the async function
+    // console.log('location : ', !location.pathname.includes('login'))
+
+    if (!location.pathname.includes('login')) {
+      handleScan() // Call the async function
+    }
   }, [isScan, asset_id, nav])
 
   return (
@@ -104,13 +133,39 @@ function App() {
         newestOnTop
         pauseOnFocusLoss
         draggable
+        draggablePercent={30} // Adjust the swipe distance percentage for dismissal
         pauseOnHover
         closeOnClick
       />
       {cookies.token ? (
         <AppProvider>
-          <div id="main-content" className="relative flex h-screen w-full">
-            <MyNavigation />
+          {isMobile && (
+            <MyModalSlider
+              alignment="left"
+              open={currentSlider?.current === 'nav'}
+              element={<MyNavigation />}
+              onClose={() => handleCurrentSlider(null)}
+            />
+          )}
+          <div
+            id="main-content"
+            className={`relative flex ${
+              isMobile ? 'flex-col' : 'flex-row'
+            } h-screen w-full`}
+          >
+            {isMobile ? (
+              <div className="pl-8 pt-4">
+                <MyButtonIcon
+                  color="gray"
+                  type="outlined"
+                  onClick={() => handleCurrentSlider({ current: 'nav' })}
+                >
+                  <Menu01 />
+                </MyButtonIcon>
+              </div>
+            ) : (
+              <MyNavigation />
+            )}
             <div className="relative flex h-screen w-full flex-col">
               <Routes>
                 <Route path="/login" element={<Navigate to="/" replace />} />
@@ -286,6 +341,14 @@ function App() {
           <Route path="*" element={<Navigate to="/login" replace />} />
           <Route
             path="/login"
+            element={
+              <LoginProvider>
+                <Login />
+              </LoginProvider>
+            }
+          />
+          <Route
+            path="/login?isScan=true&asset_id=..."
             element={
               <LoginProvider>
                 <Login />

@@ -8,7 +8,7 @@ import React, {
 } from 'react'
 import { useCookies } from 'react-cookie'
 import { debounce } from 'lodash'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { get, post } from './services/NetworkUtils'
 import { Access } from './services/Helper'
 import { myToaster } from './components/Toaster/MyToaster'
@@ -25,21 +25,26 @@ function AppProvider({ children }) {
   const [slider, setSlider] = useState(false)
   const [user, setUser] = useState({})
   const [accesses, setAccesses] = useState([])
+  const [isLoading, setisLoading] = useState(true)
   const [cookies] = useCookies(['token'])
   const nav = useNavigate()
+  const location = useLocation()
 
-  const getSession = useCallback(
-    () =>
-      AppService.getSession()
-        .then((res) => {
-          setUser({
-            ...res.data,
-            photo_url: `${res.data.photo_url}?time=${new Date().getTime()}`,
-          })
-        })
-        .catch(myToaster),
-    []
-  )
+  const getSession = useCallback(async () => {
+    try {
+      const res = await AppService.getSession()
+      setUser({
+        ...res.data,
+        photo_url: `${res.data.photo_url}?time=${new Date().getTime()}`,
+      })
+    } catch (error) {
+      console.error('Failed to fetch session:', error)
+      setUser(null)
+    } finally {
+      setisLoading(false) // Ensure loading is complete
+      console.log(isLoading)
+    }
+  }, [])
 
   const createStockAdjustmentFromQR = useCallback(
     (asset_id) =>
@@ -64,7 +69,10 @@ function AppProvider({ children }) {
   )
 
   useEffect(() => {
+    // Call getSession only if "login" is not part of the path
+    // if (!location.pathname.includes('login')) {
     getSession()
+    // }
   }, [])
 
   const contextValue = useMemo(

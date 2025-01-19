@@ -5,7 +5,7 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import CryptoJS from 'crypto-js'
 import { Eye, EyeOff } from '@untitled-ui/icons-react'
 import { useLogin } from './context'
@@ -17,10 +17,25 @@ import MyCheckbox from '../../components/Checkbox/MyCheckbox'
 import MyButton from '../../components/Button/MyButton'
 
 function Login() {
-  const { login, isScan } = useLogin()
+  const { login } = useLogin()
   const nav = useNavigate()
-  // console.log(isScan)
+  const [searchParams] = useSearchParams()
 
+  const isScan = searchParams.get('isScan')
+  const assetId = searchParams.get('asset_id')
+
+  useEffect(() => {
+    if (isScan === 'true' && assetId) {
+      console.log('Processing scan:', { isScan, assetId })
+
+      // Handle the query parameters logic here
+      // when user login from scan QR and not login yet
+      localStorage.setItem('isScan', isScan)
+      localStorage.setItem('assetId', assetId)
+    }
+  }, [isScan, assetId])
+
+  // when user login from scan QR and already logged in
   if (isScan) {
     nav('stock-adjustment')
   }
