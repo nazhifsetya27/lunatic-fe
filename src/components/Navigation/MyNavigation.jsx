@@ -19,6 +19,7 @@ const mediaUrl = import.meta.env.VITE_API_MEDIA_URL
 function SideNavbar({ childs }) {
   const location = useLocation()
   const { user } = useApp()
+  const { role } = user
 
   const [loading, setLoading] = useState(true)
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
@@ -41,7 +42,7 @@ function SideNavbar({ childs }) {
         icon={<LogOut04 className="text-warning/600" />}
         bgColor="bg-error/100"
       />
-      <div className="flex h-screen w-20 min-w-[80px] flex-col justify-between border-r border-gray-light/200">
+      <div className="flex h-dvh w-20 min-w-[80px] flex-col justify-between border-r border-gray-light/200">
         <div className="flex h-full flex-col justify-between">
           <div className="flex h-full w-full flex-col items-center gap-y-6 pt-8">
             <div className="flex w-full justify-center px-4 py-[7px]">
@@ -78,7 +79,7 @@ function SideNavbar({ childs }) {
                         location?.pathname.includes('/approval')
                           ? 'bg-gray-light/50 text-gray-light/700'
                           : 'text-gray-light/500'
-                      } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
+                      } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md ${role === 'User' ? 'hidden' : ''}`}
                     >
                       <CheckDone01 size={24} stroke="currentColor" />
                     </div>
@@ -96,7 +97,7 @@ function SideNavbar({ childs }) {
                         location?.pathname.includes('/user')
                           ? 'bg-gray-light/50 text-gray-light/700'
                           : 'text-gray-light/500'
-                      } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
+                      } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md ${role === 'Administrator' ? '' : 'hidden'}`}
                     >
                       <Users01 size={24} stroke="currentColor" />
                     </div>
@@ -114,7 +115,7 @@ function SideNavbar({ childs }) {
                         location?.pathname.includes('/storage')
                           ? 'bg-gray-light/50 text-gray-light/700'
                           : 'text-gray-light/500'
-                      } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
+                      } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md ${role === 'User' ? 'hidden' : ''}`}
                     >
                       <StorageCardOne size={24} stroke="currentColor" />
                     </div>
@@ -159,7 +160,7 @@ function SideNavbar({ childs }) {
                           location?.pathname.includes('/settings')
                             ? 'bg-gray-light/50 text-gray-light/700'
                             : 'text-gray-light/500'
-                        } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
+                        } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md ${role === 'User' ? 'hidden' : ''}`}
                       >
                         <Settings02
                           data-test="btn-nav-setting"

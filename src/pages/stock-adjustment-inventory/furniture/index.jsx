@@ -13,11 +13,11 @@ function FurnitureStockAdjustment() {
     setStockAdjustmentInventory,
     setParams,
   } = useStockAdjustmentInventory()
-  // console.log('sam', stockAdjustmentInventory.data)
+
   const params = { archive: 0 }
 
   return (
-    <div>
+    <div className="p-4 sm:p-6">
       <MyDataTable
         values={stockAdjustmentInventory}
         paginator
@@ -27,6 +27,7 @@ function FurnitureStockAdjustment() {
         onChangePagination={(page) => {
           setParams((value) => ({ ...value, page }))
         }}
+        className="text-sm"
       >
         <MyColumn
           sortable
@@ -47,13 +48,12 @@ function FurnitureStockAdjustment() {
         <MyColumn
           sortable
           field="name"
-          header="adjustment status"
+          header="Adjustment Status"
           body={(value) => (
             <div>
               {value.current_condition_id === null ? (
                 <MyChip
-                  label="not adjusted"
-                  // endAdornment={<AlertCircle className="size-5 text-warning/500" />}
+                  label="Not Adjusted"
                   color="warning"
                   variant="filled"
                   rounded="full"
@@ -61,8 +61,7 @@ function FurnitureStockAdjustment() {
                 />
               ) : (
                 <MyChip
-                  label="adjusted"
-                  // endAdornment={<AlertCircle className="size-5 text-warning/500" />}
+                  label="Adjusted"
                   color="success"
                   variant="filled"
                   rounded="full"
