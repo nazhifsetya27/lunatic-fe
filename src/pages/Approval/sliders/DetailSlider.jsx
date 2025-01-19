@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Check, XClose } from '@untitled-ui/icons-react'
 import SimpleBar from 'simplebar-react'
 import moment from 'moment'
-import MyDetailView from '../../../components/TabView/MyTabView'
 import MyButton from '../../../components/TabView/MyTabPanel'
 import { useApproval } from '../context'
 import { useApp } from '../../../AppContext'
 import { Access } from '../../../services/Helper'
+import MyDetailView from '../../../components/DetailView/MyDetailView'
 
 function DetailSlider() {
   const { getAccess } = useApp()
@@ -22,19 +22,13 @@ function DetailSlider() {
     approve,
   } = useApproval()
 
-  const [approvalDetails, setApprovalDetails] = useState()
+  console.log(approvalDetail?.general_information)
 
-  const data = currentSlider?.id
-  // const category = data?.category
-  console.log(data, '<<<annnan')
+  const data = currentSlider.id
 
   useEffect(() => {
-    if (data.id) {
-      getDetail(data.id).then((approval) => {
-        setApprovalDetails(approval)
-      })
-    }
-  }, [currentTabs])
+    if (data.id) getDetail(data?.id)
+  }, [])
 
   return (
     <div className="flex h-screen w-[375px] flex-col">
@@ -113,7 +107,7 @@ function DetailSlider() {
               </div>
               <div className="flex flex-1 flex-col">
                 <MyDetailView
-                  datas={approvalDetails?.general_information || {}}
+                  datas={approvalDetail?.general_information || {}}
                   field="serial_number"
                   func={{
                     'Created date': (value) =>

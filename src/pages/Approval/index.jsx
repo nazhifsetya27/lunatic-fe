@@ -92,7 +92,10 @@ function Approval() {
                 <div className="flex items-center justify-between gap-3 border-b border-gray-light/200 px-4 py-3">
                   <MyButtonGroupV2
                     buttons={[
-                      { label: 'Pending approval', value: 'pending approval' },
+                      {
+                        label: 'Waiting for approval',
+                        value: 'Waiting for approval',
+                      },
                       { label: 'Approved', value: 'approved' },
                       { label: 'View all', value: 'view all' },
                     ]}
