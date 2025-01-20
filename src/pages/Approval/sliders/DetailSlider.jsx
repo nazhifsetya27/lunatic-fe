@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Check, XClose } from '@untitled-ui/icons-react'
 import SimpleBar from 'simplebar-react'
 import moment from 'moment'
-import MyButton from '../../../components/TabView/MyTabPanel'
+import MyButton from '../../../components/Button/MyButton'
 import { useApproval } from '../context'
 import { useApp } from '../../../AppContext'
-import { Access } from '../../../services/Helper'
 import MyDetailView from '../../../components/DetailView/MyDetailView'
+import { Access } from '../../../services/Helper'
+import { default as PActionMenu } from '../sliders/Menu'
 
 function DetailSlider() {
   const { getAccess } = useApp()
@@ -21,8 +22,6 @@ function DetailSlider() {
     approvalDetail,
     approve,
   } = useApproval()
-
-  console.log(approvalDetail?.general_information)
 
   const data = currentSlider.id
 
@@ -74,19 +73,39 @@ function DetailSlider() {
             </MyButton>
           </div> */}
           <div
-            className={`mb-4 ${data?.status !== 'Approved' ? 'visible' : 'hidden'}`}
+            className={`mb-4 ${data?.status === 'Waiting for approval' ? 'visible' : 'hidden'} flex gap-2`}
             // className={`mb-4 ${access?.add && data.status === 'open' ? 'visible' : 'hidden'}`}
           >
-            <MyButton
-              color="primary"
-              variant="filled"
-              size="md"
-              // onClick={() => approve(data.id, { category: data.category })}
-              disabled={data?.status === 'Approved'}
-            >
-              <Check />
-              <p className="text-sm-semibold">Approve</p>
-            </MyButton>
+            <PActionMenu
+              target={(open, handleClick) => (
+                <MyButton
+                  onClick={handleClick}
+                  color={'primary'}
+                  variant={'filled'}
+                  size={'sm'}
+                  disabled={data?.status !== 'Waiting for approval'}
+                >
+                  <Check size={20} stroke={'currentColor'} />
+                  <p className="text-sm-semibold">Approve</p>
+                </MyButton>
+              )}
+              data={{ status: 'Approved' }}
+            />
+            <PActionMenu
+              target={(open, handleClick) => (
+                <MyButton
+                  onClick={handleClick}
+                  color={'error'}
+                  variant={'filled'}
+                  size={'sm'}
+                  disabled={data?.status !== 'Waiting for approval'}
+                >
+                  <XClose size={20} stroke={'currentColor'} />
+                  <p className="text-sm-semibold">Reject</p>
+                </MyButton>
+              )}
+              data={{ status: 'Rejected' }}
+            />
           </div>
         </div>
 
@@ -110,7 +129,9 @@ function DetailSlider() {
                   datas={approvalDetail?.general_information || {}}
                   field="serial_number"
                   func={{
-                    'Created date': (value) =>
+                    'Created at': (value) =>
+                      moment(value).format('DD MMM YYYY • HH:mm'),
+                    'Updated at': (value) =>
                       moment(value).format('DD MMM YYYY • HH:mm'),
                   }}
                 />
