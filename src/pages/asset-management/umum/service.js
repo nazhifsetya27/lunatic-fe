@@ -27,6 +27,10 @@ const Service = {
     await get('/asset/asset-option/floor-list', params),
   searchRoomList: async (params) =>
     await get('/asset/asset-option/room-list', params),
+
+  // import export
+  downloadTemplateImport: () => download(`/asset/elektronik/example`),
+  downloadExport: (params) => download(`/asset/elektronik/export`, params),
 }
 
 export default Service
