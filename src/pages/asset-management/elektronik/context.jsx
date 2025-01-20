@@ -176,15 +176,15 @@ function ElektronikProvider({ children }) {
   //     return Service.importElektronik(formData, config)
   //   }, [])
 
-  //   const downloadTemplateImport = useCallback(() => {
-  //     const url = Service.downloadTemplateImport()
-  //     window.open(url, '_blank').focus()
-  //   }, [])
+  const downloadTemplateImport = useCallback(() => {
+    const url = Service.downloadTemplateImport()
+    window.open(url, '_blank').focus()
+  }, [])
 
-  //   const downloadExport = useCallback(() => {
-  //     const url = Service.downloadExport(params)
-  //     window.open(url, '_blank').focus()
-  //   }, [params])
+  const downloadExport = useCallback(() => {
+    const url = Service.downloadExport({ category: 'Elektronik' })
+    window.open(url, '_blank').focus()
+  }, [params])
 
   const searchUnitList = async (param) =>
     Service.searchUnitList(param).catch(myToaster)
@@ -216,6 +216,8 @@ function ElektronikProvider({ children }) {
       getElektronikDetail,
       restoreElektronik,
       createElektronik,
+      downloadTemplateImport,
+      downloadExport,
       updateElektronik,
       deleteElektronik,
       searchUnitList,
@@ -240,6 +242,8 @@ function ElektronikProvider({ children }) {
       createElektronik,
       updateElektronik,
       deleteElektronik,
+      downloadTemplateImport,
+      downloadExport,
       searchUnitList,
       searchBuildingList,
       searchFloorList,

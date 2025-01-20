@@ -177,15 +177,15 @@ function FurnitureProvider({ children }) {
   //     return Service.importFurniture(formData, config)
   //   }, [])
 
-  //   const downloadTemplateImport = useCallback(() => {
-  //     const url = Service.downloadTemplateImport()
-  //     window.open(url, '_blank').focus()
-  //   }, [])
+  const downloadTemplateImport = useCallback(() => {
+    const url = Service.downloadTemplateImport()
+    window.open(url, '_blank').focus()
+  }, [])
 
-  //   const downloadExport = useCallback(() => {
-  //     const url = Service.downloadExport(params)
-  //     window.open(url, '_blank').focus()
-  //   }, [params])
+  const downloadExport = useCallback(() => {
+    const url = Service.downloadExport({ category: 'Furniture' })
+    window.open(url, '_blank').focus()
+  }, [params])
 
   const searchUnitList = async (param) =>
     Service.searchUnitList(param).catch(myToaster)
@@ -218,6 +218,8 @@ function FurnitureProvider({ children }) {
       createFurniture,
       updateFurniture,
       deleteFurniture,
+      downloadExport,
+      downloadTemplateImport,
       restoreFurniture,
       searchUnitList,
       searchBuildingList,
@@ -240,6 +242,8 @@ function FurnitureProvider({ children }) {
       createFurniture,
       updateFurniture,
       deleteFurniture,
+      downloadExport,
+      downloadTemplateImport,
       restoreFurniture,
       searchUnitList,
       searchBuildingList,

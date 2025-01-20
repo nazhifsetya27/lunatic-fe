@@ -4,10 +4,13 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { DownloadCloud01, XClose } from '@untitled-ui/icons-react'
 import io from 'socket.io-client'
-import { MyButton, MyDropzone, myToaster } from '@interstellar-component'
-import { usePartNumber } from '../context'
+// import { MyButton, MyDropzone, myToaster } from '@interstellar-component'
+import { useElektronik } from '../context'
 import { schemaImport } from '../schema'
-import { checkErrorYup } from '../../../services/Helper'
+import { checkErrorYup } from '../../../../services/Helper'
+import MyButton from '../../../../components/Button/MyButton'
+import MyDropzone from '../../../../components/Dropzone/MyDropzone'
+import { myToaster } from '../../../../components/Toaster/MyToaster'
 
 const baseURL = import.meta.env.VITE_API_SOCKET_URL
 
@@ -25,7 +28,7 @@ function ImportSlider() {
     importPartNumber,
     downloadTemplateImport,
     getPartNumbers,
-  } = usePartNumber()
+  } = useElektronik()
 
   const [progressUpload, setProgressUpload] = useState(null)
   const [failedFile, setFailedFile] = useState()

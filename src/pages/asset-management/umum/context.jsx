@@ -175,15 +175,15 @@ function UmumProvider({ children }) {
   //     return Service.importUmum(formData, config)
   //   }, [])
 
-  //   const downloadTemplateImport = useCallback(() => {
-  //     const url = Service.downloadTemplateImport()
-  //     window.open(url, '_blank').focus()
-  //   }, [])
+  const downloadTemplateImport = useCallback(() => {
+    const url = Service.downloadTemplateImport()
+    window.open(url, '_blank').focus()
+  }, [])
 
-  //   const downloadExport = useCallback(() => {
-  //     const url = Service.downloadExport(params)
-  //     window.open(url, '_blank').focus()
-  //   }, [params])
+  const downloadExport = useCallback(() => {
+    const url = Service.downloadExport({ category: 'Umum' })
+    window.open(url, '_blank').focus()
+  }, [params])
 
   const searchUnitList = async (param) =>
     Service.searchUnitList(param).catch(myToaster)
@@ -221,6 +221,8 @@ function UmumProvider({ children }) {
       searchBuildingList,
       searchFloorList,
       searchRoomList,
+      downloadTemplateImport,
+      downloadExport,
       getPrint,
       print,
     }),
@@ -229,6 +231,8 @@ function UmumProvider({ children }) {
       currentSlider,
       getUmums,
       handleCurrentSlider,
+      downloadTemplateImport,
+      downloadExport,
       searchCustomer,
       searchRack,
       searchUmumType,
