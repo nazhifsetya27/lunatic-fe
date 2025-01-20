@@ -13,6 +13,7 @@ import { XClose } from '@untitled-ui/icons-react'
 // import { MyButton, MyAsyncDropdown, MyDropzone } from '@interstellar-component'
 
 // Context
+import { useMediaQuery } from '@mui/material'
 import { useStockAdjustmentInventory } from '../../context'
 
 // schema
@@ -61,9 +62,12 @@ function FormSliderFurniture() {
     handleError(adjustInventory, control),
     checkErrorYup
   )
+  const isMobile = useMediaQuery('(max-width:640px)')
 
   return (
-    <div className="flex h-screen w-[375px] flex-col gap-8">
+    <div
+      className={`flex h-screen ${isMobile ? 'w-[360px]' : 'w-[375px]'} flex-col gap-8`}
+    >
       <header className="relative flex items-start gap-x-4 px-4 pt-6">
         <button
           onClick={() => handleCurrentSlider(null)}
@@ -129,7 +133,7 @@ function FormSliderFurniture() {
                   value={current_condition}
                   placeholder="Select condition"
                   control={control}
-                  error={errors?.condition?.message}
+                  error={errors?.current_condition?.message}
                   isOptionEqualToValue={(option, value) =>
                     option.id === value.id
                   }

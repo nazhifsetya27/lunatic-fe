@@ -17,6 +17,7 @@ import SimpleBar from 'simplebar-react'
 import { debounce } from 'lodash'
 
 // Sliders
+import { useMediaQuery } from '@mui/material'
 import FormSlider from './slider/FormSlider'
 import DetailSlider from './slider/DetailSlider'
 
@@ -38,12 +39,24 @@ import Modal from './slider/DetailsItemOpen'
 const mediaUrl = import.meta.env.VITE_API_MEDIA_URL
 
 const getChip = (status) => {
-  if (status === 'done-with-attention') {
+  if (status === 'Rejected') {
     return (
       <MyChip
-        label="Attention"
-        endAdornment={<AlertCircle className="size-5 text-warning/500" />}
-        color="warning"
+        label="Rejected"
+        endAdornment={<AlertCircle className="size-5 text-error/500" />}
+        color="error"
+        variant="filled"
+        rounded="full"
+        size="lg"
+      />
+    )
+  }
+  if (status === 'Approved') {
+    return (
+      <MyChip
+        label="Approved"
+        endAdornment={<AlertCircle className="size-5 text-success/500" />}
+        color="success"
         variant="filled"
         rounded="full"
         size="lg"
@@ -86,6 +99,7 @@ function StockAdjustment() {
     stockAdjustment,
   } = useStockAdjustment()
 
+  const isMobile = useMediaQuery('(max-width:640px)')
   const navigate = useNavigate()
 
   return (
@@ -111,7 +125,7 @@ function StockAdjustment() {
         className="flex-1"
         style={{ height: '100vh' }}
       >
-        <main className="flex flex-col gap-8 pb-12 pt-8">
+        <main className={`flex ${isMobile ? '' : 'flex-col'} gap-8 pb-12 pt-8`}>
           <div className="flex flex-col gap-6 px-8">
             <div className="flex flex-col gap-1">
               <p className="display-sm-semibold text-gray-light/900">

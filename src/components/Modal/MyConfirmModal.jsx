@@ -1,6 +1,7 @@
 import { Save01, XClose } from '@untitled-ui/icons-react'
 
 import { useEffect } from 'react'
+import { useMediaQuery } from '@mui/material'
 import MyModal from './MyModal'
 import MyButton from '../Button/MyButton'
 import MyBgPatternDecorativeCircle from '../Decorative/MyBgPatternDecorativeCircle'
@@ -59,8 +60,11 @@ function ConfirmModalView({
     }
   }, [onConfirm, onClose])
 
+  const isMobile = useMediaQuery('(max-width:640px)')
   return (
-    <div className="flex w-[400px] flex-col gap-5 overflow-hidden rounded-lg bg-base-white">
+    <div
+      className={`flex ${isMobile ? 'w-[80vw]' : 'w-[400px]'} flex-col gap-5 overflow-hidden rounded-lg bg-base-white`}
+    >
       <header className="relative flex items-start gap-x-4 pt-6">
         <button
           onClick={onClose}

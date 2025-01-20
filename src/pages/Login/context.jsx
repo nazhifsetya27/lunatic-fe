@@ -13,8 +13,10 @@ function LoginProvider({ children }) {
   const nav = useNavigate()
 
   // from scan QR
-  const isScan = searchParams.get('isScan')
-  const asset_id = searchParams.get('asset_id')
+  // const isScan = searchParams.get('isScan')
+  // const asset_id = searchParams.get('asset_id')
+  const isScan = localStorage.getItem('isScan')
+  const asset_id = localStorage.getItem('assetId')
 
   const login = async (body) => {
     const formData = new FormData()
@@ -44,11 +46,17 @@ function LoginProvider({ children }) {
               import.meta.env.VITE_APP_SECRET_KEY
             ).toString()
           )
+        } else {
+          localStorage.removeItem('rv5zzc9noTdU5AD2In')
+        }
 
-          // if isScan redirect to SA
-          if (isScan) {
-            const createSAFromQR =
+        // if isScan create SA and redirect to SA
+        if (isScan) {
+          let createSAFromQR
+          try {
+            createSAFromQR =
               await LoginService.createStockAdjustmentFromQR(asset_id)
+            // console.log(createSAFromQR) // Log the response here
 
             nav(`/stock-adjustment/${createSAFromQR?.data?.id}`, {
               state: {
@@ -57,14 +65,20 @@ function LoginProvider({ children }) {
               },
             })
 
+            localStorage.removeItem('isScan')
+            localStorage.removeItem('assetId')
+
             myToaster({
               status: 200,
               title: 'success create stock adjustment',
               message: 'please adjust your inventory',
             })
+          } catch (error) {
+            console.error('Error creating stock adjustment:', error)
+            localStorage.removeItem('isScan')
+            localStorage.removeItem('assetId')
+            myToaster(error)
           }
-        } else {
-          localStorage.removeItem('rv5zzc9noTdU5AD2In')
         }
       })
   }
