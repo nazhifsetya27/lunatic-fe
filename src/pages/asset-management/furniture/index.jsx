@@ -19,7 +19,6 @@ import MyTextField from '../../../components/TextField/MyTextField'
 import MyDataTable from '../../../components/Table/MyDataTable'
 import MyColumn from '../../../components/Table/MyColumn'
 
-// import FormSlider from './Sliders/FormSlider'
 import { useFurniture } from './context'
 import MyModalSlider from '../../../components/ModalSlider/MyModalSlider'
 import DetailSlider from './Sliders/DetailSlider'
@@ -27,9 +26,7 @@ import FormSlider from './Sliders/FormSlider'
 import MyArchiveButton from '../../../components/Button/MyArchiveButton'
 import MyFilterModal from '../../../components/Modal/MyFilterModal'
 import { useApp } from '../../../AppContext'
-// import DetailSlider from './Sliders/DetailSlider'
-// import ImportSlider from './Sliders/ImportSlider'
-// import { useApp } from '../../../AppContext'
+import ImportSlider from './Sliders/ImportSlider'
 
 function Furniture() {
   const { user } = useApp()
@@ -55,11 +52,11 @@ function Furniture() {
         element={<DetailSlider />}
         onClose={() => handleCurrentSlider(null)}
       />
-      {/* <MyModalSlider
+      <MyModalSlider
         open={currentSlider?.current === 'import-slider'}
         element={<ImportSlider />}
         onClose={() => handleCurrentSlider(null)}
-      /> */}
+      />
 
       <Stack className="w-full rounded-xl border border-gray-light/200 shadow-shadows/shadow-xs">
         <Stack direction="row" className="gap-4 p-5">
@@ -94,12 +91,12 @@ function Furniture() {
               </MyButton>
 
               <MyButton
-                // onClick={() =>
-                //   handleCurrentSlider({
-                //     status: true,
-                //     current: 'import-slider',
-                //   })
-                // }
+                onClick={() =>
+                  handleCurrentSlider({
+                    status: true,
+                    current: 'import-slider',
+                  })
+                }
                 color="secondary"
                 variant="outlined"
                 size="md"

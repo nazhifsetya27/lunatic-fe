@@ -170,16 +170,16 @@ function ElektronikProvider({ children }) {
     [getElektronics, handleCurrentSlider]
   )
 
-  //   const importElektronik = useCallback((values, config) => {
-  //     const formData = new FormData()
-  //     formData.append('simcards', values.simcards)
-  //     return Service.importElektronik(formData, config)
-  //   }, [])
+  const downloadTemplateImport = useCallback(() => {
+    const url = Service.downloadTemplateImport()
+    window.open(url, '_blank').focus()
+  }, [])
 
-  //   const downloadTemplateImport = useCallback(() => {
-  //     const url = Service.downloadTemplateImport()
-  //     window.open(url, '_blank').focus()
-  //   }, [])
+  const importElektronik = useCallback((values, config) => {
+    const formData = new FormData()
+    formData.append('electronics', values.electronics)
+    return Service.importElektronik(formData, config)
+  }, [])
 
   //   const downloadExport = useCallback(() => {
   //     const url = Service.downloadExport(params)
@@ -224,6 +224,8 @@ function ElektronikProvider({ children }) {
       searchRoomList,
       getPrint,
       print,
+      downloadTemplateImport,
+      importElektronik,
     }),
     [
       params,
@@ -244,6 +246,8 @@ function ElektronikProvider({ children }) {
       searchBuildingList,
       searchFloorList,
       searchRoomList,
+      downloadTemplateImport,
+      importElektronik,
     ]
   )
 

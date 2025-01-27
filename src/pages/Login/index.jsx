@@ -11,6 +11,7 @@ import { Eye, EyeOff } from '@untitled-ui/icons-react'
 import { useLogin } from './context'
 import { LoginSchema } from './schema'
 import mainLogo from './assets/Image.png'
+import PLNLogo from './assets/logo_PLN.svg'
 import { handleError, checkErrorYup } from '../../services/Helper'
 import MyTextField from '../../components/TextField/MyTextField'
 import MyCheckbox from '../../components/Checkbox/MyCheckbox'
@@ -89,7 +90,9 @@ function Login() {
         <div className="w-full sm:mx-7 md:w-[360px]">
           {/* HEADER */}
           <header className="mb-6 flex flex-col items-center gap-4">
-            <div className="h-14 w-44">{/* <Ingenico /> */}Logo</div>
+            <div className="h-30 w-20">
+              <img src={PLNLogo} alt="plnLogo" />
+            </div>
             <div>
               <p className="text-md-regular text-gray-light/600">
                 Welcome back! Please enter your details.
@@ -108,7 +111,7 @@ function Login() {
                       htmlFor="email"
                       className="text-sm-medium flex flex-row items-start justify-start text-gray-light/700"
                     >
-                      Email or Username
+                      Email
                     </label>
                     <MyTextField
                       name="email"
@@ -166,13 +169,13 @@ function Login() {
                       Remember me
                     </p>
                   </div>
-                  <MyButton
+                  {/* <MyButton
                     color="primary"
                     variant="text"
                     onClick={() => nav('/forget-password')}
                   >
                     <p className="text-sm-semibold">Forgot password</p>
-                  </MyButton>
+                  </MyButton> */}
                 </section>
                 <MyButton
                   type="submit"
@@ -186,14 +189,6 @@ function Login() {
                 </MyButton>
               </div>
             </form>
-          </div>
-
-          {/* Row */}
-          <div>
-            <p className="text-sm-regular text-center">
-              User can only log in on one device at a time to keep data safe and
-              secure.
-            </p>
           </div>
         </div>
       </div>

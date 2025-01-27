@@ -17,6 +17,9 @@ const Service = {
     patch(`/asset/furniture/${id}`, data, {}, 'form-data'),
   deleteFurniture: async (id) => remove(`/asset/furniture/${id}`),
   restoreFurniture: async (id) => patch(`/asset/furniture/${id}/restore`),
+  importFurniture: async (data, config) =>
+    await post('/asset/furniture/import', data, 'form-data', undefined, config),
+  downloadTemplateImport: () => download('/asset/furniture/example'),
 
   // option
   searchUnitList: async (params) =>

@@ -4,10 +4,12 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { DownloadCloud01, XClose } from '@untitled-ui/icons-react'
 import io from 'socket.io-client'
-import { MyButton, MyDropzone, myToaster } from '@interstellar-component'
-import { usePartNumber } from '../context'
+import { useFurniture } from '../context'
 import { schemaImport } from '../schema'
-import { checkErrorYup } from '../../../services/Helper'
+import { checkErrorYup } from '../../../../services/Helper'
+import { myToaster } from '../../../../components/Toaster/MyToaster'
+import MyButton from '../../../../components/Button/MyButton'
+import MyDropzone from '../../../../components/Dropzone/MyDropzone'
 
 const baseURL = import.meta.env.VITE_API_SOCKET_URL
 
@@ -15,17 +17,17 @@ function ImportSlider() {
   const {
     setValue,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm({ resolver: yupResolver(schemaImport) })
 
   const [socket, setSocket] = useState(null)
 
   const {
     handleCurrentSlider,
-    importPartNumber,
+    importFurniture,
     downloadTemplateImport,
-    getPartNumbers,
-  } = usePartNumber()
+    getFurnitures,
+  } = useFurniture()
 
   const [progressUpload, setProgressUpload] = useState(null)
   const [failedFile, setFailedFile] = useState()
@@ -33,7 +35,7 @@ function ImportSlider() {
   const onSubmit = useCallback(
     async (data) => {
       try {
-        const res = await importPartNumber(data, {
+        const res = await importFurniture(data, {
           onUploadProgress: (progressEvent) => {
             setProgressUpload(progressEvent)
           },
@@ -53,12 +55,12 @@ function ImportSlider() {
           setProgressUpload({ progress: a.progress / 100, import: true })
         })
         socket.on(res?.data?.result, (b) => {
-          console.log(b.result)
+          console.log('b.result:', b.result)
           setFailedFile(b?.result)
           setProgressUpload({ progress: 100, import: true })
           clearTimeout(timeout)
           socketOff()
-          getPartNumbers()
+          getFurnitures()
           if (b?.result?.failed?.length === 0) {
             myToaster({
               status: 200,
@@ -73,15 +75,16 @@ function ImportSlider() {
         myToaster(error)
       }
     },
-    [getPartNumbers, handleCurrentSlider, importPartNumber, socket]
+    [getFurnitures, handleCurrentSlider, importFurniture, socket]
   )
 
   useEffect(() => {
-    const newSocket = io.connect(`${baseURL}/v1`, {
-      path: '/warehouse-api/socket.io',
+    const newSocket = io.connect(`${baseURL}`, {
+      path: '/socket.io',
       transports: ['websocket'],
       upgrade: false,
     })
+
     setSocket(newSocket)
     return () => {
       newSocket.disconnect()
@@ -136,9 +139,10 @@ function ImportSlider() {
                 // }}
                 // onDropRejected={(rejectedFiles, e) => {}}
                 // eslint-disable-next-line no-unused-vars
+                errors={errors?.furnitures?.message}
                 onDropAccepted={(acceptedFiles, handleDeleteFile) => {
                   const file = acceptedFiles?.find((item) => item)
-                  setValue('partnumbers', file)
+                  setValue('furnitures', file)
                 }}
                 failedFile={failedFile}
               />

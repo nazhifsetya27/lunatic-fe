@@ -169,16 +169,16 @@ function UmumProvider({ children }) {
     [getUmums, handleCurrentSlider]
   )
 
-  //   const importUmum = useCallback((values, config) => {
-  //     const formData = new FormData()
-  //     formData.append('Umums', values.Umums)
-  //     return Service.importUmum(formData, config)
-  //   }, [])
+  const downloadTemplateImport = useCallback(() => {
+    const url = Service.downloadTemplateImport()
+    window.open(url, '_blank').focus()
+  }, [])
 
-  //   const downloadTemplateImport = useCallback(() => {
-  //     const url = Service.downloadTemplateImport()
-  //     window.open(url, '_blank').focus()
-  //   }, [])
+  const importUmum = useCallback((values, config) => {
+    const formData = new FormData()
+    formData.append('umums', values.umums)
+    return Service.importUmum(formData, config)
+  }, [])
 
   //   const downloadExport = useCallback(() => {
   //     const url = Service.downloadExport(params)
@@ -223,6 +223,8 @@ function UmumProvider({ children }) {
       searchRoomList,
       getPrint,
       print,
+      downloadTemplateImport,
+      importUmum,
     }),
     [
       params,
@@ -243,6 +245,8 @@ function UmumProvider({ children }) {
       searchBuildingList,
       searchFloorList,
       searchRoomList,
+      downloadTemplateImport,
+      importUmum,
     ]
   )
 

@@ -17,6 +17,9 @@ const Service = {
     patch(`/asset/umum/${id}`, data, {}, 'form-data'),
   deleteUmum: async (id) => remove(`/asset/umum/${id}`),
   restoreUmum: async (id) => patch(`/asset/umum/${id}/restore`),
+  importUmum: async (data, config) =>
+    await post('/asset/umum/import', data, 'form-data', undefined, config),
+  downloadTemplateImport: () => download('/asset/umum/example'),
 
   // option
   searchUnitList: async (params) =>

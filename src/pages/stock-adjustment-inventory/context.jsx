@@ -142,14 +142,11 @@ function StockAdjustmentInventoryProvider({ children }) {
       .catch(myToaster)
   }
   // eslint-disable-next-line no-shadow, consistent-return
-  const submitInventory = async (stock_adjustment_id) => {
-    if (window.confirm('Are you sure want to submit?')) {
-      return Service.submitInventory(stock_adjustment_id)
-        .then(myToaster)
-        .then(() => navigate('/stock-adjustment'))
-        .catch(myToaster)
-    }
-  }
+  const submitInventory = async (stock_adjustment_id) =>
+    Service.submitInventory(stock_adjustment_id)
+      .then(myToaster)
+      .then(() => navigate('/stock-adjustment'))
+      .catch(myToaster)
 
   const deleteStockAdjustmentInventory = async (
     stock_adjustment_inventory_id

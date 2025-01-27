@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import {
   LogOut04,
   Users01,
@@ -13,13 +15,15 @@ import MyTooltip from '../Tooltip/MyTooltip'
 import MyButton from '../Button/MyButton'
 import MyAvatar from '../Avatar/MyAvatar'
 import { useApp } from '../../AppContext'
+import PLNLogo from '../Icon/logo_PLN.svg'
 
 const mediaUrl = import.meta.env.VITE_API_MEDIA_URL
 
 function SideNavbar({ childs }) {
   const location = useLocation()
   const { user } = useApp()
-  const { role } = user
+  const role = user?.role
+  const nav = useNavigate()
 
   const [loading, setLoading] = useState(true)
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
@@ -47,8 +51,11 @@ function SideNavbar({ childs }) {
       <div className="flex h-dvh w-20 min-w-[80px] flex-col justify-between border-r border-gray-light/200">
         <div className="flex h-full flex-col justify-between">
           <div className="flex h-full w-full flex-col items-center gap-y-6 pt-8">
-            <div className="flex w-full justify-center px-4 py-[7px]">
-              {/* <Ingenico /> */} Logo
+            <div
+              className="flex w-full cursor-pointer justify-center px-4 py-[7px]"
+              onClick={() => nav('/')}
+            >
+              <img src={PLNLogo} alt="PLNLogo" />
             </div>
             {/* TOP */}
             <div className="flex h-full flex-1 flex-col">
@@ -59,7 +66,7 @@ function SideNavbar({ childs }) {
                     <div
                       className={`${
                         location?.pathname.includes('/asset')
-                          ? 'bg-gray-light/50 text-gray-light/700'
+                          ? 'bg-gray-light/200 text-gray-light/700 shadow-lg'
                           : 'text-gray-light/500'
                       } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
                     >
@@ -79,7 +86,7 @@ function SideNavbar({ childs }) {
                     <div
                       className={`${
                         location?.pathname.includes('/approval')
-                          ? 'bg-gray-light/50 text-gray-light/700'
+                          ? 'bg-gray-light/200 text-gray-light/700 shadow-lg'
                           : 'text-gray-light/500'
                       } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md ${role === 'User' ? 'hidden' : ''}`}
                     >
@@ -97,7 +104,7 @@ function SideNavbar({ childs }) {
                     <div
                       className={`${
                         location?.pathname.includes('/user')
-                          ? 'bg-gray-light/50 text-gray-light/700'
+                          ? 'bg-gray-light/200 text-gray-light/700 shadow-lg'
                           : 'text-gray-light/500'
                       } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md ${role === 'Administrator' ? '' : 'hidden'}`}
                     >
@@ -115,7 +122,7 @@ function SideNavbar({ childs }) {
                     <div
                       className={`${
                         location?.pathname.includes('/storage')
-                          ? 'bg-gray-light/50 text-gray-light/700'
+                          ? 'bg-gray-light/200 text-gray-light/700 shadow-lg'
                           : 'text-gray-light/500'
                       } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md ${role === 'User' ? 'hidden' : ''}`}
                     >
@@ -135,7 +142,7 @@ function SideNavbar({ childs }) {
                     <div
                       className={`${
                         location?.pathname.includes('/stock-adjustment')
-                          ? 'bg-gray-light/50 text-gray-light/700'
+                          ? 'bg-gray-light/200 text-gray-light/700 shadow-lg'
                           : 'text-gray-light/500'
                       } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
                     >
@@ -160,7 +167,7 @@ function SideNavbar({ childs }) {
                       <div
                         className={`${
                           location?.pathname.includes('/settings')
-                            ? 'bg-gray-light/50 text-gray-light/700'
+                            ? 'bg-gray-light/200 text-gray-light/700 shadow-lg'
                             : 'text-gray-light/500'
                         } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md ${role === 'User' ? 'hidden' : ''}`}
                       >
@@ -204,7 +211,7 @@ function SideNavbar({ childs }) {
                     <div
                       className={`${
                         location?.pathname.includes('/profile')
-                          ? 'bg-gray-light/50 text-gray-light/700'
+                          ? 'bg-gray-light/200 text-gray-light/700 shadow-lg'
                           : 'text-gray-light/500'
                       } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
                     >

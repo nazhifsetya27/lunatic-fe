@@ -40,7 +40,7 @@ import MyArchiveButton from '../../../components/Button/MyArchiveButton'
 import MyFilterModal from '../../../components/Modal/MyFilterModal'
 import { useApp } from '../../../AppContext'
 // import DetailSlider from './Sliders/DetailSlider'
-// import ImportSlider from './Sliders/ImportSlider'
+import ImportSlider from './Sliders/ImportSlider'
 // import { useApp } from '../../../AppContext'
 
 function Umum() {
@@ -67,11 +67,11 @@ function Umum() {
         element={<DetailSlider />}
         onClose={() => handleCurrentSlider(null)}
       />
-      {/* <MyModalSlider
+      <MyModalSlider
         open={currentSlider?.current === 'import-slider'}
         element={<ImportSlider />}
         onClose={() => handleCurrentSlider(null)}
-      /> */}
+      />
 
       <Stack className="w-full rounded-xl border border-gray-light/200 shadow-shadows/shadow-xs">
         <Stack direction="row" className="gap-4 p-5">
@@ -106,12 +106,12 @@ function Umum() {
               </MyButton>
 
               <MyButton
-                // onClick={() =>
-                //   handleCurrentSlider({
-                //     status: true,
-                //     current: 'import-slider',
-                //   })
-                // }
+                onClick={() =>
+                  handleCurrentSlider({
+                    status: true,
+                    current: 'import-slider',
+                  })
+                }
                 color="secondary"
                 variant="outlined"
                 size="md"

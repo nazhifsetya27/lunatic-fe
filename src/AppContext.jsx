@@ -42,7 +42,6 @@ function AppProvider({ children }) {
       setUser(null)
     } finally {
       setisLoading(false) // Ensure loading is complete
-      console.log(isLoading)
     }
   }, [])
 
