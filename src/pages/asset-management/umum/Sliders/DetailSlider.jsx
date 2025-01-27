@@ -14,12 +14,12 @@ function DetailSlider() {
     currentSlider,
     handleCurrentSlider,
     getUmumDetail,
-    deleteUmum,
     restoreUmum,
     setParams,
     params,
     getPrint,
     print,
+    setConfirmModalOpen,
   } = useUmum()
 
   const { data } = currentSlider
@@ -101,7 +101,7 @@ function DetailSlider() {
         ) : (
           <>
             <MyButton
-              onClick={() => deleteUmum(currentSlider.id)}
+              onClick={() => setConfirmModalOpen(true)}
               variant="text"
               size="md"
             >

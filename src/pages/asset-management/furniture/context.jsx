@@ -15,6 +15,8 @@ const FurnitureContext = createContext()
 function FurnitureProvider({ children }) {
   const { setSlider } = useApp()
 
+  const [isConfirmModalOpen, setConfirmModalOpen] = useState(false)
+
   const [furnitures, setFurnitures] = useState({
     data: [],
     meta: [],
@@ -158,16 +160,12 @@ function FurnitureProvider({ children }) {
   //   )
 
   const deleteFurniture = useCallback(
-    (id) => {
-      if (window.confirm('Anda yakin ingin menghapus data ini?')) {
-        return Service.deleteFurniture(id)
-          .then(myToaster)
-          .then(() => handleCurrentSlider({ status: false, current: null }))
-          .then(getFurnitures)
-          .catch(myToaster)
-      }
-      return Promise.resolve()
-    },
+    (id) =>
+      Service.deleteFurniture(id)
+        .then(myToaster)
+        .then(() => handleCurrentSlider({ status: false, current: null }))
+        .then(getFurnitures)
+        .catch(myToaster),
     [getFurnitures, handleCurrentSlider]
   )
 
@@ -228,7 +226,8 @@ function FurnitureProvider({ children }) {
       getPrint,
       print,
       importFurniture,
-      downloadTemplateImport,
+      setConfirmModalOpen,
+      isConfirmModalOpen,
     }),
     [
       params,
@@ -253,6 +252,8 @@ function FurnitureProvider({ children }) {
       searchRoomList,
       importFurniture,
       downloadTemplateImport,
+      setConfirmModalOpen,
+      isConfirmModalOpen,
     ]
   )
 
