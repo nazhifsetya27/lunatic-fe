@@ -18,15 +18,7 @@ const Service = {
     patch(`/asset/elektronik/${id}`, data, {}, 'form-data'),
   deleteElektronik: async (id) => remove(`/asset/elektronik/${id}`),
   restoreElektronik: async (id) => patch(`/asset/elektronik/${id}/restore`),
-  importElektronik: async (data, config) =>
-    await post(
-      '/asset/elektronik/import',
-      data,
-      'form-data',
-      undefined,
-      config
-    ),
-  downloadTemplateImport: () => download('/asset/elektronik/example'),
+
   // option
   searchUnitList: async (params) =>
     await get('/asset/asset-option/unit-list', params),
@@ -39,6 +31,14 @@ const Service = {
 
   // import export
   downloadTemplateImport: () => download(`/asset/elektronik/example`),
+  importElektronik: async (data, config) =>
+    await post(
+      '/asset/elektronik/import',
+      data,
+      'form-data',
+      undefined,
+      config
+    ),
   downloadExport: (params) => download(`/asset/elektronik/export`, params),
 }
 
