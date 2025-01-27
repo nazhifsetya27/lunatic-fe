@@ -38,6 +38,7 @@ function Furniture() {
     setParams,
     furnitures,
     restoreFurniture,
+    downloadExport,
   } = useFurniture()
 
   return (
@@ -81,7 +82,7 @@ function Furniture() {
           {user?.role !== 'User' && (
             <Stack direction="row" className="gap-3">
               <MyButton
-                // onClick={downloadExport}
+                onClick={downloadExport}
                 color="primary"
                 variant="outlined"
                 size="md"

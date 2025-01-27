@@ -79,9 +79,29 @@ function ApprovalProvider(props) {
       })
       .catch(myToaster)
 
+  const getDetail = async (id) =>
+    await Service.getDetail(id)
+      .then((res) => {
+        setApprovalDetail(res.data)
+      })
+      .catch(myToaster)
+
+  const updateApproval = async (body) => {
+    const formData = new FormData()
+    console.log(body, '<<<< body')
+
+    formData.append('status', body.status)
+    formData.append('description', body.description)
+    await Service.updateApproval(currentSlider?.id.id, formData)
+      .then(myToaster)
+      .then(() => handleCurrentSlider({ status: false, current: null }))
+      .then(getApproval)
+  }
+
   return (
     <ApprovalContext.Provider
       value={{
+        currentSlider,
         setCurrentSlider,
         currentModal,
         setCurrentModal,
@@ -93,6 +113,9 @@ function ApprovalProvider(props) {
         setParams,
         getApproval,
         approval,
+        getDetail,
+        approvalDetail,
+        updateApproval,
       }}
     >
       {' '}

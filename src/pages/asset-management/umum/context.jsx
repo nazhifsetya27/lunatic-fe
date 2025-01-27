@@ -180,10 +180,10 @@ function UmumProvider({ children }) {
     return Service.importUmum(formData, config)
   }, [])
 
-  //   const downloadExport = useCallback(() => {
-  //     const url = Service.downloadExport(params)
-  //     window.open(url, '_blank').focus()
-  //   }, [params])
+  const downloadExport = useCallback(() => {
+    const url = Service.downloadExport({ category: 'Umum' })
+    window.open(url, '_blank').focus()
+  }, [params])
 
   const searchUnitList = async (param) =>
     Service.searchUnitList(param).catch(myToaster)
@@ -221,6 +221,8 @@ function UmumProvider({ children }) {
       searchBuildingList,
       searchFloorList,
       searchRoomList,
+      downloadTemplateImport,
+      downloadExport,
       getPrint,
       print,
       downloadTemplateImport,
@@ -231,6 +233,8 @@ function UmumProvider({ children }) {
       currentSlider,
       getUmums,
       handleCurrentSlider,
+      downloadTemplateImport,
+      downloadExport,
       searchCustomer,
       searchRack,
       searchUmumType,

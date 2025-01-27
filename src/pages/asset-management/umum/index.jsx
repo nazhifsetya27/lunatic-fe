@@ -53,6 +53,7 @@ function Umum() {
     umums,
     currentSlider,
     restoreUmum,
+    downloadExport,
   } = useUmum()
 
   return (
@@ -96,7 +97,7 @@ function Umum() {
           {user?.role !== 'User' && (
             <Stack direction="row" className="gap-3">
               <MyButton
-                // onClick={downloadExport}
+                onClick={downloadExport}
                 color="primary"
                 variant="outlined"
                 size="md"

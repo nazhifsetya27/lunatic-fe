@@ -53,6 +53,7 @@ function Elektronik() {
     elektronics,
     restoreElektronik,
     currentSlider,
+    downloadExport,
   } = useElektronik()
 
   return (
@@ -96,7 +97,7 @@ function Elektronik() {
           {user?.role !== 'User' && (
             <Stack direction="row" className="gap-3">
               <MyButton
-                // onClick={downloadExport}
+                onClick={downloadExport}
                 color="primary"
                 variant="outlined"
                 size="md"
