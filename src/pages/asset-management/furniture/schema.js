@@ -10,7 +10,7 @@ export const schema = Yup.object().shape({
 })
 
 export const schemaImport = Yup.object().shape({
-  terminals: Yup.mixed()
+  furnitures: Yup.mixed()
     .required()
     .test(
       'fileSize',

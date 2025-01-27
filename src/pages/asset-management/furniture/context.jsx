@@ -171,15 +171,15 @@ function FurnitureProvider({ children }) {
     [getFurnitures, handleCurrentSlider]
   )
 
-  //   const importFurniture = useCallback((values, config) => {
-  //     const formData = new FormData()
-  //     formData.append('simcards', values.simcards)
-  //     return Service.importFurniture(formData, config)
-  //   }, [])
-
   const downloadTemplateImport = useCallback(() => {
     const url = Service.downloadTemplateImport()
     window.open(url, '_blank').focus()
+  }, [])
+
+  const importFurniture = useCallback((values, config) => {
+    const formData = new FormData()
+    formData.append('furnitures', values.furnitures)
+    return Service.importFurniture(formData, config)
   }, [])
 
   const downloadExport = useCallback(() => {
@@ -227,6 +227,8 @@ function FurnitureProvider({ children }) {
       searchRoomList,
       getPrint,
       print,
+      importFurniture,
+      downloadTemplateImport,
     }),
     [
       params,
@@ -249,6 +251,8 @@ function FurnitureProvider({ children }) {
       searchBuildingList,
       searchFloorList,
       searchRoomList,
+      importFurniture,
+      downloadTemplateImport,
     ]
   )
 

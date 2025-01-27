@@ -29,7 +29,9 @@ const Service = {
     await get('/asset/asset-option/room-list', params),
 
   // import export
-  downloadTemplateImport: () => download(`/asset/elektronik/example`),
+  downloadTemplateImport: () => download('/asset/umum/example'),
+  importUmum: async (data, config) =>
+    await post('/asset/umum/import', data, 'form-data', undefined, config),
   downloadExport: (params) => download(`/asset/elektronik/export`, params),
 }
 

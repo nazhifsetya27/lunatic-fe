@@ -19,7 +19,6 @@ import MyTextField from '../../../components/TextField/MyTextField'
 import MyDataTable from '../../../components/Table/MyDataTable'
 import MyColumn from '../../../components/Table/MyColumn'
 
-// import FormSlider from './Sliders/FormSlider'
 import { useFurniture } from './context'
 import MyModalSlider from '../../../components/ModalSlider/MyModalSlider'
 import DetailSlider from './Sliders/DetailSlider'
@@ -27,9 +26,7 @@ import FormSlider from './Sliders/FormSlider'
 import MyArchiveButton from '../../../components/Button/MyArchiveButton'
 import MyFilterModal from '../../../components/Modal/MyFilterModal'
 import { useApp } from '../../../AppContext'
-// import DetailSlider from './Sliders/DetailSlider'
 import ImportSlider from './Sliders/ImportSlider'
-// import { useApp } from '../../../AppContext'
 
 function Furniture() {
   const { user } = useApp()

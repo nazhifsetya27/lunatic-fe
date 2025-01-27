@@ -45,7 +45,6 @@ import ImportSlider from './Sliders/ImportSlider'
 
 function Elektronik() {
   const { user } = useApp()
-  console.log(user.role)
 
   const {
     handleCurrentSlider,

@@ -1,7 +1,7 @@
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import SimpleBar from 'simplebar-react'
-import { ArrowLeft, SearchLg } from '@untitled-ui/icons-react'
-import { useEffect } from 'react'
+import { ArrowLeft, Save03, SearchLg } from '@untitled-ui/icons-react'
+import { useEffect, useState } from 'react'
 import { useMediaQuery } from '@mui/material'
 import { useStockAdjustmentInventory } from './context'
 import MySuggestionField from '../../components/Autocomplete/MySuggestionField'
@@ -13,6 +13,7 @@ import MyTabButton from '../../components/HorizontalTab/MyTabButton'
 // sliders
 import FormSliderFurniture from './furniture/Sliders/FormSlider'
 import MyModalSlider from '../../components/ModalSlider/MyModalSlider'
+import MyConfirmModal from '../../components/Modal/MyConfirmModal'
 
 function StockAdjustmentInventory() {
   const {
@@ -34,6 +35,7 @@ function StockAdjustmentInventory() {
   const location = useLocation()
   const { state } = useLocation()
   const { stock_adjustment_id } = useParams()
+  const [isConfirmModalOpen, setConfirmModalOpen] = useState(false)
 
   const stockAdjustmentState = JSON.parse(
     localStorage.getItem('stockAdjustmentState')
@@ -82,6 +84,16 @@ function StockAdjustmentInventory() {
         open={currentSlider?.current === 'form-slider-furniture'}
         element={<FormSliderFurniture />}
         onClose={() => handleCurrentSlider(null)}
+      />
+      <MyConfirmModal
+        open={isConfirmModalOpen}
+        onClose={() => setConfirmModalOpen(false)}
+        onConfirm={() =>
+          submitInventory(stockAdjustmentState.stock_adjustment_id)
+        }
+        message="Are you sure want to submit?"
+        icon={<Save03 className="text-warning/600" />}
+        bgColor="bg-error/100"
       />
       <SimpleBar
         forceVisible="y"
@@ -195,9 +207,7 @@ function StockAdjustmentInventory() {
                   </div>
                 </div>
                 <MyButton
-                  onClick={() =>
-                    submitInventory(stockAdjustmentState.stock_adjustment_id)
-                  }
+                  onClick={() => setConfirmModalOpen(true)}
                   color="primary"
                   variant="filled"
                   size="md"

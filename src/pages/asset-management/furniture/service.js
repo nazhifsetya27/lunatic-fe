@@ -29,8 +29,10 @@ const Service = {
     await get('/asset/asset-option/room-list', params),
 
   // import export
-  downloadTemplateImport: () => download(`/asset/elektronik/example`),
-  downloadExport: (params) => download(`/asset/elektronik/export`, params),
+  downloadTemplateImport: () => download(`/asset/furniture/example`),
+  importFurniture: async (data, config) =>
+    await post('/asset/furniture/import', data, 'form-data', undefined, config),
+  downloadExport: (params) => download(`/asset/furniture/export`, params),
 }
 
 export default Service

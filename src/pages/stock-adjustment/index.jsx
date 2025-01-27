@@ -10,6 +10,9 @@ import {
   LinkExternal02,
   RefreshCcw01,
   AlertCircle,
+  XClose,
+  Check,
+  Loading01,
 } from '@untitled-ui/icons-react'
 
 // Shared Components
@@ -43,7 +46,7 @@ const getChip = (status) => {
     return (
       <MyChip
         label="Rejected"
-        endAdornment={<AlertCircle className="size-5 text-error/500" />}
+        endAdornment={<XClose className="size-4 text-error/500" />}
         color="error"
         variant="filled"
         rounded="full"
@@ -55,7 +58,7 @@ const getChip = (status) => {
     return (
       <MyChip
         label="Approved"
-        endAdornment={<AlertCircle className="size-5 text-success/500" />}
+        endAdornment={<Check className="size-4 text-success/500" />}
         color="success"
         variant="filled"
         rounded="full"
@@ -79,7 +82,7 @@ const getChip = (status) => {
     return (
       <MyChip
         label="On progress"
-        endAdornment={<AlertCircle className="size-5 text-gray-500" />}
+        endAdornment={<Loading01 className="size-4 text-gray-500" />}
         color="gray"
         variant="filled"
         rounded="full"
@@ -191,6 +194,14 @@ function StockAdjustment() {
                         label: 'Waiting for approval',
                         value: 'waiting_for_approval',
                       },
+                      {
+                        label: 'Approved',
+                        value: 'approved',
+                      },
+                      {
+                        label: 'Rejected',
+                        value: 'rejected',
+                      },
                     ]}
                     value={params.type}
                     onChange={(e) => {
@@ -300,7 +311,7 @@ function StockAdjustment() {
                           >
                             <MyAvatar
                               photo={`${mediaUrl}${created_by?.photo_url ?? null}`}
-                              size={40}
+                              size={45}
                             />
                           </div>
                           <div className="flex flex-col">
