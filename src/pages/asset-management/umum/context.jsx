@@ -15,6 +15,8 @@ const UmumContext = createContext()
 function UmumProvider({ children }) {
   const { setSlider } = useApp()
 
+  const [isConfirmModalOpen, setConfirmModalOpen] = useState(false)
+
   const [umums, setUmums] = useState({
     data: [],
     meta: [],
@@ -156,16 +158,12 @@ function UmumProvider({ children }) {
   //   )
 
   const deleteUmum = useCallback(
-    (id) => {
-      if (window.confirm('Anda yakin ingin menghapus data ini?')) {
-        return Service.deleteUmum(id)
-          .then(myToaster)
-          .then(() => handleCurrentSlider({ status: false, current: null }))
-          .then(getUmums)
-          .catch(myToaster)
-      }
-      return Promise.resolve()
-    },
+    (id) =>
+      Service.deleteUmum(id)
+        .then(myToaster)
+        .then(() => handleCurrentSlider({ status: false, current: null }))
+        .then(getUmums)
+        .catch(myToaster),
     [getUmums, handleCurrentSlider]
   )
 
@@ -225,8 +223,9 @@ function UmumProvider({ children }) {
       downloadExport,
       getPrint,
       print,
-      downloadTemplateImport,
       importUmum,
+      isConfirmModalOpen,
+      setConfirmModalOpen,
     }),
     [
       params,
@@ -251,6 +250,8 @@ function UmumProvider({ children }) {
       searchRoomList,
       downloadTemplateImport,
       importUmum,
+      isConfirmModalOpen,
+      setConfirmModalOpen,
     ]
   )
 

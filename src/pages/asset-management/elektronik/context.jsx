@@ -15,6 +15,8 @@ const ElektronikContext = createContext()
 function ElektronikProvider({ children }) {
   const { setSlider } = useApp()
 
+  const [isConfirmModalOpen, setConfirmModalOpen] = useState(false)
+
   const [elektronics, setElektronics] = useState({
     data: [],
     meta: [],
@@ -157,16 +159,12 @@ function ElektronikProvider({ children }) {
   //   )
 
   const deleteElektronik = useCallback(
-    (id) => {
-      if (window.confirm('Anda yakin ingin menghapus data ini?')) {
-        return Service.deleteElektronik(id)
-          .then(myToaster)
-          .then(() => handleCurrentSlider({ status: false, current: null }))
-          .then(getElektronics)
-          .catch(myToaster)
-      }
-      return Promise.resolve()
-    },
+    (id) =>
+      Service.deleteElektronik(id)
+        .then(myToaster)
+        .then(() => handleCurrentSlider({ status: false, current: null }))
+        .then(getElektronics)
+        .catch(myToaster),
     [getElektronics, handleCurrentSlider]
   )
 
@@ -226,8 +224,9 @@ function ElektronikProvider({ children }) {
       searchRoomList,
       getPrint,
       print,
-      downloadTemplateImport,
       importElektronik,
+      setConfirmModalOpen,
+      isConfirmModalOpen,
     }),
     [
       params,
@@ -252,6 +251,8 @@ function ElektronikProvider({ children }) {
       searchRoomList,
       downloadTemplateImport,
       importElektronik,
+      setConfirmModalOpen,
+      isConfirmModalOpen,
     ]
   )
 

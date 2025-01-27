@@ -14,12 +14,12 @@ function DetailSlider() {
     currentSlider,
     handleCurrentSlider,
     getElektronikDetail,
-    deleteElektronik,
     restoreElektronik,
     setParams,
     params,
     getPrint,
     print,
+    setConfirmModalOpen,
   } = useElektronik()
 
   const { data } = currentSlider
@@ -101,7 +101,7 @@ function DetailSlider() {
         ) : (
           <>
             <MyButton
-              onClick={() => deleteElektronik(currentSlider.id)}
+              onClick={() => setConfirmModalOpen(true)}
               variant="text"
               size="md"
             >

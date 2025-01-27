@@ -1,30 +1,7 @@
-// import {
-//   DownloadCloud02,
-//   FilterLines,
-//   LinkExternal02,
-//   Package,
-//   Plus,
-//   RefreshCcw01,
-//   SearchLg,
-//   UploadCloud02,
-// } from '@untitled-ui/icons-react'
-import { useNavigate } from 'react-router-dom'
 import { debounce } from 'lodash'
-import moment from 'moment'
-// import {
-//   MyArchiveButton,
-//   MyButton,
-//   MyChip,
-//   MyColumn,
-//   MyDataTable,
-//   MyFilterModal,
-//   MyModalSlider,
-//   MyTextField,
-//   MyTooltip,
-// } from '@interstellar-component'
 import { Box, Divider, Stack } from '@mui/material'
 import { Download, Plus, Refresh, Search, Upload } from '@icon-park/react'
-import { FilterLines, LinkExternal02 } from '@untitled-ui/icons-react'
+import { FilterLines, LinkExternal02, Save03 } from '@untitled-ui/icons-react'
 import MyChip from '../../../components/Chip/MyChip'
 import MyButton from '../../../components/Button/MyButton'
 import MyTextField from '../../../components/TextField/MyTextField'
@@ -41,6 +18,7 @@ import MyFilterModal from '../../../components/Modal/MyFilterModal'
 import { useApp } from '../../../AppContext'
 // import DetailSlider from './Sliders/DetailSlider'
 import ImportSlider from './Sliders/ImportSlider'
+import MyConfirmModal from '../../../components/Modal/MyConfirmModal'
 // import { useApp } from '../../../AppContext'
 
 function Umum() {
@@ -54,6 +32,9 @@ function Umum() {
     currentSlider,
     restoreUmum,
     downloadExport,
+    isConfirmModalOpen,
+    setConfirmModalOpen,
+    deleteUmum,
   } = useUmum()
 
   return (
@@ -73,7 +54,17 @@ function Umum() {
         element={<ImportSlider />}
         onClose={() => handleCurrentSlider(null)}
       />
-
+      <MyConfirmModal
+        open={isConfirmModalOpen}
+        onClose={() => setConfirmModalOpen(false)}
+        onConfirm={() => {
+          deleteUmum(currentSlider.id)
+          setConfirmModalOpen(false)
+        }}
+        message="Are you sure want to delete?"
+        icon={<Save03 className="text-warning/600" />}
+        bgColor="bg-error/100"
+      />
       <Stack className="w-full rounded-xl border border-gray-light/200 shadow-shadows/shadow-xs">
         <Stack direction="row" className="gap-4 p-5">
           <Stack className="flex-1 gap-1">

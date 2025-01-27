@@ -1,18 +1,8 @@
-// import {
-//   DownloadCloud02,
-//   FilterLines,
-//   LinkExternal02,
-//   Package,
-//   Plus,
-//   RefreshCcw01,
-//   SearchLg,
-//   UploadCloud02,
-// } from '@untitled-ui/icons-react'
-import { useNavigate } from 'react-router-dom'
 import { debounce } from 'lodash'
 import { Box, Divider, Stack } from '@mui/material'
 import { Download, Plus, Refresh, Search, Upload } from '@icon-park/react'
-import { FilterLines, LinkExternal02 } from '@untitled-ui/icons-react'
+import { FilterLines, LinkExternal02, Save03 } from '@untitled-ui/icons-react'
+import { useState } from 'react'
 import MyChip from '../../../components/Chip/MyChip'
 import MyButton from '../../../components/Button/MyButton'
 import MyTextField from '../../../components/TextField/MyTextField'
@@ -27,6 +17,7 @@ import MyArchiveButton from '../../../components/Button/MyArchiveButton'
 import MyFilterModal from '../../../components/Modal/MyFilterModal'
 import { useApp } from '../../../AppContext'
 import ImportSlider from './Sliders/ImportSlider'
+import MyConfirmModal from '../../../components/Modal/MyConfirmModal'
 
 function Furniture() {
   const { user } = useApp()
@@ -39,6 +30,9 @@ function Furniture() {
     furnitures,
     restoreFurniture,
     downloadExport,
+    setConfirmModalOpen,
+    isConfirmModalOpen,
+    deleteFurniture,
   } = useFurniture()
 
   return (
@@ -58,7 +52,17 @@ function Furniture() {
         element={<ImportSlider />}
         onClose={() => handleCurrentSlider(null)}
       />
-
+      <MyConfirmModal
+        open={isConfirmModalOpen}
+        onClose={() => setConfirmModalOpen(false)}
+        onConfirm={() => {
+          deleteFurniture(currentSlider.id)
+          setConfirmModalOpen(false) // Close the modal
+        }}
+        message="Are you sure want to delete?"
+        icon={<Save03 className="text-warning/600" />}
+        bgColor="bg-error/100"
+      />
       <Stack className="w-full rounded-xl border border-gray-light/200 shadow-shadows/shadow-xs">
         <Stack direction="row" className="gap-4 p-5">
           <Stack className="flex-1 gap-1">

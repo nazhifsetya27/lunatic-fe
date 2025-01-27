@@ -12,12 +12,12 @@ function DetailSlider() {
     currentSlider,
     handleCurrentSlider,
     getFurnitureDetail,
-    deleteFurniture,
     restoreFurniture,
     setParams,
     params,
     getPrint,
     print,
+    setConfirmModalOpen,
   } = useFurniture()
 
   const { data } = currentSlider
@@ -99,7 +99,7 @@ function DetailSlider() {
         ) : (
           <>
             <MyButton
-              onClick={() => deleteFurniture(currentSlider.id)}
+              onClick={() => setConfirmModalOpen(true)}
               variant="text"
               size="md"
             >
