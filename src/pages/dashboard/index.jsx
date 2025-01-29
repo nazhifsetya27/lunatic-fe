@@ -41,8 +41,6 @@ const Dashboard = () => {
     getPerformance()
   }, [params])
 
-  console.log(performance?.data?.job_order_summary?.approved, '<<< ahahah')
-
   return (
     <SimpleBar forceVisible="y" className="flex-1" style={{ height: '100vh' }}>
       <main className="flex flex-col gap-8 pb-12 pt-8">
@@ -236,321 +234,50 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex h-full flex-1 flex-col justify-between gap-8">
-                <div className="flex flex-col gap-6 rounded-xl border p-6 shadow-shadows/shadow-xs">
+              <div className="flex-1 h-full flex flex-col justify-between gap-8">
+          {performance?.data?.asset_summary &&
+            Object.entries(performance.data.asset_summary).map(
+              ([category, data]) => (
+                <div
+                  key={category}
+                  className="flex flex-col gap-6 rounded-xl border p-6 shadow-shadows/shadow-xs"
+                >
+                  {/* Nama Kategori */}
                   <p className="text-md-semibold text-gray-light/900">
-                    Elektronik
+                    {category}
                   </p>
                   <hr className="border-gray-light/200" />
+
+                  {/* List Kondisi */}
                   <div className="flex w-full gap-6">
-                    <div className="flex flex-1 flex-col gap-2 border-b-4 border-brand/600 pb-3">
-                      <p className="text-sm-medium text-gray-light/600">
-                        SANGAT BAIK
-                      </p>
-                      <div className="flex gap-4">
-                        <p className="text-xl-semibold text-gray-light/900">
-                          {performance?.data?.service_level_agreement?.meet ??
-                            '-'}
-                        </p>
-                        <MyChip
-                          label={`${
-                            performance?.data?.service_level_agreement
-                              ?.meet_percentage ?? '-'
-                          }`}
-                          rounded={'full'}
-                          color={`${
-                            performance?.comparison?.sla?.meet_tickets
-                              ?.status === 'decrease'
-                              ? 'error'
-                              : 'success'
-                          }`}
-                          variant={'filled'}
-                          size={'sm'}
-                        />
+                    {Object.entries(data.conditions).map(([condition, details]) => (
+                      <div
+                        key={condition}
+                        className="flex flex-1 flex-col gap-2 border-b-4 border-brand/600 pb-3"
+                      >
+                        {/* Nama Kondisi */}
+                        <p className="text-sm-medium text-gray-light/600">{condition}</p>
+
+                        {/* Jumlah & Persentase */}
+                        <div className="flex gap-4">
+                          <p className="text-xl-semibold text-gray-light/900">
+                            {details.count}
+                          </p>
+                          <MyChip
+                            label={details.percentage}
+                            rounded="full"
+                            color={details.count > 0 ? "success" : "error"}
+                            variant="filled"
+                            size="sm"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex flex-1 flex-col gap-2 border-b-4 border-brand/600 pb-3">
-                      <p className="text-sm-medium text-gray-light/600">BAIK</p>
-                      <div className="flex gap-4">
-                        <p className="text-xl-semibold text-gray-light/900">
-                          {performance?.data?.service_level_agreement?.meet ??
-                            '-'}
-                        </p>
-                        <MyChip
-                          label={`${
-                            performance?.data?.service_level_agreement
-                              ?.meet_percentage ?? '-'
-                          }`}
-                          rounded={'full'}
-                          color={`${
-                            performance?.comparison?.sla?.meet_tickets
-                              ?.status === 'decrease'
-                              ? 'error'
-                              : 'success'
-                          }`}
-                          variant={'filled'}
-                          size={'sm'}
-                        />
-                      </div>
-                    </div>
-                    <div className="flex flex-1 flex-col gap-2 border-b-4 border-brand/600 pb-3">
-                      <p className="text-sm-medium text-gray-light/600">
-                        BURUK
-                      </p>
-                      <div className="flex gap-4">
-                        <p className="text-xl-semibold text-gray-light/900">
-                          {performance?.data?.service_level_agreement?.meet ??
-                            '-'}
-                        </p>
-                        <MyChip
-                          label={`${
-                            performance?.data?.service_level_agreement
-                              ?.meet_percentage ?? '-'
-                          }`}
-                          rounded={'full'}
-                          color={`${
-                            performance?.comparison?.sla?.meet_tickets
-                              ?.status === 'decrease'
-                              ? 'error'
-                              : 'success'
-                          }`}
-                          variant={'filled'}
-                          size={'sm'}
-                        />
-                      </div>
-                    </div>
-                    <div className="flex flex-1 flex-col gap-2 border-b-4 border-brand/600 pb-3">
-                      <p className="text-sm-medium text-gray-light/600">
-                        SANGAT BURUK
-                      </p>
-                      <div className="flex gap-4">
-                        <p className="text-xl-semibold text-gray-light/900">
-                          {performance?.data?.service_level_agreement?.miss ??
-                            '-'}
-                        </p>
-                        <MyChip
-                          label={`${
-                            performance?.data?.service_level_agreement
-                              ?.miss_percentage ?? '-'
-                          }`}
-                          rounded={'full'}
-                          color={'error'}
-                          variant={'filled'}
-                          size={'sm'}
-                        />
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
-                <div className="flex flex-col gap-6 rounded-xl border p-6 shadow-shadows/shadow-xs">
-                  <p className="text-md-semibold text-gray-light/900">
-                    Furniture
-                  </p>
-                  <hr className="border-gray-light/200" />
-                  <div className="flex w-full gap-6">
-                    <div className="flex flex-1 flex-col gap-2 border-b-4 border-brand/600 pb-3">
-                      <p className="text-sm-medium text-gray-light/600">
-                        SANGAT BAIK
-                      </p>
-                      <div className="flex gap-4">
-                        <p className="text-xl-semibold text-gray-light/900">
-                          {performance?.data?.service_level_agreement?.meet ??
-                            '-'}
-                        </p>
-                        <MyChip
-                          label={`${
-                            performance?.data?.service_level_agreement
-                              ?.meet_percentage ?? '-'
-                          }`}
-                          rounded={'full'}
-                          color={`${
-                            performance?.comparison?.sla?.meet_tickets
-                              ?.status === 'decrease'
-                              ? 'error'
-                              : 'success'
-                          }`}
-                          variant={'filled'}
-                          size={'sm'}
-                        />
-                      </div>
-                    </div>
-                    <div className="flex flex-1 flex-col gap-2 border-b-4 border-brand/600 pb-3">
-                      <p className="text-sm-medium text-gray-light/600">BAIK</p>
-                      <div className="flex gap-4">
-                        <p className="text-xl-semibold text-gray-light/900">
-                          {performance?.data?.service_level_agreement?.meet ??
-                            '-'}
-                        </p>
-                        <MyChip
-                          label={`${
-                            performance?.data?.service_level_agreement
-                              ?.meet_percentage ?? '-'
-                          }`}
-                          rounded={'full'}
-                          color={`${
-                            performance?.comparison?.sla?.meet_tickets
-                              ?.status === 'decrease'
-                              ? 'error'
-                              : 'success'
-                          }`}
-                          variant={'filled'}
-                          size={'sm'}
-                        />
-                      </div>
-                    </div>
-                    <div className="flex flex-1 flex-col gap-2 border-b-4 border-brand/600 pb-3">
-                      <p className="text-sm-medium text-gray-light/600">
-                        BURUK
-                      </p>
-                      <div className="flex gap-4">
-                        <p className="text-xl-semibold text-gray-light/900">
-                          {performance?.data?.service_level_agreement?.meet ??
-                            '-'}
-                        </p>
-                        <MyChip
-                          label={`${
-                            performance?.data?.service_level_agreement
-                              ?.meet_percentage ?? '-'
-                          }`}
-                          rounded={'full'}
-                          color={`${
-                            performance?.comparison?.sla?.meet_tickets
-                              ?.status === 'decrease'
-                              ? 'error'
-                              : 'success'
-                          }`}
-                          variant={'filled'}
-                          size={'sm'}
-                        />
-                      </div>
-                    </div>
-                    <div className="flex flex-1 flex-col gap-2 border-b-4 border-brand/600 pb-3">
-                      <p className="text-sm-medium text-gray-light/600">
-                        SANGAT BURUK
-                      </p>
-                      <div className="flex gap-4">
-                        <p className="text-xl-semibold text-gray-light/900">
-                          {performance?.data?.service_level_agreement?.miss ??
-                            '-'}
-                        </p>
-                        <MyChip
-                          label={`${
-                            performance?.data?.service_level_agreement
-                              ?.miss_percentage ?? '-'
-                          }`}
-                          rounded={'full'}
-                          color={'error'}
-                          variant={'filled'}
-                          size={'sm'}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-6 rounded-xl border p-6 shadow-shadows/shadow-xs">
-                  <p className="text-md-semibold text-gray-light/900">Umum</p>
-                  <hr className="border-gray-light/200" />
-                  <div className="flex w-full gap-6">
-                    <div className="flex flex-1 flex-col gap-2 border-b-4 border-brand/600 pb-3">
-                      <p className="text-sm-medium text-gray-light/600">
-                        SANGAT BAIK
-                      </p>
-                      <div className="flex gap-4">
-                        <p className="text-xl-semibold text-gray-light/900">
-                          {performance?.data?.service_level_agreement?.meet ??
-                            '-'}
-                        </p>
-                        <MyChip
-                          label={`${
-                            performance?.data?.service_level_agreement
-                              ?.meet_percentage ?? '-'
-                          }`}
-                          rounded={'full'}
-                          color={`${
-                            performance?.comparison?.sla?.meet_tickets
-                              ?.status === 'decrease'
-                              ? 'error'
-                              : 'success'
-                          }`}
-                          variant={'filled'}
-                          size={'sm'}
-                        />
-                      </div>
-                    </div>
-                    <div className="flex flex-1 flex-col gap-2 border-b-4 border-brand/600 pb-3">
-                      <p className="text-sm-medium text-gray-light/600">BAIK</p>
-                      <div className="flex gap-4">
-                        <p className="text-xl-semibold text-gray-light/900">
-                          {performance?.data?.service_level_agreement?.meet ??
-                            '-'}
-                        </p>
-                        <MyChip
-                          label={`${
-                            performance?.data?.service_level_agreement
-                              ?.meet_percentage ?? '-'
-                          }`}
-                          rounded={'full'}
-                          color={`${
-                            performance?.comparison?.sla?.meet_tickets
-                              ?.status === 'decrease'
-                              ? 'error'
-                              : 'success'
-                          }`}
-                          variant={'filled'}
-                          size={'sm'}
-                        />
-                      </div>
-                    </div>
-                    <div className="flex flex-1 flex-col gap-2 border-b-4 border-brand/600 pb-3">
-                      <p className="text-sm-medium text-gray-light/600">
-                        BURUK
-                      </p>
-                      <div className="flex gap-4">
-                        <p className="text-xl-semibold text-gray-light/900">
-                          {performance?.data?.service_level_agreement?.meet ??
-                            '-'}
-                        </p>
-                        <MyChip
-                          label={`${
-                            performance?.data?.service_level_agreement
-                              ?.meet_percentage ?? '-'
-                          }`}
-                          rounded={'full'}
-                          color={`${
-                            performance?.comparison?.sla?.meet_tickets
-                              ?.status === 'decrease'
-                              ? 'error'
-                              : 'success'
-                          }`}
-                          variant={'filled'}
-                          size={'sm'}
-                        />
-                      </div>
-                    </div>
-                    <div className="flex flex-1 flex-col gap-2 border-b-4 border-brand/600 pb-3">
-                      <p className="text-sm-medium text-gray-light/600">
-                        SANGAT BURUK
-                      </p>
-                      <div className="flex gap-4">
-                        <p className="text-xl-semibold text-gray-light/900">
-                          {performance?.data?.service_level_agreement?.miss ??
-                            '-'}
-                        </p>
-                        <MyChip
-                          label={`${
-                            performance?.data?.service_level_agreement
-                              ?.miss_percentage ?? '-'
-                          }`}
-                          rounded={'full'}
-                          color={'error'}
-                          variant={'filled'}
-                          size={'sm'}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              )
+            )}
+        </div>
             </div>
             <hr className="mx-8 border-gray-light/200" />
           </div>
