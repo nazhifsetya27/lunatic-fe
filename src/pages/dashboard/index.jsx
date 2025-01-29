@@ -14,10 +14,6 @@ import MyChip from '../../components/Chip/MyChip'
 import MyButton from '../../components/Button/MyButton'
 import {
   Calendar,
-  FilterLines,
-  TrendDown02,
-  TrendUp01,
-  TrendUp02,
   XClose,
 } from '@untitled-ui/icons-react'
 import moment from 'moment'
@@ -243,9 +239,18 @@ const Dashboard = () => {
                   className="flex flex-col gap-6 rounded-xl border p-6 shadow-shadows/shadow-xs"
                 >
                   {/* Nama Kategori */}
+                  <div  className="flex flex-1 gap-3 rounded-xl">
                   <p className="text-md-semibold text-gray-light/900">
                     {category}
                   </p>
+                  <MyChip
+                        label={`Total ${data.total}`}
+                        rounded={"lg"}
+                        color={"modern"}
+                        variant={"outlined"}
+                        size={"sm"}
+                      />
+                  </div>
                   <hr className="border-gray-light/200" />
 
                   {/* List Kondisi */}
