@@ -54,6 +54,8 @@ import UmumStockAdjustment from './pages/stock-adjustment-inventory/umum'
 import { myToaster } from './components/Toaster/MyToaster'
 import MyModalSlider from './components/ModalSlider/MyModalSlider'
 import MyButtonIcon from './components/Button/MyButtonIcon'
+import Dashboard from './pages/dashboard'
+import { DashboardProvider } from './pages/dashboard/context'
 
 function App() {
   const { createStockAdjustmentFromQR, user, isLoading } = useApp()
@@ -325,6 +327,19 @@ function App() {
                         <ApprovalProvider>
                           <ApprovalWarehouse />
                         </ApprovalProvider>
+                      }
+                      allowedRoles={['Administrator', 'Approver']}
+                    />
+                  }
+                />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute
+                      element={
+                        <DashboardProvider>
+                          <Dashboard />
+                        </DashboardProvider>
                       }
                       allowedRoles={['Administrator', 'Approver']}
                     />
