@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import MyPopper from '../Poppper/MyPopper'
-import { Calendar, DateRange } from 'react-date-range'
+// import { Calendar, DateRange } from 'react-date-range'
 import { ChevronLeft, ChevronRight } from '@untitled-ui/icons-react'
 import {
   format,
@@ -17,6 +17,7 @@ import {
 } from 'date-fns'
 import { AlertTriangle } from '@untitled-ui/icons-react'
 import MyTextField from '../TextField/MyTextField'
+import { DateRange } from 'react-date-range'
 
 const MyDateRange = ({
   target,
