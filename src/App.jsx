@@ -171,7 +171,14 @@ function App() {
             <div className="relative flex h-screen w-full flex-col">
               <Routes>
                 <Route path="/login" element={<Navigate to="/" replace />} />
-                <Route path="/" element={<Welcome />} />
+                <Route
+                  path="/"
+                  element={
+                    <DashboardProvider>
+                      <Dashboard />
+                    </DashboardProvider>
+                  }
+                />
                 {/* ASSET */}
                 <Route path="/asset" element={<AssetManagement />}>
                   <Route index element={<Navigate to="furniture" replace />} />
@@ -332,8 +339,8 @@ function App() {
                     />
                   }
                 />
-                <Route
-                  path="/dashboard"
+                {/* <Route
+                  path="/"
                   element={
                     <ProtectedRoute
                       element={
@@ -344,7 +351,7 @@ function App() {
                       allowedRoles={['Administrator', 'Approver']}
                     />
                   }
-                />
+                /> */}
                 <Route path="/404" element={<NotFound />} />
                 <Route path="*" element={<Navigate to="/404" replace />} />
               </Routes>

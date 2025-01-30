@@ -98,7 +98,7 @@ function SideNavbar({ childs }) {
                   <span className="text-xs-semibold text-white">Approval</span>
                 </MyTooltip>
               </Link>
-              <Link to={'/dashboard'}>
+              {/* <Link to={'/dashboard'}>
                 <MyTooltip
                   placement="right"
                   target={
@@ -115,7 +115,7 @@ function SideNavbar({ childs }) {
                 >
                   <p className="text-xs-semibold text-white">Dashboard</p>
                 </MyTooltip>
-              </Link>
+              </Link> */}
               <Link to="/user">
                 <MyTooltip
                   placement="right"
