@@ -62,7 +62,7 @@ const MyDateRange = ({
     <>
       <MyPopper id={'my-date-range'} target={target} placement={'bottom-start'}>
         {(open, anchorEl, show, close) => (
-          <div className="flex w-[328px] flex-col">
+          <div className="flex w-[400px] flex-col">
             <div className="px-6 py-5">
               <DateRange
                 editableDateInputs={false}

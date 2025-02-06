@@ -12,10 +12,7 @@ import MyChartPieDonut from '../../components/Chart/MyChartPieDonut'
 import MyChartBarHorizontal from '../../components/Chart/MyChartBarHorizontal'
 import MyChip from '../../components/Chip/MyChip'
 import MyButton from '../../components/Button/MyButton'
-import {
-  Calendar,
-  XClose,
-} from '@untitled-ui/icons-react'
+import { Calendar, XClose } from '@untitled-ui/icons-react'
 import moment from 'moment'
 
 const Dashboard = () => {
@@ -132,7 +129,7 @@ const Dashboard = () => {
                         'Waiting for approval',
                         'In progress',
                       ]}
-                      colors={['#106F96', '#AD2F2F', '#B5EAFF', '#55B3D9']}
+                      colors={['#106F96', '#AD2F2F', '#70F511', '#55B3D9']}
                       type="donut"
                       height={500}
                     />
@@ -230,59 +227,65 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex-1 h-full flex flex-col justify-between gap-8">
-          {performance?.data?.asset_summary &&
-            Object.entries(performance.data.asset_summary).map(
-              ([category, data]) => (
-                <div
-                  key={category}
-                  className="flex flex-col gap-6 rounded-xl border p-6 shadow-shadows/shadow-xs"
-                >
-                  {/* Nama Kategori */}
-                  <div  className="flex flex-1 gap-3 rounded-xl">
-                  <p className="text-md-semibold text-gray-light/900">
-                    {category}
-                  </p>
-                  <MyChip
-                        label={`Total ${data.total}`}
-                        rounded={"lg"}
-                        color={"modern"}
-                        variant={"outlined"}
-                        size={"sm"}
-                      />
-                  </div>
-                  <hr className="border-gray-light/200" />
-
-                  {/* List Kondisi */}
-                  <div className="flex w-full gap-6">
-                    {Object.entries(data.conditions).map(([condition, details]) => (
+              <div className="flex h-full flex-1 flex-col justify-between gap-8">
+                {performance?.data?.asset_summary &&
+                  Object.entries(performance.data.asset_summary).map(
+                    ([category, data]) => (
                       <div
-                        key={condition}
-                        className="flex flex-1 flex-col gap-2 border-b-4 border-brand/600 pb-3"
+                        key={category}
+                        className="flex flex-col gap-6 rounded-xl border p-6 shadow-shadows/shadow-xs"
                       >
-                        {/* Nama Kondisi */}
-                        <p className="text-sm-medium text-gray-light/600">{condition}</p>
-
-                        {/* Jumlah & Persentase */}
-                        <div className="flex gap-4">
-                          <p className="text-xl-semibold text-gray-light/900">
-                            {details.count}
+                        {/* Nama Kategori */}
+                        <div className="flex flex-1 gap-3 rounded-xl">
+                          <p className="text-md-semibold text-gray-light/900">
+                            {category}
                           </p>
                           <MyChip
-                            label={details.percentage}
-                            rounded="full"
-                            color={details.count > 0 ? "success" : "error"}
-                            variant="filled"
-                            size="sm"
+                            label={`Total ${data.total}`}
+                            rounded={'lg'}
+                            color={'modern'}
+                            variant={'outlined'}
+                            size={'sm'}
                           />
                         </div>
+                        <hr className="border-gray-light/200" />
+
+                        {/* List Kondisi */}
+                        <div className="flex w-full gap-6">
+                          {Object.entries(data.conditions).map(
+                            ([condition, details]) => (
+                              <div
+                                key={condition}
+                                className="flex flex-1 flex-col gap-2 border-b-4 border-brand/600 pb-3"
+                              >
+                                {/* Nama Kondisi */}
+                                <p className="text-sm-medium text-gray-light/600">
+                                  {condition}
+                                </p>
+
+                                {/* Jumlah & Persentase */}
+                                <div className="flex gap-4">
+                                  <p className="text-xl-semibold text-gray-light/900">
+                                    {details.count}
+                                  </p>
+                                  <MyChip
+                                    label={details.percentage}
+                                    rounded="full"
+                                    color={
+                                      details.count > 0 ? 'success' : 'error'
+                                    }
+                                    variant="filled"
+                                    size="sm"
+                                  />
+                                </div>
+                              </div>
+                            )
+                          )}
+                        </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              )
-            )}
-        </div>
+                    )
+                  )}
+              </div>
             </div>
             <hr className="mx-8 border-gray-light/200" />
           </div>
