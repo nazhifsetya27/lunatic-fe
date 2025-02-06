@@ -6,6 +6,10 @@ import {
   SearchLg,
   LinkExternal02,
   RefreshCcw01,
+  Loading01,
+  AlertCircle,
+  Check,
+  XClose,
 } from '@untitled-ui/icons-react'
 
 import SimpleBar from 'simplebar-react'
@@ -25,6 +29,58 @@ import MyButtonGroupV2 from '../../components/Button/MyButtonGroupV2'
 import MyFilterModal from '../../components/Modal/MyFilterModal'
 import DetailSlider from './sliders/DetailSlider'
 import { useApproval } from './context'
+
+const getChip = (status) => {
+  if (status === 'Rejected') {
+    return (
+      <MyChip
+        label="Rejected"
+        endAdornment={<XClose className="size-4 text-error/500" />}
+        color="error"
+        variant="filled"
+        rounded="full"
+        size="lg"
+      />
+    )
+  }
+  if (status === 'Approved') {
+    return (
+      <MyChip
+        label="Approved"
+        endAdornment={<Check className="size-4 text-success/500" />}
+        color="success"
+        variant="filled"
+        rounded="full"
+        size="lg"
+      />
+    )
+  }
+  if (status === 'Waiting for approval') {
+    return (
+      <MyChip
+        label="Waiting for approval"
+        endAdornment={<AlertCircle className="size-5 text-warning/500" />}
+        color="warning"
+        variant="filled"
+        rounded="full"
+        size="lg"
+      />
+    )
+  }
+  if (status === 'On progress') {
+    return (
+      <MyChip
+        label="On progress"
+        endAdornment={<Loading01 className="size-4 text-gray-500" />}
+        color="gray"
+        variant="filled"
+        rounded="full"
+        size="lg"
+      />
+    )
+  }
+  return null
+}
 
 function Approval() {
   const {
@@ -189,16 +245,17 @@ function Approval() {
                     <MyColumn
                       field="status"
                       header="Status"
-                      body={(value) => (
+                      body={({ status }) => (
                         <p className="text-sm-regular text-gray-light/600">
                           {/* {value?.category ?? '-'} */}
-                          <MyChip
+                          {/* <MyChip
                             label={value?.status}
                             size="lg"
                             rounded="lg"
                             variant="outlined"
                             color="modern"
-                          />
+                          /> */}
+                          {getChip(status)}
                         </p>
                       )}
                     />
