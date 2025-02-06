@@ -12,6 +12,7 @@ import { useLogin } from './context'
 import { LoginSchema } from './schema'
 import mainLogo from './assets/Image.png'
 import PLNLogo from './assets/logo_PLN.svg'
+import heroLogin from './assets/heroLogin.png'
 import { handleError, checkErrorYup } from '../../services/Helper'
 import MyTextField from '../../components/TextField/MyTextField'
 import MyCheckbox from '../../components/Checkbox/MyCheckbox'
@@ -195,7 +196,13 @@ function Login() {
 
       {/* RIGHT SECTION */}
       <div className="my-6 h-auto max-w-full max-sm:hidden">
-        <img src={mainLogo} alt="mainLogo" width="532px" height="950px" />
+        <img
+          src={heroLogin}
+          alt="mainLogo"
+          width="532px"
+          height="950px"
+          className="rounded-2xl"
+        />
       </div>
     </main>
   )
