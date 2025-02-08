@@ -28,6 +28,7 @@ const Service = {
     await get('/asset/asset-option/floor-list', params),
   searchRoomList: async (params) =>
     await get('/asset/asset-option/room-list', params),
+  searchKodeList: async (params) => await get('/option/kode-list', params),
 
   // import export
   downloadTemplateImport: () => download(`/asset/elektronik/example`),

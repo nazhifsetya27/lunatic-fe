@@ -27,6 +27,7 @@ function ElektronikProvider({ children }) {
     filter: [],
     archive: 0,
     detailtab: 'general',
+    category: 'Elektronik',
   })
   const [currentSlider, setCurrentSlider] = useState({
     status: false,
@@ -104,7 +105,7 @@ function ElektronikProvider({ children }) {
       const formData = new FormData()
 
       formData.append('name', body?.name)
-      formData.append('kode', body?.kode)
+      formData.append('kode', body?.kode?.kode)
       formData.append('unit_id', body?.unit?.id)
       formData.append('building_id', body?.building?.id)
 
@@ -115,6 +116,7 @@ function ElektronikProvider({ children }) {
         .then(myToaster)
         .then(() => handleCurrentSlider({ status: false, current: null }))
         .then(getElektronics)
+        .catch(myToaster)
     },
     [getElektronics, handleCurrentSlider]
   )
@@ -124,7 +126,7 @@ function ElektronikProvider({ children }) {
       const formData = new FormData()
 
       formData.append('name', body?.name)
-      formData.append('kode', body?.kode)
+      formData.append('kode', body?.kode?.kode)
       formData.append('unit_id', body?.unit?.id)
       formData.append('building_id', body?.building?.id)
 
@@ -135,6 +137,7 @@ function ElektronikProvider({ children }) {
         .then(myToaster)
         .then(() => handleCurrentSlider({ status: false, current: null }))
         .then(getElektronics)
+        .catch(myToaster)
     },
     [currentSlider, getElektronics, handleCurrentSlider]
   )
@@ -192,6 +195,8 @@ function ElektronikProvider({ children }) {
     Service.searchFloorList(param).catch(myToaster)
   const searchRoomList = async (param) =>
     Service.searchRoomList(param).catch(myToaster)
+  const searchKodeList = async (param) =>
+    Service.searchKodeList(param).catch(myToaster)
 
   useEffect(() => {
     getElektronics()
@@ -227,6 +232,7 @@ function ElektronikProvider({ children }) {
       importElektronik,
       setConfirmModalOpen,
       isConfirmModalOpen,
+      searchKodeList,
     }),
     [
       params,
@@ -253,6 +259,7 @@ function ElektronikProvider({ children }) {
       importElektronik,
       setConfirmModalOpen,
       isConfirmModalOpen,
+      searchKodeList,
     ]
   )
 

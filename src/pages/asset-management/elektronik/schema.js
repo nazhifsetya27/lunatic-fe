@@ -2,11 +2,11 @@ import * as Yup from 'yup'
 
 export const schema = Yup.object().shape({
   name: Yup.string().required(),
-  kode: Yup.string().required(),
+  kode: Yup.object().required(),
   unit: Yup.object().required(),
   building: Yup.object().required(),
-  floor: Yup.object().optional(),
-  room: Yup.object().optional(),
+  floor: Yup.object().nullable(),
+  room: Yup.object().nullable(),
 })
 
 export const schemaImport = Yup.object().shape({

@@ -32,6 +32,8 @@ function Print({ print }) {
     document.body.removeChild(link)
   }
 
+  console.log(`${baseUrl}/login?isScan=true&asset_id=${print?.assetId}`)
+
   return (
     <div className="flex-1 overflow-hidden">
       <SimpleBar forceVisible="y" style={{ height: '100%' }}>

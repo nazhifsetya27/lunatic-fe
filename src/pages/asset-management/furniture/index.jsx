@@ -83,48 +83,46 @@ function Furniture() {
             </Box>
           </Stack>
 
-          {user?.role !== 'User' && (
-            <Stack direction="row" className="gap-3">
-              <MyButton
-                onClick={downloadExport}
-                color="primary"
-                variant="outlined"
-                size="md"
-              >
-                <Download className="size-5" stroke="currentColor" />
-                <span className="text-sm-semibold">Export</span>
-              </MyButton>
+          <Stack direction="row" className="gap-3">
+            <MyButton
+              onClick={downloadExport}
+              color="primary"
+              variant="outlined"
+              size="md"
+            >
+              <Download className="size-5" stroke="currentColor" />
+              <span className="text-sm-semibold">Export</span>
+            </MyButton>
 
-              <MyButton
-                onClick={() =>
-                  handleCurrentSlider({
-                    status: true,
-                    current: 'import-slider',
-                  })
-                }
-                color="secondary"
-                variant="outlined"
-                size="md"
-              >
-                <Upload className="size-5" stroke="currentColor" />
-                <span className="text-sm-semibold">Import</span>
-              </MyButton>
-              <MyButton
-                onClick={() =>
-                  handleCurrentSlider({
-                    status: true,
-                    current: 'form-slider',
-                  })
-                }
-                color="primary"
-                variant="filled"
-                size="md"
-              >
-                <Plus className="size-5" stroke="currentColor" />
-                <span className="text-sm-semibold">Asset furniture</span>
-              </MyButton>
-            </Stack>
-          )}
+            <MyButton
+              onClick={() =>
+                handleCurrentSlider({
+                  status: true,
+                  current: 'import-slider',
+                })
+              }
+              color="secondary"
+              variant="outlined"
+              size="md"
+            >
+              <Upload className="size-5" stroke="currentColor" />
+              <span className="text-sm-semibold">Import</span>
+            </MyButton>
+            <MyButton
+              onClick={() =>
+                handleCurrentSlider({
+                  status: true,
+                  current: 'form-slider',
+                })
+              }
+              color="primary"
+              variant="filled"
+              size="md"
+            >
+              <Plus className="size-5" stroke="currentColor" />
+              <span className="text-sm-semibold">Asset furniture</span>
+            </MyButton>
+          </Stack>
         </Stack>
 
         <Divider className="border-gray-light/200" />

@@ -27,6 +27,7 @@ function FormSlider() {
     searchBuildingList,
     searchFloorList,
     searchRoomList,
+    searchKodeList,
   } = useUmum()
 
   const {
@@ -45,18 +46,21 @@ function FormSlider() {
 
   useEffect(() => {
     if (currentSlider.id) {
-      showUmum(currentSlider.id).then((elektronik) => {
-        // console.log('elektronik: ', elektronik)
+      showUmum(currentSlider.id).then((umum) => {
+        // console.log('umum: ', umum)
 
-        setTitle(elektronik.name)
-        setValue('name', elektronik.name)
-        setValue('kode', elektronik.kode)
+        setTitle(umum.name)
+        setValue('name', umum.name)
+        setValue('kode', {
+          name: umum.name,
+          kode: umum.kode,
+        })
         // unit got from the user
         setValue('unit', user?.unit)
-        setValue('building', elektronik?.storage?.building)
-        setValue('floor', elektronik?.storage?.storage_floor)
-        setValue('room', elektronik?.storage?.storage_room)
-        if (elektronik.deleted_at)
+        setValue('building', umum?.storage?.building)
+        setValue('floor', umum?.storage?.storage_floor)
+        setValue('room', umum?.storage?.storage_room)
+        if (umum.deleted_at)
           setParams((value) => ({
             ...value,
             archived: true,
@@ -68,12 +72,39 @@ function FormSlider() {
     }
   }, [currentSlider.id, setValue, showUmum])
 
-  const { unit, building, floor, room } = watch()
+  const { unit, building, floor, room, kode } = watch()
 
   const onSubmit = handleSubmit(
     handleError(currentSlider.id ? updateUmum : createUmum, control),
     checkErrorYup
   )
+
+  useEffect(() => {
+    let isMounted = true // Track if component is still mounted
+
+    async function fetchKodeList() {
+      try {
+        const val = await searchKodeList(params)
+        if (isMounted) {
+          const dataLength = val?.data?.length
+          setValue('kode', val?.data[dataLength - 1])
+        }
+      } catch (error) {
+        // Handle or log the error so it doesn’t break the entire app
+        console.error(error)
+      }
+    }
+
+    // Call the async function
+    if (!currentSlider?.id) {
+      // Only run fetchKodeList if there is no currentSlider.id
+      fetchKodeList()
+    }
+    // Cleanup when the component unmounts
+    return () => {
+      isMounted = false
+    }
+  }, [params, searchKodeList, setValue])
 
   return (
     <div className="flex h-screen w-[375px] flex-col gap-6">
@@ -116,7 +147,7 @@ function FormSlider() {
                 />
               </label>
 
-              <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
+              {/* <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
                 <span className="after:ml-0.5 after:content-['*']">Kode</span>
                 <MyTextField
                   disabled={params?.archived}
@@ -125,29 +156,32 @@ function FormSlider() {
                   placeholder="Input code"
                   errors={errors?.name?.message}
                 />
-              </label>
+              </label> */}
 
-              {/* <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
-                <span className="after:ml-0.5 after:content-['*']">Unit</span>
+              <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
+                <span className="after:ml-0.5 after:content-['*']">Kode</span>
                 <MyAsyncDropdown
-                  getOnRender={false}
+                  // getOnRender={false}
                   trigger={trigger}
-                  // disabled={isArchived}
-                  name="unit"
-                  placeholder="Select unit"
+                  name="kode"
+                  placeholder="Select kode"
                   control={control}
-                  error={errors?.unit?.message}
+                  error={errors?.kode?.message}
                   isOptionEqualToValue={(option, value) =>
                     option.id === value.id
                   }
-                  getOptionLabel={(e) => e?.name}
-                  value={unit}
-                  asyncFunction={searchUnitList}
+                  renderOption={(e) =>
+                    kode ? e?.kode : `${e?.name} - ${e?.kode}`
+                  }
+                  getOptionLabel={(e) => e?.kode}
+                  value={kode}
+                  asyncFunction={searchKodeList}
+                  extraData={{ category: 'Umum' }}
                   onChange={(e, value) => {
-                    setValue('unit', value)
+                    setValue('kode', value)
                   }}
                 />
-              </label> */}
+              </label>
 
               <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
                 <span className="after:ml-0.5 after:content-['*']">Gedung</span>
