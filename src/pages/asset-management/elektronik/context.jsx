@@ -106,6 +106,13 @@ function ElektronikProvider({ children }) {
 
       formData.append('name', body?.name)
       formData.append('kode', body?.kode?.kode)
+      if (body.acquisition_date) {
+        formData.append(
+          'acquisition_date',
+          new Date(body.acquisition_date).toISOString()
+        )
+      }
+      formData.append('price', body?.price)
       formData.append('unit_id', body?.unit?.id)
       formData.append('building_id', body?.building?.id)
 
@@ -127,6 +134,13 @@ function ElektronikProvider({ children }) {
 
       formData.append('name', body?.name)
       formData.append('kode', body?.kode?.kode)
+      if (body.acquisition_date) {
+        formData.append(
+          'acquisition_date',
+          new Date(body.acquisition_date).toISOString()
+        )
+      }
+      formData.append('price', body?.price)
       formData.append('unit_id', body?.unit?.id)
       formData.append('building_id', body?.building?.id)
 

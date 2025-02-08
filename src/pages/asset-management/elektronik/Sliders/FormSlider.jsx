@@ -2,14 +2,16 @@ import { useState, useEffect } from 'react'
 import SimpleBar from 'simplebar-react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { RefreshCcw01, XClose } from '@untitled-ui/icons-react'
+import { RefreshCcw01, XClose, Clock } from '@untitled-ui/icons-react'
 import { useElektronik } from '../context'
 import { schema } from '../schema'
 import { handleError, checkErrorYup } from '../../../../services/Helper'
 import MyTextField from '../../../../components/TextField/MyTextField'
 import MyButton from '../../../../components/Button/MyButton'
 import MyAsyncDropdown from '../../../../components/Autocomplete/MyAsyncDropdown'
+import MyCalendar from '../../../../components/DatePicker/MyCalendar'
 import { useApp } from '../../../../AppContext'
+import moment from 'moment'
 
 function FormSlider() {
   const { user } = useApp()
@@ -55,6 +57,8 @@ function FormSlider() {
           name: elektronik.name,
           kode: elektronik.kode,
         })
+        setValue('acquisition_date', elektronik?.acquisition_date)
+        setValue('price', elektronik?.price)
         // unit got from the user
         setValue('unit', user?.unit)
         setValue('building', elektronik?.storage?.building)
@@ -72,7 +76,7 @@ function FormSlider() {
     }
   }, [currentSlider.id, setValue, showElektronik])
 
-  const { unit, building, floor, room, kode } = watch()
+  const { unit, building, floor, room, kode, acquisition_date, price } = watch()
 
   const onSubmit = handleSubmit(
     handleError(
@@ -183,6 +187,61 @@ function FormSlider() {
                   onChange={(e, value) => {
                     setValue('kode', value)
                   }}
+                />
+              </label>
+
+              <div className="flex w-full flex-col gap-1.5">
+                <label
+                  htmlFor="issue"
+                  className="text-sm-medium text-gray-light/700"
+                >
+                  Tanggal perolehan
+                </label>
+                <MyCalendar
+                  showTime
+                  placeholder={'Select Date'}
+                  value={acquisition_date}
+                  target={(open, handleClick) => (
+                    <button
+                      onClick={handleClick}
+                      type={'button'}
+                      className="flex w-full items-center gap-1 rounded-lg border border-gray-light/300 px-4 py-2.5 text-gray-light/700"
+                    >
+                      <Clock
+                        size={20}
+                        className={'text-gray-light/500'}
+                        stroke={'currentColor'}
+                      />
+
+                      {acquisition_date ? (
+                        <p className="text-md-medium px-0.5 text-gray-light/900">
+                          {moment(acquisition_date).format('DD MMM YYYY HH:mm')}
+                        </p>
+                      ) : (
+                        <p>
+                          <p className="text-md-regular px-0.5 text-gray-light/500">
+                            Select date
+                          </p>
+                        </p>
+                      )}
+                    </button>
+                  )}
+                  onChange={(value) => {
+                    setValue('acquisition_date', value)
+                  }}
+                />
+              </div>
+
+              <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
+                <span className="after:ml-0.5">Harga</span>
+                <MyTextField
+                  disabled={params?.archived}
+                  name="price"
+                  type="number"
+                  value={price}
+                  control={control}
+                  placeholder="Input Harga"
+                  errors={errors?.price?.message}
                 />
               </label>
 
