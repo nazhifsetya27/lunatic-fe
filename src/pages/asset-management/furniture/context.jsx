@@ -27,6 +27,7 @@ function FurnitureProvider({ children }) {
     filter: [],
     archive: 0,
     detailtab: 'general',
+    category: 'Furniture',
   })
   const [currentSlider, setCurrentSlider] = useState({
     status: false,
@@ -105,7 +106,7 @@ function FurnitureProvider({ children }) {
       const formData = new FormData()
 
       formData.append('name', body?.name)
-      formData.append('kode', body?.kode)
+      formData.append('kode', body?.kode?.kode)
       formData.append('unit_id', body?.unit?.id)
       formData.append('building_id', body?.building?.id)
 
@@ -116,6 +117,7 @@ function FurnitureProvider({ children }) {
         .then(myToaster)
         .then(() => handleCurrentSlider({ status: false, current: null }))
         .then(getFurnitures)
+        .catch(myToaster)
     },
     [getFurnitures, handleCurrentSlider]
   )
@@ -125,7 +127,7 @@ function FurnitureProvider({ children }) {
       const formData = new FormData()
 
       formData.append('name', body?.name)
-      formData.append('kode', body?.kode)
+      formData.append('kode', body?.kode?.kode)
       formData.append('unit_id', body?.unit?.id)
       formData.append('building_id', body?.building?.id)
 
@@ -136,6 +138,7 @@ function FurnitureProvider({ children }) {
         .then(myToaster)
         .then(() => handleCurrentSlider({ status: false, current: null }))
         .then(getFurnitures)
+        .catch(myToaster)
     },
     [currentSlider, getFurnitures, handleCurrentSlider]
   )
@@ -193,6 +196,8 @@ function FurnitureProvider({ children }) {
     Service.searchFloorList(param).catch(myToaster)
   const searchRoomList = async (param) =>
     Service.searchRoomList(param).catch(myToaster)
+  const searchKodeList = async (param) =>
+    Service.searchKodeList(param).catch(myToaster)
 
   useEffect(() => {
     getFurnitures()
@@ -228,6 +233,7 @@ function FurnitureProvider({ children }) {
       importFurniture,
       setConfirmModalOpen,
       isConfirmModalOpen,
+      searchKodeList,
     }),
     [
       params,
@@ -254,6 +260,7 @@ function FurnitureProvider({ children }) {
       downloadTemplateImport,
       setConfirmModalOpen,
       isConfirmModalOpen,
+      searchKodeList,
     ]
   )
 

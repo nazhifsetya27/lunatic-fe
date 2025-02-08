@@ -27,6 +27,7 @@ function UmumProvider({ children }) {
     filter: [],
     archive: 0,
     detailtab: 'general',
+    category: 'Umum',
   })
   const [currentSlider, setCurrentSlider] = useState({
     status: false,
@@ -103,7 +104,7 @@ function UmumProvider({ children }) {
       const formData = new FormData()
 
       formData.append('name', body?.name)
-      formData.append('kode', body?.kode)
+      formData.append('kode', body?.kode?.kode)
       formData.append('unit_id', body?.unit?.id)
       formData.append('building_id', body?.building?.id)
 
@@ -114,6 +115,7 @@ function UmumProvider({ children }) {
         .then(myToaster)
         .then(() => handleCurrentSlider({ status: false, current: null }))
         .then(getUmums)
+        .catch(myToaster)
     },
     [getUmums, handleCurrentSlider]
   )
@@ -123,7 +125,7 @@ function UmumProvider({ children }) {
       const formData = new FormData()
 
       formData.append('name', body?.name)
-      formData.append('kode', body?.kode)
+      formData.append('kode', body?.kode?.kode)
       formData.append('unit_id', body?.unit?.id)
       formData.append('building_id', body?.building?.id)
 
@@ -134,6 +136,7 @@ function UmumProvider({ children }) {
         .then(myToaster)
         .then(() => handleCurrentSlider({ status: false, current: null }))
         .then(getUmums)
+        .catch(myToaster)
     },
     [currentSlider, getUmums, handleCurrentSlider]
   )
@@ -191,6 +194,8 @@ function UmumProvider({ children }) {
     Service.searchFloorList(param).catch(myToaster)
   const searchRoomList = async (param) =>
     Service.searchRoomList(param).catch(myToaster)
+  const searchKodeList = async (param) =>
+    Service.searchKodeList(param).catch(myToaster)
 
   useEffect(() => {
     getUmums()
@@ -226,6 +231,7 @@ function UmumProvider({ children }) {
       importUmum,
       isConfirmModalOpen,
       setConfirmModalOpen,
+      searchKodeList,
     }),
     [
       params,
@@ -252,6 +258,7 @@ function UmumProvider({ children }) {
       importUmum,
       isConfirmModalOpen,
       setConfirmModalOpen,
+      searchKodeList,
     ]
   )
 

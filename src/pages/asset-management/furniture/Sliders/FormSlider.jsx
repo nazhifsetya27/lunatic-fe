@@ -13,7 +13,6 @@ import { useApp } from '../../../../AppContext'
 
 function FormSlider() {
   const { user } = useApp()
-  console.log(user)
 
   const {
     currentSlider,
@@ -29,6 +28,7 @@ function FormSlider() {
     searchBuildingList,
     searchFloorList,
     searchRoomList,
+    searchKodeList,
   } = useFurniture()
 
   const {
@@ -52,7 +52,10 @@ function FormSlider() {
 
         setTitle(furniture.name)
         setValue('name', furniture.name)
-        setValue('kode', furniture.kode)
+        setValue('kode', {
+          name: furniture.name,
+          kode: furniture.kode,
+        })
         // unit got from the user
         setValue('unit', user?.unit)
         setValue('building', furniture?.storage?.building)
@@ -70,12 +73,38 @@ function FormSlider() {
     }
   }, [currentSlider.id, setValue, showFurniture])
 
-  const { unit, building, floor, room } = watch()
+  const { unit, building, floor, room, kode } = watch()
 
   const onSubmit = handleSubmit(
     handleError(currentSlider.id ? updateFurniture : createFurniture, control),
     checkErrorYup
   )
+
+  useEffect(() => {
+    let isMounted = true // Track if component is still mounted
+
+    async function fetchKodeList() {
+      try {
+        const val = await searchKodeList(params)
+        if (isMounted) {
+          const dataLength = val?.data?.length
+          setValue('kode', val?.data[dataLength - 1])
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    if (!currentSlider?.id) {
+      // Only run fetchKodeList if there is no currentSlider.id
+      fetchKodeList()
+    }
+
+    // Cleanup when the component unmounts
+    return () => {
+      isMounted = false
+    }
+  }, [currentSlider?.id, params, searchKodeList, setValue])
 
   return (
     <div className="flex h-screen w-[375px] flex-col gap-6">
@@ -118,7 +147,7 @@ function FormSlider() {
                 />
               </label>
 
-              <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
+              {/* <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
                 <span className="after:ml-0.5 after:content-['*']">Kode</span>
                 <MyTextField
                   disabled={params?.archived}
@@ -127,29 +156,32 @@ function FormSlider() {
                   placeholder="Input kode"
                   errors={errors?.name?.message}
                 />
-              </label>
+              </label> */}
 
-              {/* <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
-                <span className="after:ml-0.5 after:content-['*']">Unit</span>
+              <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
+                <span className="after:ml-0.5 after:content-['*']">Kode</span>
                 <MyAsyncDropdown
-                  getOnRender={false}
+                  // getOnRender={false}
                   trigger={trigger}
-                  // disabled={isArchived}
-                  name="unit"
-                  placeholder="Select unit"
+                  name="kode"
+                  placeholder="Select kode"
                   control={control}
-                  error={errors?.unit?.message}
+                  error={errors?.kode?.message}
                   isOptionEqualToValue={(option, value) =>
                     option.id === value.id
                   }
-                  getOptionLabel={(e) => e?.name}
-                  value={unit}
-                  asyncFunction={searchUnitList}
+                  renderOption={(e) =>
+                    kode ? e?.kode : `${e?.name} - ${e?.kode}`
+                  }
+                  getOptionLabel={(e) => e?.kode}
+                  value={kode}
+                  asyncFunction={searchKodeList}
+                  extraData={{ category: 'Furniture' }}
                   onChange={(e, value) => {
-                    setValue('unit', value)
+                    setValue('kode', value)
                   }}
                 />
-              </label> */}
+              </label>
 
               <label className="text-sm-medium flex flex-col gap-1.5 text-gray-light/700">
                 <span className="after:ml-0.5 after:content-['*']">Gedung</span>
