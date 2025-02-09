@@ -26,7 +26,7 @@ function DetailSlider() {
   const { data } = currentSlider
 
   const [elektronikDetail, setElektronikDetail] = useState({})
-  const [assetHistory, setAssetHistory] = useState({})
+  const [assetHistory, setAssetHistory] = useState([])
 
   useEffect(() => {
     if (currentSlider.id) {
@@ -93,46 +93,49 @@ function DetailSlider() {
       {params?.detailtab === 'asset_history' && (
         <HistoryTabPanel assetHistory={assetHistory} />
       )}
-      <footer className="flex items-center justify-end gap-4 border-t border-gray-light/200 px-4 py-4">
-        {elektronikDetail.raw?.deleted_at ? (
-          <MyButton
-            onClick={() => restoreElektronik(currentSlider.id)}
-            color="primary"
-            variant="outlined"
-            size="md"
-          >
-            <RefreshCcw01 className="size-5" stroke="currentColor" />
-            <span className="text-sm-semibold">Restore</span>
-          </MyButton>
-        ) : (
-          <>
+
+      {params?.detailtab === 'general' ? (
+        <footer className="flex items-center justify-end gap-4 border-t border-gray-light/200 px-4 py-4">
+          {elektronikDetail.raw?.deleted_at ? (
             <MyButton
-              onClick={() => setConfirmModalOpen(true)}
-              variant="text"
+              onClick={() => restoreUmum(currentSlider.id)}
+              color="primary"
+              variant="outlined"
               size="md"
             >
-              <span className="text-sm-semibold text-error/700">Delete</span>
+              <RefreshCcw01 className="size-5" stroke="currentColor" />
+              <span className="text-sm-semibold">Restore</span>
             </MyButton>
-            <MyButton
-              color="secondary"
-              variant="outlined"
-              size="sm"
-              onClick={() =>
-                handleCurrentSlider(
-                  { current: 'form-slider' },
-                  currentSlider.id
-                )
-              }
-            >
-              <Edit01
-                className="size-5 text-gray-light/600"
-                stroke="currentColor"
-              />
-              <span className="text-sm-semibold">Edit</span>
-            </MyButton>
-          </>
-        )}
-      </footer>
+          ) : (
+            <>
+              <MyButton
+                onClick={() => setConfirmModalOpen(true)}
+                variant="text"
+                size="md"
+              >
+                <span className="text-sm-semibold text-error/700">Delete</span>
+              </MyButton>
+              <MyButton
+                color="secondary"
+                variant="outlined"
+                size="sm"
+                onClick={() =>
+                  handleCurrentSlider(
+                    { current: 'form-slider' },
+                    currentSlider.id
+                  )
+                }
+              >
+                <Edit01
+                  className="size-5 text-gray-light/600"
+                  stroke="currentColor"
+                />
+                <span className="text-sm-semibold">Edit</span>
+              </MyButton>
+            </>
+          )}
+        </footer>
+      ) : null}
     </div>
   )
 }

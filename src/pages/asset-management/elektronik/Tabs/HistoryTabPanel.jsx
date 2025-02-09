@@ -10,7 +10,6 @@ import MyStepper from '../../../../components/Stepper/MyStepper'
 import MyTextField from '../../../../components/TextField/MyTextField'
 
 function HistoryTabPanel({ assetHistory }) {
-
   const conditionLocationHistories = useMemo(
     () => assetHistory ?? [],
     [assetHistory]
@@ -60,7 +59,7 @@ function HistoryTabPanel({ assetHistory }) {
                     variant="filled"
                     size="sm"
                   />
-                  <p>-- to ---</p>
+                  <p>-- to --</p>
                   <MyChip
                     label={item?.asset_current_condition ?? '-'}
                     rounded="md"
