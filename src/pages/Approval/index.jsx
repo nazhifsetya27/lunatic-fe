@@ -153,6 +153,7 @@ function Approval() {
                         value: 'Waiting for approval',
                       },
                       { label: 'Approved', value: 'approved' },
+                      { label: 'Rejected', value: 'Rejected' },
                       { label: 'View all', value: 'view all' },
                     ]}
                     value={params.status}
@@ -263,9 +264,26 @@ function Approval() {
                       field="approver"
                       header="Approver"
                       body={(value) => (
-                        <p className="text-sm-regular text-gray-light/600">
-                          {value?.approver?.name ?? '-'}
-                        </p>
+                        <div className="flex items-center gap-3">
+                          <div
+                            style={{
+                              display: value?.approver?.name ? '' : 'none',
+                            }}
+                          >
+                            <MyAvatar
+                              photo={value?.approver?.photo_url ?? null}
+                              size={40}
+                            />
+                          </div>
+                          <div className="flex flex-col">
+                            <p className="text-sm-medium text-gray-light/900">
+                              {value?.approver?.name ?? ''}
+                            </p>
+                            <p className="text-sm-regular text-gray-light/600">
+                              {value?.approver?.role ?? ''}
+                            </p>
+                          </div>
+                        </div>
                       )}
                     />
                     <MyColumn

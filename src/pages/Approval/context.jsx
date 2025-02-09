@@ -88,7 +88,6 @@ function ApprovalProvider(props) {
 
   const updateApproval = async (body) => {
     const formData = new FormData()
-    console.log(body, '<<<< body')
 
     formData.append('status', body.status)
     formData.append('description', body.description)
