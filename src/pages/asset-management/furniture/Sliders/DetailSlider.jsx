@@ -5,6 +5,7 @@ import MyButton from '../../../../components/Button/MyButton'
 import General from '../Tabs/General'
 import MyHorizontalTab from '../../../../components/HorizontalTab/MyHorizontalTab'
 import MyTabButton from '../../../../components/HorizontalTab/MyTabButton'
+import HistoryTabPanel from '../Tabs/HistoryTabPanel'
 import Print from '../Tabs/Print'
 
 function DetailSlider() {
@@ -23,11 +24,13 @@ function DetailSlider() {
   const { data } = currentSlider
 
   const [furnitureDetail, setFurnitureDetail] = useState({})
+  const [assetHistory, setAssetHistory] = useState({})
 
   useEffect(() => {
     if (currentSlider.id) {
       getFurnitureDetail(currentSlider.id).then((detail) => {
         setFurnitureDetail(detail.data)
+        setAssetHistory(detail.asset_history)
       })
       getPrint(currentSlider.id)
     }
@@ -77,6 +80,7 @@ function DetailSlider() {
         >
           <MyTabButton value="general">General</MyTabButton>
           <MyTabButton value="print">Print</MyTabButton>
+          <MyTabButton value="asset_history">Asset history</MyTabButton>
         </MyHorizontalTab>
       </div>
 
@@ -84,6 +88,9 @@ function DetailSlider() {
         <General furnitureDetail={furnitureDetail} />
       )}
       {params?.detailtab === 'print' && <Print print={print} />}
+      {params?.detailtab === 'asset_history' && (
+        <HistoryTabPanel assetHistory={assetHistory} />
+      )}
 
       <footer className="flex items-center justify-end gap-4 border-t border-gray-light/200 px-4 py-4">
         {furnitureDetail.raw?.deleted_at ? (
