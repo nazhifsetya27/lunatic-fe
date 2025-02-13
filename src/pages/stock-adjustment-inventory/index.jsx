@@ -166,7 +166,7 @@ function StockAdjustmentInventory() {
                       getOptionLabel={(e) => e?.name}
                       getOptionValue={(e) => e?.name}
                       asyncFunction={(e) => searchInventoryList({ ...e })}
-                      extraData={{ isStockAdjustment: true }}
+                      // extraData={{ isStockAdjustment: true }}
                       isSearchInventory
                       // onClick={(value) => console.log(value)}
                       onChangeInput={(e, value, rawValue) => {
@@ -196,9 +196,16 @@ function StockAdjustmentInventory() {
                                 size="sm"
                               />
                             </div>
-                            <p className="text-sm-bold text-gray-light/700">
-                              {option?.category ?? '-'}
-                            </p>
+                            <div className="flex w-[100px] flex-col items-center">
+                              <p className="text-sm-bold text-gray-light/700">
+                                {option?.category ?? '-'}
+                              </p>
+                              <p className="text-sm-bold text-gray-light/700">
+                                <span className="text-sm-semibold">nomor:</span>
+                                &nbsp;
+                                {option?.nomor ?? '-'}
+                              </p>
+                            </div>
                           </div>
                           <hr className="mb-1 mt-3 border-gray-light/200" />
                         </div>
