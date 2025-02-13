@@ -303,17 +303,20 @@ function MySuggestionField({
               }
             }
 
-            unSelectedOptions = unSelectedOptions.filter((e) =>
-              getOptionLabel
-                ? (getOptionLabel(e) ?? '')
-                    .trim()
-                    .toLowerCase()
-                    .includes(state.inputValue.trim().toLowerCase())
+            // Updated filter to include both name and kode
+            unSelectedOptions = unSelectedOptions.filter((e) => {
+              const searchTerm = state.inputValue.trim().toLowerCase()
+              const label = getOptionLabel
+                ? getOptionLabel(e)
                 : (e?.label ?? '')
-                    .trim()
-                    .toLowerCase()
-                    .includes(state.inputValue.trim().toLowerCase())
-            )
+              const kode = e.kode ?? ''
+              const nomor = e.nomor ?? ''
+              return (
+                label.toLowerCase().includes(searchTerm) ||
+                kode.toLowerCase().includes(searchTerm) ||
+                String(nomor).toLowerCase().includes(searchTerm)
+              )
+            })
 
             return [...selectedOptions, ...unSelectedOptions]
           }

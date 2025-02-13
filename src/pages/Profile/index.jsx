@@ -11,6 +11,7 @@ import MyButton from '../../components/Button/MyButton'
 import MyTextField from '../../components/TextField/MyTextField'
 import MyAvatar from '../../components/Avatar/MyAvatar'
 import { WhatsApp } from '../../components/Icon/MediaSosial'
+import { myToaster } from '../../components/Toaster/MyToaster'
 
 function Profile() {
   const { getProfile, updateProfile } = useProfile()
@@ -163,7 +164,24 @@ function Profile() {
                     className="hidden"
                     multiple={false}
                     onChange={(e) => {
-                      setValue('photo', e.target.files[0])
+                      const file = e.target.files[0]
+                      const maxSize = 5 * 1024 * 1024 // 5MB in bytes
+
+                      if (file && file.size > maxSize) {
+                        // alert(
+                        //   'File size exceeds 5MB. Please upload a smaller file.'
+                        // )
+                        myToaster({
+                          status: 500,
+                          title: 'Error upload image',
+                          message:
+                            'File size exceeds 5MB. Please upload a smaller file.',
+                        })
+                        e.target.value = '' // Clear the input
+                        return
+                      }
+
+                      setValue('photo', file)
                     }}
                   />
                   <MyButton

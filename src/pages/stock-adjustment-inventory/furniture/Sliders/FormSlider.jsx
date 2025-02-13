@@ -157,7 +157,8 @@ function FormSliderFurniture() {
                     multiple={false}
                     errors={errors?.evidence?.message}
                     progressUpload={progressUpload}
-                    maxSize={157286400}
+                    // maxSize={157286400} // 150mb
+                    maxSize={5242880} // 5MB in bytes
                     accept={['.jpeg', '.png', '.jpg']}
                     // onDrop={(acceptedFiles, rejectedFiles, e) => {
                     //   console.log(acceptedFiles, rejectedFiles, e)

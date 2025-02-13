@@ -145,7 +145,7 @@ function MyDropzone({
                 <section
                   className={`${
                     isDragReject
-                      ? 'cursor-not-allowed border-2 border-error/600'
+                      ? 'border-2 border-error/600'
                       : isDragActive
                         ? 'cursor-pointer border-2 border-brand/600'
                         : 'cursor-pointer border border-gray-light/200'
