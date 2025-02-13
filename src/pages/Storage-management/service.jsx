@@ -10,7 +10,8 @@ const Service = {
     await get(`/storage-management/${unit_id}/${id}`),
   updateStorageManagement: async (data) =>
     await post('/storage-management', data),
-  // deleteRackManagement: async (id) => await remove(`/v1/rack-management/${id}`),
+  deleteStorageManagement: async (id) =>
+    await remove(`/storage-management/${id}`),
   // restoreRackManagement: async (id) =>
   //   await patch(`/v1/rack-management/${id}/restore`),
   // downloadTemplateImport: () => download('/v1/rack-management/example'),

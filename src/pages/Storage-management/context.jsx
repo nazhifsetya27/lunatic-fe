@@ -119,12 +119,12 @@ function StorageManagementProvider({ children }) {
       .then(() => getStorageManagement(params?.unit?.id))
   }
 
-  // const deleteStorageManagement = async (id) => {
-  //   await Service.deleteStorageManagement(id)
-  //     .then(myToaster)
-  //     .then(getStorageManagement)
-  //     .catch(myToaster)
-  // }
+  const deleteStorageManagement = async (id) => {
+    await Service.deleteStorageManagement(id)
+      .then(myToaster)
+      .then(getStorageManagement)
+      .catch(myToaster)
+  }
   // const bulkDeleteStorageManagement = async (data) => {
   //   data = data.filter((e) => uuidValidate(e))
   //   await Service.bulkDeleteStorageManagement({
@@ -196,6 +196,7 @@ function StorageManagementProvider({ children }) {
         searchRoomList,
         category,
         setcategory,
+        deleteStorageManagement,
       }}
     >
       {children}
