@@ -3,6 +3,8 @@ import * as Yup from 'yup'
 export const schema = Yup.object().shape({
   name: Yup.string().required(),
   kode: Yup.object().required(),
+  acquisition_date: Yup.date().nullable(),
+  price: Yup.string().nullable(),
   unit: Yup.object().required(),
   building: Yup.object().required(),
   floor: Yup.object().nullable(),
