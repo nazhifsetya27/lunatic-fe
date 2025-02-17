@@ -113,7 +113,9 @@ function FurnitureProvider({ children }) {
           new Date(body.acquisition_date).toISOString()
         )
       }
-      formData.append('price', body?.price)
+      if (body.price) {
+        formData.append('price', body?.price)
+      }
       formData.append('unit_id', body?.unit?.id)
       formData.append('building_id', body?.building?.id)
 
@@ -143,8 +145,9 @@ function FurnitureProvider({ children }) {
           new Date(body.acquisition_date).toISOString()
         )
       }
-      formData.append('price', body?.price)
-
+      if (body.price) {
+        formData.append('price', body?.price)
+      }
       if (body?.floor?.id) formData.append('floor_id', body.floor.id)
       if (body?.room?.id) formData.append('room_id', body.room.id)
 
