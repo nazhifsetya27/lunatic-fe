@@ -79,6 +79,7 @@ function Modal() {
   }, [currentSlider])
 
   const [title, setTitle] = useState('Add user')
+  const [deletedAtUser, setDeletedAtUser] = useState(null)
 
   useEffect(() => {
     // setValue('delete_photo', false)
@@ -90,6 +91,7 @@ function Modal() {
         setValue('email', data.email)
         setValue('role', data.role)
         setValue('unit_id', data.unit)
+        setDeletedAtUser(data.deleted_at)
       })
     }
   }, [currentSlider.id])
@@ -308,7 +310,7 @@ function Modal() {
           <footer className="flex items-center justify-end gap-4 border-t border-gray-light/200 px-4 py-4">
             <div
               className={`flex-1 items-start ${
-                currentSlider.id && !deleted_at ? '' : 'hidden'
+                currentSlider.id && !deletedAtUser ? '' : 'hidden'
               }`}
             >
               <MyButton
@@ -328,7 +330,7 @@ function Modal() {
             >
               <p className="text-sm-semibold">Close</p>
             </MyButton>
-            {deleted_at ? (
+            {deletedAtUser ? (
               <MyButton
                 onClick={(e) => {
                   e.stopPropagation()
