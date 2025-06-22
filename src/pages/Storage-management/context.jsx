@@ -72,9 +72,8 @@ function StorageManagementProvider({ children }) {
   }
 
   const showStorageManagement = async (id) =>
-    await Service.showStorageManagement(params?.unit?.id, id)
-      .then((res) => res)
-      .catch(myToaster)
+    await Service.showStorageManagement(params?.unit?.id, id).then((res) => res)
+  // .catch(myToaster)
 
   const createStorageManagement = async (body) => {
     const formData = new FormData()
@@ -91,8 +90,6 @@ function StorageManagementProvider({ children }) {
   }
 
   const updateStorageManagement = async (body) => {
-    console.log('body: ', body)
-
     const formData = new FormData()
     formData.append('unit_id', params?.unit?.id)
 
@@ -119,10 +116,17 @@ function StorageManagementProvider({ children }) {
       .then(() => getStorageManagement(params?.unit?.id))
   }
 
-  const deleteStorageManagement = async (id) => {
-    await Service.deleteStorageManagement(id)
+  const deleteStorageManagement = async (id, body) => {
+    console.log('body delete', body)
+
+    const formData = new FormData()
+    if (body?.building_id) formData.append('building_id', body?.building_id)
+    if (body?.floor_id) formData.append('floor_id', body?.floor_id)
+    if (body?.room_id) formData.append('room_id', body?.room_id)
+
+    await Service.deleteStorageManagement(id, formData)
       .then(myToaster)
-      .then(getStorageManagement)
+      .then(() => getStorageManagement(params?.unit?.id))
       .catch(myToaster)
   }
   // const bulkDeleteStorageManagement = async (data) => {
