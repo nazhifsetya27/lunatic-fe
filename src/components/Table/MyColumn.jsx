@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
-import MyCheckbox from '../Checkbox/MyCheckbox'
 import { ArrowDown, ArrowUp } from '@untitled-ui/icons-react'
+import MyCheckbox from '../Checkbox/MyCheckbox'
 import { useApp } from '../../AppContext'
 
 const getDataByField = (data, field) => {
@@ -12,7 +12,7 @@ const getDataByField = (data, field) => {
   )
 }
 
-const MyColumn = ({
+function MyColumn({
   index,
   i,
   tag,
@@ -34,7 +34,8 @@ const MyColumn = ({
   isArchived,
   invisibleSelection,
   valign = '', // top, middle, bottom
-}) => {
+  hideCheckboxBody = false,
+}) {
   const [sort, setSort] = useState()
   const getClassAlignment = useMemo(() => {
     let className = ''
@@ -56,9 +57,7 @@ const MyColumn = ({
   const { user } = useApp()
   const idUserLogin = user.id
 
-  const isHeader = useMemo(() => {
-    return tag === 'th' ? true : false
-  }, [tag])
+  const isHeader = useMemo(() => tag === 'th', [tag])
 
   const Tag = isHeader ? 'th' : 'td'
   const handleSort = () => {
@@ -73,7 +72,7 @@ const MyColumn = ({
       width={width}
       onClick={sortable && handleSort}
       className={`${sortable ? 'cursor-pointer' : ''} ${
-        padding ? padding : 'px-6'
+        padding || 'px-6'
       } py-${isHeader ? 3 : 4} ${isHeader ? '' : ''} ${
         (value?.checked ?? false) ? 'bg-gray-light/50' : ''
       } border-b border-gray-light/200 ${getClassVAlignment}`}
@@ -102,9 +101,7 @@ const MyColumn = ({
               />
             </div>
           )}
-          {headerBody ? (
-            headerBody
-          ) : (
+          {headerBody || (
             <p className="text-xs-medium whitespace-nowrap text-gray-light/600">
               {header}
             </p>
@@ -140,7 +137,8 @@ const MyColumn = ({
                   (field === 'ticket_status' && !value.pic_ids?.length) ||
                   (field === 'approval' &&
                     value?.approver?.id === idUserLogin) ||
-                  (invisibleSelection && invisibleSelection(value))
+                  (invisibleSelection && invisibleSelection(value)) ||
+                  hideCheckboxBody
                     ? 'invisible'
                     : ''
                 }`}

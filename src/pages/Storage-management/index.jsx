@@ -1,16 +1,12 @@
 import React, { useEffect } from 'react'
 import SimpleBar from 'simplebar-react'
 import { Box, Stack } from '@mui/material'
-import { debounce, pick } from 'lodash'
+import { debounce } from 'lodash'
 import {
-  Edit01,
   Plus,
-  UploadCloud02,
   SearchLg,
-  RefreshCcw01,
   Trash01,
   LinkExternal02,
-  FilterLines,
 } from '@untitled-ui/icons-react'
 
 import FormSliderNewRackManagement from './Sliders/FormSlider'
@@ -43,9 +39,8 @@ function StorageManagement() {
     createRackManagement,
     unit,
     getStorageManagement,
+    deleteStorageManagement,
   } = useStorageManagement()
-
-  // console.log('storageManagement: ', storageManagement)
 
   // useEffect(() => {
   //   setParams((value) => ({
@@ -216,12 +211,14 @@ function StorageManagement() {
                     selectionMode={
                       storageManagement?.data?.length != 0 ? 'multiple' : false
                     }
+                    // selectionMode="single"
                     onSelectionChange={(value) => setRackManagement(value)}
                   >
                     {storageManagement?.uniqueChildren?.map((child, index) => (
                       <MyColumn
                         key={index}
-                        field={child}
+                        hideCheckboxBody
+                        field="approval"
                         header={child}
                         body={(value) => (
                           <p className="text-sm-medium text-gray-light/900">
@@ -259,7 +256,7 @@ function StorageManagement() {
                       body={(value) => (
                         <div className="flex items-center justify-end gap-1">
                           <MyButton
-                            onClick={() => deleteRackManagement(value.id)}
+                            onClick={() => deleteStorageManagement(value.id)}
                             size="md"
                             variant="text"
                           >
@@ -274,7 +271,10 @@ function StorageManagement() {
                                 {
                                   status: true,
                                   current: 'form-detail-slider',
-                                  data: { category: 'Lantai' },
+                                  data: {
+                                    category: 'Lantai',
+                                    storage_management_id: value?.id,
+                                  },
                                 },
                                 value.Gedung.id
                               )
@@ -292,7 +292,7 @@ function StorageManagement() {
                     />
                   </MyDataTable>
                 </div>
-                <div className="flex items-center justify-start gap-3 border-b border-gray-light/200 px-4 py-3">
+                <div className="flex items-center justify-start gap-3 border-b border-gray-light/200 py-3 pl-8 pr-4">
                   <MyButton
                     // onClick={async () => {
                     //   try {

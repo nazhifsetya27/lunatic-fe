@@ -33,7 +33,6 @@ function FormSliderDetailRackManagement() {
 
   const [title, setTitle] = useState('')
   const [storage, setStorage] = useState()
-  console.log('storage: ', storage)
 
   const [isAddNewStorage, setIsAddNewStorage] = useState(false)
 
@@ -130,49 +129,56 @@ function FormSliderDetailRackManagement() {
           />
           <MyColumn
             alignment="right"
-            body={(value) => {
-              console.log(value)
-
-              return (
-                <div className="flex items-center justify-end gap-1">
+            body={(value) => (
+              <div className="flex items-center justify-end gap-1">
+                <MyButton
+                  onClick={() =>
+                    deleteStorageManagement(value?.storage_management_id, {
+                      building_id: currentSlider?.id,
+                      floor_id: value?.id,
+                      room_id:
+                        currentSlider?.data?.category === 'Ruangan'
+                          ? value.id
+                          : null,
+                    })
+                  }
+                  size="md"
+                  variant="text"
+                >
+                  <Trash01
+                    className="size-5 text-gray-light/600"
+                    stroke="currentColor"
+                  />
+                </MyButton>
+                {currentSlider?.data?.category !== 'Ruangan' && (
                   <MyButton
-                    // onClick={() => deleteStorageManagement(value?.id)}
+                    onClick={() => {
+                      handleCurrentSlider(
+                        {
+                          status: true,
+                          current: 'form-detail-slider',
+                          data: {
+                            category: 'Ruangan',
+                            previous_building_id: currentSlider?.id,
+                            storage_management_id:
+                              currentSlider?.data?.storage_management_id,
+                          },
+                        },
+                        value.id
+                      )
+                      setIsAddNewStorage(false)
+                    }}
                     size="md"
                     variant="text"
                   >
-                    <Trash01
+                    <LinkExternal02
                       className="size-5 text-gray-light/600"
                       stroke="currentColor"
                     />
                   </MyButton>
-                  {currentSlider?.data?.category !== 'Ruangan' && (
-                    <MyButton
-                      onClick={() => {
-                        handleCurrentSlider(
-                          {
-                            status: true,
-                            current: 'form-detail-slider',
-                            data: {
-                              category: 'Ruangan',
-                              previous_building_id: currentSlider?.id,
-                            },
-                          },
-                          value.id
-                        )
-                        setIsAddNewStorage(false)
-                      }}
-                      size="md"
-                      variant="text"
-                    >
-                      <LinkExternal02
-                        className="size-5 text-gray-light/600"
-                        stroke="currentColor"
-                      />
-                    </MyButton>
-                  )}
-                </div>
-              )
-            }}
+                )}
+              </div>
+            )}
           />
         </MyDataTable>
 
