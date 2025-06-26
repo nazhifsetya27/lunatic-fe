@@ -55,6 +55,10 @@ function Login() {
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(LoginSchema),
+    defaultValues: {
+      email: 'administrator@gmail.com',
+      password: 'administrator',
+    },
   })
 
   useEffect(() => {
