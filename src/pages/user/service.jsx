@@ -10,6 +10,7 @@ export const Service = {
   updateUser: async (id, data) =>
     await patch('/user/' + id, data, {}, 'form-data'),
   deleteUser: async (id) => await remove('/user/' + id),
+  restoreUser: async (id) => await patch('/user/restore/' + id),
 }
 
 export default Service

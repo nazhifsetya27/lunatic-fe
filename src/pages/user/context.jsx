@@ -117,6 +117,15 @@ const UserProvider = (props) => {
         .catch(myToaster)
   }
 
+  const restoreUser = async (id) => {
+    if (window.confirm('Are you sure you want to restore this data?'))
+      return await Service.restoreUser(id)
+        .then(myToaster)
+        .then(() => handleCurrentSlider({ status: false, current: null }))
+        .then(getUsers)
+        .catch(myToaster)
+  }
+
   useEffect(() => {
     setSlider(currentSlider.status)
     setCreatedPassword(null)
@@ -142,6 +151,7 @@ const UserProvider = (props) => {
         updateUser,
         deleteUser,
         setParams,
+        restoreUser,
         params,
       }}
     >
