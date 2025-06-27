@@ -60,6 +60,24 @@ function SideNavbar({ childs }) {
             </div>
             {/* TOP */}
             <div className="flex h-full flex-1 flex-col">
+              <Link to="/">
+                <MyTooltip
+                  placement="right"
+                  target={
+                    <div
+                      className={`${
+                        location?.pathname === '/'
+                          ? 'bg-gray-light/50 text-gray-light/700'
+                          : 'text-gray-light/500'
+                      } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
+                    >
+                      <HomeLine size={24} stroke="currentColor" />
+                    </div>
+                  }
+                >
+                  <p className="text-xs-semibold text-white">Dashboard</p>
+                </MyTooltip>
+              </Link>
               <Link to="/asset">
                 <MyTooltip
                   placement="right"
@@ -98,24 +116,6 @@ function SideNavbar({ childs }) {
                   <span className="text-xs-semibold text-white">Approval</span>
                 </MyTooltip>
               </Link>
-              {/* <Link to={'/dashboard'}>
-                <MyTooltip
-                  placement="right"
-                  target={
-                    <div
-                      className={`${
-                        location?.pathname.includes('/dashboard')
-                          ? 'bg-gray-light/50 text-gray-light/700'
-                          : 'text-gray-light/500'
-                      } flex h-12 w-12 min-w-[48px] cursor-pointer items-center justify-center rounded-md`}
-                    >
-                      <HomeLine size={24} stroke={'currentColor'} />
-                    </div>
-                  }
-                >
-                  <p className="text-xs-semibold text-white">Dashboard</p>
-                </MyTooltip>
-              </Link> */}
               <Link to="/user">
                 <MyTooltip
                   placement="right"
