@@ -25,6 +25,12 @@ function StorageManagementProvider({ children }) {
     search: null,
   })
 
+  const [storageParams, setStorageParams] = useState({
+    floor_id: null,
+    room_id: null,
+  })
+  const [currentBuildingId, setCurrentBuildingId] = useState(null)
+
   const [currentSlider, setCurrentSlider] = useState({
     status: false,
     current: null,
@@ -72,7 +78,11 @@ function StorageManagementProvider({ children }) {
   }
 
   const showStorageManagement = async (id) =>
-    await Service.showStorageManagement(params?.unit?.id, id).then((res) => res)
+    await Service.showStorageManagement(
+      params?.unit?.id,
+      id,
+      storageParams
+    ).then((res) => res)
   // .catch(myToaster)
 
   const createStorageManagement = async (body) => {
@@ -117,7 +127,7 @@ function StorageManagementProvider({ children }) {
   }
 
   const deleteStorageManagement = async (id, body) => {
-    console.log('body delete', body)
+    // console.log('body delete', body)
 
     const formData = new FormData()
     if (body?.building_id) formData.append('building_id', body?.building_id)
@@ -201,6 +211,10 @@ function StorageManagementProvider({ children }) {
         category,
         setcategory,
         deleteStorageManagement,
+        setStorageParams,
+        storageParams,
+        currentBuildingId,
+        setCurrentBuildingId,
       }}
     >
       {children}

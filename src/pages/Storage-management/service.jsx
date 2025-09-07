@@ -6,8 +6,8 @@ const Service = {
     await get(`/storage-management/${unit_id}`, params),
   createStorageManagement: async (data) =>
     await post('/storage-management', data),
-  showStorageManagement: async (unit_id, id) =>
-    await get(`/storage-management/${unit_id}/${id}`),
+  showStorageManagement: async (unit_id, id, params) =>
+    await get(`/storage-management/${unit_id}/${id}`, params),
   updateStorageManagement: async (data) =>
     await post('/storage-management', data),
   deleteStorageManagement: async (id, data) =>
