@@ -29,7 +29,12 @@ function FormSliderDetailRackManagement() {
     category,
     setcategory,
     deleteStorageManagement,
+    setStorageParams,
+    currentBuildingId,
+    storageParams,
   } = useStorageManagement()
+  // console.log('currentSlider', currentSlider?.data?.category)
+  // console.log('storageParams', storageParams)
 
   const [title, setTitle] = useState('')
   const [storage, setStorage] = useState()
@@ -60,7 +65,7 @@ function FormSliderDetailRackManagement() {
   )
 
   useEffect(() => {
-    showStorageManagement(currentSlider.id).then((data) => {
+    showStorageManagement(currentBuildingId).then((data) => {
       setTitle(`Edit ${data.category}`)
       setStorage(data.data)
       setcategory(data.category)
@@ -75,7 +80,14 @@ function FormSliderDetailRackManagement() {
     <div className="flex h-screen w-[375px] flex-col">
       <header className="relative flex flex-col items-start gap-y-4 px-4 pt-6">
         <button
-          onClick={() => handleCurrentSlider(null)}
+          onClick={() => {
+            handleCurrentSlider(null)
+            setStorageParams((prev) => ({
+              ...prev,
+              floor_id: null,
+              // room_id: currentSlider?.id,
+            }))
+          }}
           className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-lg p-2 text-gray-light/400"
         >
           <XClose size={24} stroke="currentColor" />
@@ -83,7 +95,7 @@ function FormSliderDetailRackManagement() {
         {currentSlider?.data?.category !== 'Lantai' && (
           <button
             className="flex items-center gap-2 text-gray-600"
-            onClick={() =>
+            onClick={() => {
               handleCurrentSlider(
                 {
                   status: true,
@@ -92,7 +104,12 @@ function FormSliderDetailRackManagement() {
                 },
                 currentSlider?.data?.previous_building_id
               )
-            }
+              setStorageParams((prev) => ({
+                ...prev,
+                floor_id: null,
+                // room_id: currentSlider?.id,
+              }))
+            }}
           >
             <ArrowLeft stroke="currentColor" className="text-gray size-5" />
             <p className="text-sm-semibold">Back</p>
@@ -166,6 +183,12 @@ function FormSliderDetailRackManagement() {
                         },
                         value.id
                       )
+                      setStorageParams((prev) => ({
+                        ...prev,
+                        floor_id: value.id,
+                        // room_id: currentSlider?.id,
+                      }))
+
                       setIsAddNewStorage(false)
                     }}
                     size="md"

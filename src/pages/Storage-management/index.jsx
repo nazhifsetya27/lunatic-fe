@@ -40,6 +40,8 @@ function StorageManagement() {
     unit,
     getStorageManagement,
     deleteStorageManagement,
+    setCurrentBuildingId,
+    setStorageParams,
   } = useStorageManagement()
 
   // useEffect(() => {
@@ -77,7 +79,14 @@ function StorageManagement() {
       <MyModalSlider
         open={currentSlider?.current === 'form-detail-slider'}
         element={<FormSliderDetailRackManagement />}
-        onClose={() => handleCurrentSlider(null)}
+        onClose={() => {
+          handleCurrentSlider(null)
+          setStorageParams((prev) => ({
+            ...prev,
+            floor_id: null,
+            // room_id: currentSlider?.id,
+          }))
+        }}
       />
       {/* <MyModalSlider
         open={currentSlider?.current === 'import-slider'}
@@ -254,9 +263,15 @@ function StorageManagement() {
                     <MyColumn
                       alignment="right"
                       body={(value) => (
+                        // console.log('value', value)
+
                         <div className="flex items-center justify-end gap-1">
                           <MyButton
-                            onClick={() => deleteStorageManagement(value.id)}
+                            onClick={() =>
+                              deleteStorageManagement(value.id, {
+                                building_id: value?.Gedung?.id,
+                              })
+                            }
                             size="md"
                             variant="text"
                           >
@@ -266,7 +281,7 @@ function StorageManagement() {
                             />
                           </MyButton>
                           <MyButton
-                            onClick={() =>
+                            onClick={() => {
                               handleCurrentSlider(
                                 {
                                   status: true,
@@ -278,7 +293,8 @@ function StorageManagement() {
                                 },
                                 value.Gedung.id
                               )
-                            }
+                              setCurrentBuildingId(value.Gedung.id)
+                            }}
                             size="md"
                             variant="text"
                           >
