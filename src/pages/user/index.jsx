@@ -249,15 +249,6 @@ const User = () => {
                   )}
                 ></MyColumn>
                 <MyColumn
-                  field="role"
-                  header="Role"
-                  body={(value) => (
-                    <p className="text-sm-regular text-gray-light/600">
-                      {value?.role ? value?.role : '-'}
-                    </p>
-                  )}
-                ></MyColumn>
-                <MyColumn
                   field="unit"
                   header="Unit"
                   body={(value) => (
